@@ -8,7 +8,7 @@ import edu.uta.tdj.code.component.ClassElement;
 import edu.uta.tdj.code.controller.CodeController;
 
 public class CodePanel extends JPanel {
-
+	
 	@Override
 	protected void paintComponent(Graphics g) {
 		super.paintComponent(g);

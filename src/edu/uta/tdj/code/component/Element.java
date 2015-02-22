@@ -28,13 +28,45 @@ public abstract class Element implements ComputedElement{
 	protected int width;
 	protected int height;
 	
+	public boolean isSelected() {
+		return selected;
+	}
+
+	public void setSelected(boolean selected) {
+		this.selected = selected;
+	}
+	
+	protected boolean selected = false;
+	
 	public Element(AST ast){
 		this.ast = ast;
 	}
 	
-	public abstract void draw(Graphics g);
+	public void draw(Graphics g){
+		this.width = toString().length()*5;
+		if(selected){
+			g.setColor(Color.black);
+			g.drawRect(x, y, width, height);
+		}
+	}
+	
+	public void unSelected(){
+		selected = false;
+	}
+	
 	
 	public abstract void setModifiers(ModifierKeyword modifiers);
+	
+	public abstract Element getSelectedElement(int x_in, int y_in);
+	
+	public boolean isInelement(int x_in, int y_in) {
+		if (y_in > this.y && y_in < this.y + 20) {
+			return true;
+		} else {
+			return false;
+		}
+	}
+	
 	
 	public void setBackgroundColor(Color color){
 		this.backgroundColor = color;

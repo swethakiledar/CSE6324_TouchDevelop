@@ -71,8 +71,17 @@ public class ExpressionStatementElement extends Element {
 	@Override
 	public void draw(Graphics g) {
 		g.setColor(Color.red);
-		g.drawString(this.astNode.toString(), x, y);
+		g.drawString(this.astNode.toString(), x, y+20);
 		
 	}
+
+	@Override
+	public Element getSelectedElement(int x_in, int y_in) {
+		// TODO Auto-generated method stub
+		if(this.isInelement(x_in, y_in))
+			return this;
+		return null;
+	}
+
 
 }

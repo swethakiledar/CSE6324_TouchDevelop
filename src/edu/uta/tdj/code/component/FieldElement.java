@@ -40,18 +40,26 @@ public class FieldElement extends Element {
 
 	@Override
 	public void draw(Graphics g) {
-		
 		this.width = toString().length()*5;
+		super.draw(g);
+		
 //		g.setColor(backgroundColor);
 //		g.fillRect(x, y-20, width, height);
 		g.setColor(Color.red);
-		g.drawString(toString(), x, y);
+		g.drawString(toString(), x, y+20);
 		g.setColor(Color.black);
 		
 	}
 
 	public String toString() {
 		return astNode.toString();
+	}
+
+	@Override
+	public Element getSelectedElement(int x_in, int y_in) {
+		if(this.isInelement(x_in, y_in))
+			return this;
+		return null;
 	}
 
 }

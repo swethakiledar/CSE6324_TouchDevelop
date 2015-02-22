@@ -21,17 +21,18 @@ public class MethodElement extends Element implements Observable {
 	private String modifiedString = "";
 	private String returnTypeString = "";
 	private ArrayList<ExpressionStatementElement> statementList;
-
+	
 	public MethodElement(AST ast) {
 		super(ast);
 		mMethodDeclaration = ast.newMethodDeclaration();
 		statementList = new ArrayList<ExpressionStatementElement>();
-		this.height = 40;
+		this.height = 50;
 	}
 	
 	public void setName(String name) {
 		mMethodDeclaration.setName(ast.newSimpleName(name));
 		this.name = name;
+		this.width = name.length()*5;
 	}
 
 	public ASTNode getNode() {
@@ -75,20 +76,16 @@ public class MethodElement extends Element implements Observable {
 	public ASTNode getAstNode() {
 		return mMethodDeclaration;
 	}
-
 	@Override
 	public void draw(Graphics g) {
-		
-		
-		
+		super.draw(g);
 		g.setColor(Color.blue);
-		g.drawString(this.toString(), x, y);
+		g.drawString(this.toString(), x, y+20);
 		for (ExpressionStatementElement ee : statementList) {
 			ee.draw(g);
 		}
 		g.setColor(Color.blue);
-		System.out.println(this.height);
-		g.drawString("}", x, this.height-20+y);
+		g.drawString("}", x, this.height+y-10);
 	}
 
 	public String toString() {
@@ -122,6 +119,30 @@ public class MethodElement extends Element implements Observable {
 		for(ExpressionStatementElement ese: statementList){
 			ese.setY(y + 20*i);
 			i++;
+		}
+	}
+
+	@Override
+	public Element getSelectedElement(int x_in, int y_in) {
+		if(this.isInelement(x_in, y_in)){
+			return this;
+		}else{
+			for(ExpressionStatementElement ese: statementList){
+				Element element = ese.getSelectedElement(x_in, y_in);
+				if(element!=null){
+					return element;
+				}
+			}
+		}
+		return null;
+	}
+	
+
+	@Override
+	public void unSelected() {
+		super.unSelected();
+		for (ExpressionStatementElement ese : statementList) {
+			ese.unSelected();
 		}
 	}
 

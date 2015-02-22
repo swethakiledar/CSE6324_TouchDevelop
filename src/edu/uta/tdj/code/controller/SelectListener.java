@@ -2,13 +2,48 @@ package edu.uta.tdj.code.controller;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseListener;
 
-public class SelectListener implements ActionListener {
+import org.w3c.dom.events.EventTarget;
+import org.w3c.dom.events.MouseEvent;
+import org.w3c.dom.views.AbstractView;
+
+import edu.uta.tdj.code.ui.CodePanel;
+
+public class SelectListener implements MouseListener {
 
 	@Override
-	public void actionPerformed(ActionEvent e) {
+	public void mouseClicked(java.awt.event.MouseEvent e) {
+		// TODO Auto-generated method stub
+		System.out.println(CodeController.selectedElement(e.getX(), e.getY()));
+		CodePanel cp = (CodePanel)e.getSource();
+		cp.repaint();
+	}
+
+	@Override
+	public void mousePressed(java.awt.event.MouseEvent e) {
 		// TODO Auto-generated method stub
 		
 	}
+
+	@Override
+	public void mouseReleased(java.awt.event.MouseEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void mouseEntered(java.awt.event.MouseEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void mouseExited(java.awt.event.MouseEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+
 
 }

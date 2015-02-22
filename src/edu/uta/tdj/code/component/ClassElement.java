@@ -1,5 +1,6 @@
 package edu.uta.tdj.code.component;
 
+import java.awt.Color;
 import java.awt.Graphics;
 import java.util.ArrayList;
 import java.util.List;
@@ -35,9 +36,8 @@ public class ClassElement extends Element {
 
 	public ClassElement(AST ast, String name) {
 		super(ast);
-		this.name = name;
 		this.astNode = ast.newTypeDeclaration();
-		astNode.setName(ast.newSimpleName(name));
+		setName(name);
 
 		fieldList = new ArrayList<FieldElement>();
 		methodList = new ArrayList<MethodElement>();
@@ -46,6 +46,12 @@ public class ClassElement extends Element {
 		this.setY(50);
 
 		this.height = 20;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+		this.width = name.length() * 5;
+		astNode.setName(ast.newSimpleName(name));
 	}
 
 	public void addContructor(ModifierKeyword modifiers) {
@@ -59,6 +65,7 @@ public class ClassElement extends Element {
 	public void addMethod(MethodElement me) {
 		me.setX(x + 20);
 		me.setY(y + height - 20);
+		System.out.println(me.getY()+"bbbbbbbbbbbb");
 		astNode.bodyDeclarations().add(me.getAstNode());
 		methodList.add(me);
 	}
@@ -73,17 +80,24 @@ public class ClassElement extends Element {
 		this.addMethod(me);
 	}
 
+	/**
+	 * add field
+	 * 
+	 * 
+	 * */
+	public void addField(FieldElement fe) {
+		fe.setX(x + 20);
+		fe.setY(y + (fieldList.size() + 1) * 20);
+		astNode.bodyDeclarations().add(fe.getAstNode());
+		fieldList.add(fe);
+	}
+
 	public void addField(String name, String type, ModifierKeyword modifiers) {
 		FieldElement fe = new FieldElement(ast);
 		fe.setName(name);
 		fe.setType(type);
 		fe.setModifiers(modifiers);
-
-		fe.setX(x + 20);
-		fe.setY(y + (fieldList.size() + 1) * 20);
-
-		astNode.bodyDeclarations().add(fe.getAstNode());
-		fieldList.add(fe);
+		addField(fe);
 	}
 
 	/**
@@ -108,7 +122,7 @@ public class ClassElement extends Element {
 	}
 
 	public void computeHeight() {
-		height = 20;
+		height = 50;
 		int i = 1;
 		for (FieldElement ef : fieldList) {
 			height = height + ef.getHeight();
@@ -120,6 +134,7 @@ public class ClassElement extends Element {
 		for (MethodElement me : methodList) {
 			height = height + me.getHeight();
 			me.setY(lastHeight + y);
+			System.out.println(me.getY()+"ccccccccccccc");
 			me.notifyObservers();
 			lastHeight = me.getHeight() + lastHeight;
 			i++;
@@ -128,10 +143,10 @@ public class ClassElement extends Element {
 
 	@Override
 	public void draw(Graphics g) {
-
+		super.draw(g);
 		computeHeight();
-
-		g.drawString(this.toString(), x, y);
+		
+		g.drawString(this.toString(), x, y+20);
 
 		for (FieldElement ef : fieldList) {
 			ef.draw(g);
@@ -140,9 +155,45 @@ public class ClassElement extends Element {
 		for (MethodElement me : methodList) {
 			me.draw(g);
 		}
+		g.drawString("}", x, this.height+y-10);
+		
 	}
 
 	public String toString() {
 		return this.modifiedString + "  class  " + name + "  {";
 	}
+
+	@Override
+	public Element getSelectedElement(int x_in, int y_in) {
+		// TODO Auto-generated method stub
+		if (this.isInelement(x_in, y_in)) {
+			return this;
+		} else {
+			for (FieldElement fe : fieldList) {
+				Element element = fe.getSelectedElement(x_in, y_in);
+				if ( element!= null)
+					return element;
+			}
+
+			for (MethodElement me : methodList) {
+				Element element = me.getSelectedElement(x_in, y_in);
+				if ( element!= null)
+					return element;
+			}
+		}
+		return null;
+	}
+
+	@Override
+	public void unSelected() {
+		this.setSelected(false);
+		for (FieldElement fe : fieldList) {
+			fe.unSelected();
+		}
+
+		for (MethodElement me : methodList) {
+			me.unSelected();
+		}
+	}
+
 }
