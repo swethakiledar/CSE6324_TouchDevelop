@@ -41,9 +41,11 @@ public class ClassElement extends Element {
 
 		fieldList = new ArrayList<FieldElement>();
 		methodList = new ArrayList<MethodElement>();
-		
+
 		this.setX(50);
 		this.setY(50);
+
+		this.height = 20;
 	}
 
 	public void addContructor(ModifierKeyword modifiers) {
@@ -51,18 +53,16 @@ public class ClassElement extends Element {
 		me.setName(this.getName());
 		me.createBlock();
 		me.setModifiers(modifiers);
-		
 		astNode.bodyDeclarations().add(me.getAstNode());
 	}
 
-	public void addMethod(MethodElement me){
-		me.setX(x+20);
-		me.setY(y+(methodList.size()+fieldList.size()+1)*20);
+	public void addMethod(MethodElement me) {
+		me.setX(x + 20);
+		me.setY(y + height - 20);
 		astNode.bodyDeclarations().add(me.getAstNode());
 		methodList.add(me);
 	}
-	
-	
+
 	public void addMethod(String name, Type returnType,
 			ModifierKeyword modifiers) {
 		MethodElement me = new MethodElement(ast);
@@ -78,24 +78,23 @@ public class ClassElement extends Element {
 		fe.setName(name);
 		fe.setType(type);
 		fe.setModifiers(modifiers);
-		
-		fe.setX(x+20);
-		fe.setY(y+(fieldList.size()+1)*20);
-		
-		System.out.println(fe.getAstNode().getClass().getName());
+
+		fe.setX(x + 20);
+		fe.setY(y + (fieldList.size() + 1) * 20);
+
 		astNode.bodyDeclarations().add(fe.getAstNode());
 		fieldList.add(fe);
 	}
+
 	/**
-	 * should be changed 
-	 * and split into parts 
+	 * should be changed and split into parts
 	 * */
 	@Override
 	public void setModifiers(ModifierKeyword modifiers) {
 		astNode.modifiers().add(ast.newModifier(modifiers));
-		modifiedString = modifiedString + " "+modifiers.toString();
+		modifiedString = modifiedString + " " + modifiers.toString();
 	}
- 
+
 	@Override
 	public void accept(ProposalComputer pcComputer) {
 		// TODO Auto-generated method stub
@@ -108,21 +107,42 @@ public class ClassElement extends Element {
 		return astNode;
 	}
 
+	public void computeHeight() {
+		height = 20;
+		int i = 1;
+		for (FieldElement ef : fieldList) {
+			height = height + ef.getHeight();
+			ef.setY(i * 20 + y);
+			i++;
+		}
+		int lastHeight = i * 20;
+
+		for (MethodElement me : methodList) {
+			height = height + me.getHeight();
+			me.setY(lastHeight + y);
+			me.notifyObservers();
+			lastHeight = me.getHeight() + lastHeight;
+			i++;
+		}
+	}
+
 	@Override
 	public void draw(Graphics g) {
-		
-		g.drawString(this.toString(), x , y );
-		
-		for(FieldElement ef: fieldList){
+
+		computeHeight();
+
+		g.drawString(this.toString(), x, y);
+
+		for (FieldElement ef : fieldList) {
 			ef.draw(g);
 		}
-		
-		for(MethodElement me: methodList){
+
+		for (MethodElement me : methodList) {
 			me.draw(g);
 		}
 	}
-	
-	public String toString(){
-		return this.modifiedString+"  class  "+name + "  {";
+
+	public String toString() {
+		return this.modifiedString + "  class  " + name + "  {";
 	}
 }

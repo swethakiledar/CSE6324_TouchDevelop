@@ -2,7 +2,6 @@ package edu.uta.tdj.code.component;
 
 import java.awt.Color;
 import java.awt.Graphics;
-
 import org.eclipse.jdt.core.dom.AST;
 import org.eclipse.jdt.core.dom.ASTNode;
 import org.eclipse.jdt.core.dom.FieldDeclaration;
@@ -18,6 +17,7 @@ public class FieldElement extends Element {
 		super(ast);
 		vdf = ast.newVariableDeclarationFragment();
 		astNode = ast.newFieldDeclaration(vdf);
+		this.height = 20;
 	}
 
 	public void setName(String name) {
@@ -40,12 +40,14 @@ public class FieldElement extends Element {
 
 	@Override
 	public void draw(Graphics g) {
-		// TODO Auto-generated method stub
-		g.setColor(backgroundColor);
-		g.fillRect(x, y, 200, 20);
+		
+		this.width = toString().length()*5;
+//		g.setColor(backgroundColor);
+//		g.fillRect(x, y-20, width, height);
 		g.setColor(Color.red);
 		g.drawString(toString(), x, y);
 		g.setColor(Color.black);
+		
 	}
 
 	public String toString() {

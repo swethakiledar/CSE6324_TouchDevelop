@@ -22,8 +22,11 @@ public abstract class Element implements ComputedElement{
 	protected AST ast;
 	protected String name;
 	protected Color backgroundColor;
+	
 	protected int x;
 	protected int y;
+	protected int width;
+	protected int height;
 	
 	public Element(AST ast){
 		this.ast = ast;
@@ -77,4 +80,20 @@ public abstract class Element implements ComputedElement{
 		this.y = y;
 	}
 	
+	public int getWidth() {
+		return width;
+	}
+
+	public void setWidth(int width) {
+		this.width = width;
+	}
+
+	public int getHeight() {
+		return height;
+	}
+
+	public void setHeight(int height) {
+		this.height = height;
+	}
+
 }

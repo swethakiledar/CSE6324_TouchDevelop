@@ -12,7 +12,10 @@ import org.eclipse.jdt.core.dom.Statement;
 import org.eclipse.jdt.core.dom.Type;
 import org.eclipse.jdt.core.dom.Modifier.ModifierKeyword;
 
-public class MethodElement extends Element {
+import edu.uta.tdj.code.component.observer.Observable;
+import edu.uta.tdj.code.component.observer.Observer;
+
+public class MethodElement extends Element implements Observable {
 
 	private MethodDeclaration mMethodDeclaration;
 	private String modifiedString = "";
@@ -23,8 +26,9 @@ public class MethodElement extends Element {
 		super(ast);
 		mMethodDeclaration = ast.newMethodDeclaration();
 		statementList = new ArrayList<ExpressionStatementElement>();
+		this.height = 40;
 	}
-
+	
 	public void setName(String name) {
 		mMethodDeclaration.setName(ast.newSimpleName(name));
 		this.name = name;
@@ -65,6 +69,7 @@ public class MethodElement extends Element {
 		ese.setX(x + 20);
 		ese.setY(y + (statementList.size() + 1) * 20);
 		statementList.add(ese);
+		this.height = height + 20;
 	}
 
 	public ASTNode getAstNode() {
@@ -73,13 +78,17 @@ public class MethodElement extends Element {
 
 	@Override
 	public void draw(Graphics g) {
+		
+		
+		
 		g.setColor(Color.blue);
 		g.drawString(this.toString(), x, y);
 		for (ExpressionStatementElement ee : statementList) {
 			ee.draw(g);
 		}
 		g.setColor(Color.blue);
-		g.drawString("}", x, y+(statementList.size() + 1) * 20);
+		System.out.println(this.height);
+		g.drawString("}", x, this.height-20+y);
 	}
 
 	public String toString() {
@@ -92,6 +101,28 @@ public class MethodElement extends Element {
 				+ "("
 				+ mMethodDeclaration.parameters().toString().replace("[", "")
 						.replace("]", "") + ")" + "{";
+	}
+
+	@Override
+	public void add(Observer observer) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void remove(Observer observer) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void notifyObservers() {
+		// TODO Auto-generated method stub
+		int i = 1;
+		for(ExpressionStatementElement ese: statementList){
+			ese.setY(y + 20*i);
+			i++;
+		}
 	}
 
 }
