@@ -20,6 +20,7 @@ public class ExpressionStatementElement extends Element {
 		assignment = ast.newAssignment();
 		vdf = ast.newVariableDeclarationFragment();
 		vde = ast.newVariableDeclarationExpression(vdf);
+		this.height = 20;
 	}
 
 	private ExpressionStatement astNode;
@@ -70,6 +71,7 @@ public class ExpressionStatementElement extends Element {
 
 	@Override
 	public void draw(Graphics g) {
+		super.draw(g);
 		g.setColor(Color.red);
 		g.drawString(this.astNode.toString(), x, y+20);
 		
@@ -82,6 +84,9 @@ public class ExpressionStatementElement extends Element {
 			return this;
 		return null;
 	}
-
+	
+	public String toString() {
+		return astNode.toString();
+	}
 
 }

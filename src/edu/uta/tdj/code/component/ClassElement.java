@@ -65,7 +65,6 @@ public class ClassElement extends Element {
 	public void addMethod(MethodElement me) {
 		me.setX(x + 20);
 		me.setY(y + height - 20);
-		System.out.println(me.getY()+"bbbbbbbbbbbb");
 		astNode.bodyDeclarations().add(me.getAstNode());
 		methodList.add(me);
 	}
@@ -134,7 +133,6 @@ public class ClassElement extends Element {
 		for (MethodElement me : methodList) {
 			height = height + me.getHeight();
 			me.setY(lastHeight + y);
-			System.out.println(me.getY()+"ccccccccccccc");
 			me.notifyObservers();
 			lastHeight = me.getHeight() + lastHeight;
 			i++;

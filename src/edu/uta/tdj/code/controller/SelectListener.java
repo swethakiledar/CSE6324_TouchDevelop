@@ -8,14 +8,16 @@ import org.w3c.dom.events.EventTarget;
 import org.w3c.dom.events.MouseEvent;
 import org.w3c.dom.views.AbstractView;
 
+import edu.uta.tdj.code.component.Element;
 import edu.uta.tdj.code.ui.CodePanel;
+import edu.utd.tdj.code.proposal.ProposalComputer;
 
 public class SelectListener implements MouseListener {
-
+	
 	@Override
 	public void mouseClicked(java.awt.event.MouseEvent e) {
 		// TODO Auto-generated method stub
-		System.out.println(CodeController.selectedElement(e.getX(), e.getY()));
+		Element element = CodeController.selectedElement(e.getX(), e.getY());
 		CodePanel cp = (CodePanel)e.getSource();
 		cp.repaint();
 	}

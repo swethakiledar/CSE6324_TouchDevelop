@@ -1,7 +1,6 @@
 package edu.uta.tdj.code.controller;
 
 import org.eclipse.jdt.core.dom.AST;
-import org.eclipse.jdt.core.dom.ASTNode;
 import org.eclipse.jdt.core.dom.CompilationUnit;
 import org.eclipse.jdt.core.dom.PrimitiveType;
 import org.eclipse.jdt.core.dom.Modifier.ModifierKeyword;
@@ -12,16 +11,17 @@ import edu.uta.tdj.code.component.ExpressionStatementElement;
 import edu.uta.tdj.code.component.FieldElement;
 import edu.uta.tdj.code.component.MethodElement;
 import edu.uta.tdj.code.factory.CodeFactory;
+import edu.utd.tdj.code.proposal.ProposalComputer;
 
 public class CodeController {
 
 	private static ClassElement ce;
-	
-	
+	private static ProposalComputer pc = new ProposalComputer();
+
 	/**
 	 * for test
 	 * */
-	
+
 	public static void init() {
 		CodeFactory codeFactory = new CodeFactory();
 
@@ -30,11 +30,11 @@ public class CodeController {
 		CompilationUnit cu = ast.newCompilationUnit();
 		ce = codeFactory.createClass("Test");
 		cu.types().add(ce.getAstNode());
-
+		pc.setCompilationUnit(cu);
 		FieldElement fe = codeFactory.createFieldElement("field1", "Test",
 				ModifierKeyword.PRIVATE_KEYWORD);
 		ce.addField(fe);
-
+		ce.setModifiers(ModifierKeyword.PUBLIC_KEYWORD);
 		MethodElement me = codeFactory.createMethodElement("method1",
 				ModifierKeyword.PUBLIC_KEYWORD,
 				ast.newPrimitiveType(PrimitiveType.VOID));
@@ -63,8 +63,13 @@ public class CodeController {
 				&& lastSelectedElement != selectedElement) {
 			getCode().unSelected();
 		}
-		lastSelectedElement = selectedElement;
-		selectedElement.setSelected(!selectedElement.isSelected());
+		if (selectedElement != null) {
+			lastSelectedElement = selectedElement;
+			selectedElement.setSelected(!selectedElement.isSelected());
+			// for test proposal
+			System.out.println(pc.getProposal(selectedElement));
+
+		}
 		return selectedElement;
 	}
 }

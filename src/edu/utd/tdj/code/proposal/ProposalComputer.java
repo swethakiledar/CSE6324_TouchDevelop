@@ -3,6 +3,7 @@ package edu.utd.tdj.code.proposal;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+
 import org.eclipse.jdt.core.dom.Assignment;
 import org.eclipse.jdt.core.dom.CompilationUnit;
 import org.eclipse.jdt.core.dom.ExpressionStatement;
@@ -10,6 +11,8 @@ import org.eclipse.jdt.core.dom.FieldDeclaration;
 import org.eclipse.jdt.core.dom.MethodDeclaration;
 import org.eclipse.jdt.core.dom.TypeDeclaration;
 import org.eclipse.jdt.core.dom.VariableDeclarationFragment;
+
+import edu.uta.tdj.code.component.*;
 
 public class ProposalComputer {
 
@@ -23,7 +26,22 @@ public class ProposalComputer {
 	public void setCompilationUnit(CompilationUnit cu) {
 		this.cu = cu;
 	}
-
+	
+	public List getProposal(Element element){
+		if(element instanceof ExpressionStatementElement){
+			return getProposal((ExpressionStatement)((ExpressionStatementElement)element).getAstNode());
+		}
+		if(element instanceof MethodElement){
+			return getProposal((MethodDeclaration)((MethodElement)element).getAstNode());
+		}
+		return null;
+	}
+	
+	
+	
+	
+	
+	
 	/**
 	 * proposal for the statement
 	 * 
