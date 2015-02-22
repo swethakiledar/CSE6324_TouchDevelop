@@ -7,6 +7,11 @@ import javax.swing.JPanel;
 import edu.uta.tdj.code.component.ClassElement;
 import edu.uta.tdj.code.controller.CodeController;
 
+/**
+ * 2015 2015Äê2ÔÂ22ÈÕ
+ * @author Fuqiang Zhang
+ */
+
 public class CodePanel extends JPanel {
 	
 	@Override

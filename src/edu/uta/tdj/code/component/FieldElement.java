@@ -8,6 +8,11 @@ import org.eclipse.jdt.core.dom.FieldDeclaration;
 import org.eclipse.jdt.core.dom.VariableDeclarationFragment;
 import org.eclipse.jdt.core.dom.Modifier.ModifierKeyword;
 
+/**
+ * 2015 2015Äê2ÔÂ22ÈÕ
+ * @author Fuqiang Zhang
+ */
+
 public class FieldElement extends Element {
 
 	private FieldDeclaration astNode;

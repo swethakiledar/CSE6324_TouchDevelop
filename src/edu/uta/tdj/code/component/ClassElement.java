@@ -1,5 +1,8 @@
 package edu.uta.tdj.code.component;
-
+/**
+ * 2015 2015Äê2ÔÂ22ÈÕ
+ * @author Fuqiang Zhang
+ */
 import java.awt.Color;
 import java.awt.Graphics;
 import java.util.ArrayList;

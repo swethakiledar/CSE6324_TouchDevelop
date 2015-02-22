@@ -11,6 +11,10 @@ import org.eclipse.jdt.core.dom.ExpressionStatement;
 import org.eclipse.jdt.core.dom.Modifier.ModifierKeyword;
 import org.eclipse.jdt.core.dom.VariableDeclarationExpression;
 import org.eclipse.jdt.core.dom.VariableDeclarationFragment;
+/**
+ * 2015 2015Äê2ÔÂ22ÈÕ
+ * @author Fuqiang Zhang
+ */
 
 public class ExpressionStatementElement extends Element {
 

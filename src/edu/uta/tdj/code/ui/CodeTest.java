@@ -30,7 +30,7 @@ public class CodeTest extends JFrame {
 		
 		menu.add(jMenuItem_SAVE);
 		jMenuBar.add(menu);
-		
+		this.setSize(600, 400);
 		this.add(jMenuBar,BorderLayout.BEFORE_FIRST_LINE);
 		this.setDefaultCloseOperation(EXIT_ON_CLOSE);
 		jMenuItem_SAVE.addActionListener(new FileController());

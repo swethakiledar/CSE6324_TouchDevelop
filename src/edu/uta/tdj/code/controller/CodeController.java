@@ -13,6 +13,11 @@ import edu.uta.tdj.code.component.MethodElement;
 import edu.uta.tdj.code.factory.CodeFactory;
 import edu.utd.tdj.code.proposal.ProposalComputer;
 
+/**
+ * 2015 2015Äê2ÔÂ22ÈÕ
+ * @author Fuqiang Zhang
+ */
+
 public class CodeController {
 
 	private static ClassElement ce;

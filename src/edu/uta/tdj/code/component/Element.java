@@ -9,6 +9,10 @@ import org.eclipse.jdt.core.dom.Modifier.ModifierKeyword;
 
 import edu.utd.tdj.code.proposal.ComputedElement;
 import edu.utd.tdj.code.proposal.ProposalComputer;
+/**
+ * 2015 2015Äê2ÔÂ22ÈÕ
+ * @author Fuqiang Zhang
+ */
 
 /**
  * each Element contains one ASTNode 

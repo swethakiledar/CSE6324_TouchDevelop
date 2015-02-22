@@ -15,6 +15,11 @@ import org.eclipse.jdt.core.dom.Modifier.ModifierKeyword;
 import edu.uta.tdj.code.component.observer.Observable;
 import edu.uta.tdj.code.component.observer.Observer;
 
+/**
+ * 2015 2015Äê2ÔÂ22ÈÕ
+ * @author Fuqiang Zhang
+ */
+
 public class MethodElement extends Element implements Observable {
 
 	private MethodDeclaration mMethodDeclaration;

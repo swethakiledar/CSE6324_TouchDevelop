@@ -14,6 +14,11 @@ import org.eclipse.jdt.core.dom.VariableDeclarationFragment;
 
 import edu.uta.tdj.code.component.*;
 
+/**
+ * 2015 2015Äê2ÔÂ22ÈÕ
+ * @author Fuqiang Zhang
+ */
+
 public class ProposalComputer {
 
 	private ComputedElement computedElement;

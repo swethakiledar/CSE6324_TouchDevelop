@@ -12,6 +12,11 @@ import edu.uta.tdj.code.component.Element;
 import edu.uta.tdj.code.ui.CodePanel;
 import edu.utd.tdj.code.proposal.ProposalComputer;
 
+/**
+ * 2015 2015Äê2ÔÂ22ÈÕ
+ * @author Fuqiang Zhang
+ */
+
 public class SelectListener implements MouseListener {
 	
 	@Override
