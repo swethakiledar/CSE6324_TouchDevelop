@@ -1,4 +1,5 @@
 package edu.uta.tdj.code.component;
+
 /**
  * 2015 2015Äê2ÔÂ22ÈÕ
  * @author Fuqiang Zhang
@@ -31,7 +32,6 @@ import edu.utd.tdj.code.proposal.ProposalComputer;
 
 public class ClassElement extends Element {
 
-	private TypeDeclaration astNode;
 	private ArrayList<FieldElement> fieldList;
 	private ArrayList<MethodElement> methodList;
 
@@ -54,21 +54,23 @@ public class ClassElement extends Element {
 	public void setName(String name) {
 		this.name = name;
 		this.width = name.length() * 5;
-		astNode.setName(ast.newSimpleName(name));
+		((TypeDeclaration)astNode).setName(ast.newSimpleName(name));
 	}
 
 	public void addContructor(ModifierKeyword modifiers) {
 		MethodElement me = new MethodElement(ast);
+		me.setParent(this);
 		me.setName(this.getName());
 		me.createBlock();
 		me.setModifiers(modifiers);
-		astNode.bodyDeclarations().add(me.getAstNode());
+		((TypeDeclaration)astNode).bodyDeclarations().add(me.getAstNode());
 	}
 
 	public void addMethod(MethodElement me) {
+		me.setParent(this);
 		me.setX(x + 20);
 		me.setY(y + height - 20);
-		astNode.bodyDeclarations().add(me.getAstNode());
+		((TypeDeclaration)astNode).bodyDeclarations().add(me.getAstNode());
 		methodList.add(me);
 	}
 
@@ -88,9 +90,10 @@ public class ClassElement extends Element {
 	 * 
 	 * */
 	public void addField(FieldElement fe) {
+		fe.setParent(this);
 		fe.setX(x + 20);
 		fe.setY(y + (fieldList.size() + 1) * 20);
-		astNode.bodyDeclarations().add(fe.getAstNode());
+		((TypeDeclaration)astNode).bodyDeclarations().add(fe.getAstNode());
 		fieldList.add(fe);
 	}
 
@@ -101,13 +104,20 @@ public class ClassElement extends Element {
 		fe.setModifiers(modifiers);
 		addField(fe);
 	}
-
+	
+	public void removeChild(Element element){
+		fieldList.remove(element);
+		methodList.remove(element);
+		element.getAstNode().delete();
+	}
+	
+	
 	/**
 	 * should be changed and split into parts
 	 * */
 	@Override
 	public void setModifiers(ModifierKeyword modifiers) {
-		astNode.modifiers().add(ast.newModifier(modifiers));
+		((TypeDeclaration)astNode).modifiers().add(ast.newModifier(modifiers));
 		modifiedString = modifiedString + " " + modifiers.toString();
 	}
 
@@ -146,8 +156,8 @@ public class ClassElement extends Element {
 	public void draw(Graphics g) {
 		super.draw(g);
 		computeHeight();
-		
-		g.drawString(this.toString(), x, y+20);
+		g.setColor(Color.black);
+		g.drawString(this.toString(), x, y + 20);
 
 		for (FieldElement ef : fieldList) {
 			ef.draw(g);
@@ -156,8 +166,8 @@ public class ClassElement extends Element {
 		for (MethodElement me : methodList) {
 			me.draw(g);
 		}
-		g.drawString("}", x, this.height+y-10);
-		
+		g.drawString("}", x, this.height + y - 10);
+
 	}
 
 	public String toString() {
@@ -172,13 +182,13 @@ public class ClassElement extends Element {
 		} else {
 			for (FieldElement fe : fieldList) {
 				Element element = fe.getSelectedElement(x_in, y_in);
-				if ( element!= null)
+				if (element != null)
 					return element;
 			}
 
 			for (MethodElement me : methodList) {
 				Element element = me.getSelectedElement(x_in, y_in);
-				if ( element!= null)
+				if (element != null)
 					return element;
 			}
 		}
@@ -197,4 +207,11 @@ public class ClassElement extends Element {
 		}
 	}
 
+	@Override
+	public void addChild(Element element) {
+		if (element instanceof MethodElement) {
+			this.addMethod((MethodElement) element);
+			return;
+		}
+	}
 }

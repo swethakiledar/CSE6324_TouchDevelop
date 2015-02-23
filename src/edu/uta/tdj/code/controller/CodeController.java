@@ -1,6 +1,10 @@
 package edu.uta.tdj.code.controller;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.eclipse.jdt.core.dom.AST;
+import org.eclipse.jdt.core.dom.ASTNode;
 import org.eclipse.jdt.core.dom.CompilationUnit;
 import org.eclipse.jdt.core.dom.PrimitiveType;
 import org.eclipse.jdt.core.dom.Modifier.ModifierKeyword;
@@ -11,10 +15,14 @@ import edu.uta.tdj.code.component.ExpressionStatementElement;
 import edu.uta.tdj.code.component.FieldElement;
 import edu.uta.tdj.code.component.MethodElement;
 import edu.uta.tdj.code.factory.CodeFactory;
+import edu.uta.tdj.code.ui.CodeTest;
+import edu.uta.tdj.ui.ButtonPanel;
+import edu.uta.tdj.ui.buttons.ProposalButtonFactory;
 import edu.utd.tdj.code.proposal.ProposalComputer;
 
 /**
  * 2015 2015Äê2ÔÂ22ÈÕ
+ * 
  * @author Fuqiang Zhang
  */
 
@@ -28,7 +36,7 @@ public class CodeController {
 	 * */
 
 	public static void init() {
-		CodeFactory codeFactory = new CodeFactory();
+		CodeFactory codeFactory = CodeFactory.getInstance();
 
 		AST ast = AST.newAST(AST.JLS4);
 		codeFactory.setAST(ast);
@@ -44,6 +52,7 @@ public class CodeController {
 				ModifierKeyword.PUBLIC_KEYWORD,
 				ast.newPrimitiveType(PrimitiveType.VOID));
 		ce.addMethod(me);
+		ce.addMethod(codeFactory.createMainMethodElement());
 
 		ExpressionStatementElement eeElement = codeFactory
 				.createExpressionStatementElement();
@@ -76,5 +85,28 @@ public class CodeController {
 
 		}
 		return selectedElement;
+	}
+	
+	public static Element getSelectedElement(){
+		return lastSelectedElement;
+	}
+	
+	public static void addElement(Element element){
+		getSelectedElement().addChild(element);
+	}
+
+	public static void showButtons(Element element) {
+		List<ASTNode> nodeList = pc.getProposal(element);
+		ArrayList buttonList = new ArrayList<>();
+		;
+		if (element instanceof ClassElement) {
+			buttonList = (ArrayList) ProposalButtonFactory.getInstance()
+					.getClassButtons(nodeList);
+		}
+		if (element instanceof MethodElement) {
+			buttonList = (ArrayList) ProposalButtonFactory.getInstance()
+					.getMethodButtons(nodeList);
+		}
+		ButtonPanel.getInstance().setButtonList(buttonList);
 	}
 }

@@ -93,4 +93,16 @@ public class ExpressionStatementElement extends Element {
 		return astNode.toString();
 	}
 
+	@Override
+	public void addChild(Element element) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void removeChild(Element element) {
+		// TODO Auto-generated method stub
+		
+	}
+
 }

@@ -21,6 +21,7 @@ import edu.utd.tdj.code.proposal.ProposalComputer;
 public abstract class Element implements ComputedElement{
 	
 	protected ASTNode astNode;
+	protected Element parent;
 	// for now it's useless
 	protected ProposalComputer pcComputer;
 	protected AST ast;
@@ -31,6 +32,18 @@ public abstract class Element implements ComputedElement{
 	protected int y;
 	protected int width;
 	protected int height;
+	
+	public Element getParent() {
+		return parent;
+	}
+
+	public void setParent(Element parent) {
+		this.parent = parent;
+	}
+
+	public abstract void  addChild(Element element);
+	public abstract void  removeChild(Element element);
+	
 	
 	public boolean isSelected() {
 		return selected;
@@ -47,10 +60,9 @@ public abstract class Element implements ComputedElement{
 	}
 	
 	public void draw(Graphics g){
-		this.width = toString().length()*5;
 		if(selected){
-			g.setColor(Color.black);
-			g.drawRect(x, y, width, height);
+			g.setColor(Color.white);
+			g.fillRect(0, y, 500, height);
 		}
 	}
 	
@@ -70,6 +82,7 @@ public abstract class Element implements ComputedElement{
 			return false;
 		}
 	}
+	
 	
 	
 	public void setBackgroundColor(Color color){

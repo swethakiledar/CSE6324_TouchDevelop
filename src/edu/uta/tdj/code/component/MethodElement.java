@@ -22,30 +22,29 @@ import edu.uta.tdj.code.component.observer.Observer;
 
 public class MethodElement extends Element implements Observable {
 
-	private MethodDeclaration mMethodDeclaration;
 	private String modifiedString = "";
 	private String returnTypeString = "";
 	private ArrayList<ExpressionStatementElement> statementList;
 	
 	public MethodElement(AST ast) {
 		super(ast);
-		mMethodDeclaration = ast.newMethodDeclaration();
+		astNode = ast.newMethodDeclaration();
 		statementList = new ArrayList<ExpressionStatementElement>();
 		this.height = 50;
 	}
 	
 	public void setName(String name) {
-		mMethodDeclaration.setName(ast.newSimpleName(name));
+		((MethodDeclaration)astNode).setName(ast.newSimpleName(name));
 		this.name = name;
-		this.width = name.length()*5;
+		this.width = name.length()*6;
 	}
 
 	public ASTNode getNode() {
-		return mMethodDeclaration;
+		return astNode;
 	}
 
 	public void setModifiers(ModifierKeyword modifiers) {
-		mMethodDeclaration.modifiers().add(ast.newModifier(modifiers));
+		((MethodDeclaration)astNode).modifiers().add(ast.newModifier(modifiers));
 		modifiedString = modifiedString + " " + modifiers.toString();
 	}
 
@@ -54,24 +53,33 @@ public class MethodElement extends Element implements Observable {
 				.newSingleVariableDeclaration();
 		variableDeclaration.setType(ast.newSimpleType(ast.newSimpleName(type)));
 		variableDeclaration.setName(ast.newSimpleName(name));
-		mMethodDeclaration.parameters().add(variableDeclaration);
+		((MethodDeclaration)astNode).parameters().add(variableDeclaration);
 	}
-
+	
+	public void addParam(String name, Type type){
+		SingleVariableDeclaration variableDeclaration = ast
+				.newSingleVariableDeclaration();
+		variableDeclaration.setType(type);
+		variableDeclaration.setName(ast.newSimpleName(name));
+		((MethodDeclaration)astNode).parameters().add(variableDeclaration);
+	}
+	
 	public void setReturnType(Type type) {
-		mMethodDeclaration.setReturnType2(type);
+		((MethodDeclaration)astNode).setReturnType2(type);
 		returnTypeString = type.toString();
 	}
 
 	public void createBlock() {
-		mMethodDeclaration.setBody(ast.newBlock());
+		((MethodDeclaration)astNode).setBody(ast.newBlock());
 	}
 
 	public void addStatement(Statement s) {
-		mMethodDeclaration.getBody().statements().add(s);
+		((MethodDeclaration)astNode).getBody().statements().add(s);
 	}
 
 	public void addStatement(ExpressionStatementElement ese) {
-		mMethodDeclaration.getBody().statements().add(ese.getAstNode());
+		ese.setParent(this);
+		((MethodDeclaration)astNode).getBody().statements().add(ese.getAstNode());
 		ese.setX(x + 20);
 		ese.setY(y + (statementList.size() + 1) * 20);
 		statementList.add(ese);
@@ -79,7 +87,7 @@ public class MethodElement extends Element implements Observable {
 	}
 
 	public ASTNode getAstNode() {
-		return mMethodDeclaration;
+		return astNode;
 	}
 	@Override
 	public void draw(Graphics g) {
@@ -101,7 +109,7 @@ public class MethodElement extends Element implements Observable {
 				+ " "
 				+ name
 				+ "("
-				+ mMethodDeclaration.parameters().toString().replace("[", "")
+				+ ((MethodDeclaration)astNode).parameters().toString().replace("[", "")
 						.replace("]", "") + ")" + "{";
 	}
 
@@ -149,6 +157,18 @@ public class MethodElement extends Element implements Observable {
 		for (ExpressionStatementElement ese : statementList) {
 			ese.unSelected();
 		}
+	}
+
+	@Override
+	public void addChild(Element element) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void removeChild(Element element) {
+		// TODO Auto-generated method stub
+		
 	}
 
 }

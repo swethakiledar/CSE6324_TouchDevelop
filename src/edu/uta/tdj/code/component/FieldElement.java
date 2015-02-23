@@ -15,7 +15,6 @@ import org.eclipse.jdt.core.dom.Modifier.ModifierKeyword;
 
 public class FieldElement extends Element {
 
-	private FieldDeclaration astNode;
 	private VariableDeclarationFragment vdf;
 	
 	public FieldElement(AST ast) {
@@ -31,12 +30,12 @@ public class FieldElement extends Element {
 	}
 
 	public void setType(String type) {
-		astNode.setType(ast.newSimpleType(ast.newSimpleName(type)));
+		((FieldDeclaration)astNode).setType(ast.newSimpleType(ast.newSimpleName(type)));
 	}
 
 	@Override
 	public void setModifiers(ModifierKeyword modifiers) {
-		astNode.modifiers().add(ast.newModifier(modifiers));
+		((FieldDeclaration)astNode).modifiers().add(ast.newModifier(modifiers));
 	}
 
 	public ASTNode getAstNode() {
@@ -65,6 +64,18 @@ public class FieldElement extends Element {
 		if(this.isInelement(x_in, y_in))
 			return this;
 		return null;
+	}
+
+	@Override
+	public void addChild(Element element) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void removeChild(Element element) {
+		// TODO Auto-generated method stub
+		
 	}
 
 }
