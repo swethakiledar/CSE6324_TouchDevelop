@@ -15,10 +15,10 @@ import edu.uta.tdj.code.component.ExpressionStatementElement;
 import edu.uta.tdj.code.component.FieldElement;
 import edu.uta.tdj.code.component.MethodElement;
 import edu.uta.tdj.code.factory.CodeFactory;
+import edu.uta.tdj.code.proposal.ProposalComputer;
 import edu.uta.tdj.code.ui.CodeTest;
 import edu.uta.tdj.ui.ButtonPanel;
 import edu.uta.tdj.ui.buttons.ProposalButtonFactory;
-import edu.utd.tdj.code.proposal.ProposalComputer;
 
 /**
  * 2015 2015Äê2ÔÂ22ÈÕ

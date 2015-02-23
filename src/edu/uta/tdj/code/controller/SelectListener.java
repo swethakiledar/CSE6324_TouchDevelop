@@ -9,8 +9,8 @@ import org.w3c.dom.events.MouseEvent;
 import org.w3c.dom.views.AbstractView;
 
 import edu.uta.tdj.code.component.Element;
+import edu.uta.tdj.code.proposal.ProposalComputer;
 import edu.uta.tdj.ui.CodePanel;
-import edu.utd.tdj.code.proposal.ProposalComputer;
 
 /**
  * 2015 2015Äê2ÔÂ22ÈÕ

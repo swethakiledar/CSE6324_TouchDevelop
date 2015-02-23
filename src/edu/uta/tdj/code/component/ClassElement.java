@@ -23,7 +23,7 @@ import org.eclipse.jdt.core.dom.Modifier.ModifierKeyword;
 import org.eclipse.jdt.core.dom.Type;
 import org.eclipse.jdt.core.dom.TypeDeclaration;
 
-import edu.utd.tdj.code.proposal.ProposalComputer;
+import edu.uta.tdj.code.proposal.ProposalComputer;
 
 /**
  * For a class

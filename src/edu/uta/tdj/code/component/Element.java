@@ -7,12 +7,8 @@ import org.eclipse.jdt.core.dom.AST;
 import org.eclipse.jdt.core.dom.ASTNode;
 import org.eclipse.jdt.core.dom.Modifier.ModifierKeyword;
 
-import edu.utd.tdj.code.proposal.ComputedElement;
-import edu.utd.tdj.code.proposal.ProposalComputer;
-/**
- * 2015 2015Äê2ÔÂ22ÈÕ
- * @author Fuqiang Zhang
- */
+import edu.uta.tdj.code.proposal.ComputedElement;
+import edu.uta.tdj.code.proposal.ProposalComputer;
 
 /**
  * each Element contains one ASTNode 

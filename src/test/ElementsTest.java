@@ -16,7 +16,7 @@ import org.eclipse.jdt.core.dom.TypeDeclaration;
 
 import edu.uta.tdj.code.component.ClassElement;
 import edu.uta.tdj.code.component.ExpressionStatementElement;
-import edu.utd.tdj.code.proposal.ProposalComputer;
+import edu.uta.tdj.code.proposal.ProposalComputer;
 
 public class ElementsTest {
 	public static void main(String[] args) {
