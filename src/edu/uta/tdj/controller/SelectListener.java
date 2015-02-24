@@ -11,6 +11,7 @@ import org.w3c.dom.views.AbstractView;
 import edu.uta.tdj.code.component.Element;
 import edu.uta.tdj.code.proposal.ProposalComputer;
 import edu.uta.tdj.ui.CodePanel;
+import edu.uta.tdj.ui.GUI;
 
 /**
  * 2015 2015Äê2ÔÂ22ÈÕ
@@ -23,11 +24,9 @@ public class SelectListener implements MouseListener {
 	@Override
 	public void mouseClicked(java.awt.event.MouseEvent e) {
 		// TODO Auto-generated method stub
-		Element element = CodeController.selectedElement(e.getX(), e.getY());
-		CodeController.showTools(element);
 		CodePanel cp = (CodePanel) e.getSource();
-		cp.getParent().repaint();
-		cp.repaint();
+		CodeController.setCodePanel(cp);
+		CodeController.selectedElement(e.getX(), e.getY());
 	}
 
 	@Override

@@ -17,17 +17,17 @@ import edu.uta.tdj.controller.CodeController;
 import edu.uta.tdj.controller.FileController;
 import edu.uta.tdj.controller.SelectListener;
 
-public class CodeTest extends JFrame {
+public class GUI extends JFrame {
 
-	private static CodeTest instance;
+	private static GUI instance;
 
-	public static CodeTest getInstance() {
+	public static GUI getInstance() {
 		if (instance == null)
-			instance = new CodeTest();
+			instance = new GUI();
 		return instance;
 	}
 
-	private CodeTest() {
+	private GUI() {
 		setModalExclusionType(ModalExclusionType.APPLICATION_EXCLUDE);
 
 		JMenuBar menuBar = new JMenuBar();
@@ -40,13 +40,11 @@ public class CodeTest extends JFrame {
 		mntmSave.addActionListener(new FileController());
 		mnF.add(mntmSave);
 		getContentPane().setLayout(new BorderLayout(0, 0));
-		
-		
-		
+
 		// add tools panel
 		ToolsPanel toolPanel = new ToolsPanel();
 		getContentPane().add(toolPanel, BorderLayout.EAST);
-		// add code panel 
+		// add code panel
 		CodePanel codePanel = new CodePanel();
 		codePanel.addMouseListener(new SelectListener());
 
@@ -60,12 +58,11 @@ public class CodeTest extends JFrame {
 	}
 
 	public void refresh() {
-		this.setSize(this.getWidth() + 1, this.getHeight() + 1);
-		this.setSize(this.getWidth() - 1, this.getHeight() - 1);
+		this.repaint();
 	}
 
 	public static void main(String arg[]) {
-		CodeTest ctCodeTest = new CodeTest();
+		GUI ctCodeTest = GUI.getInstance();
 		ctCodeTest.init();
 	}
 

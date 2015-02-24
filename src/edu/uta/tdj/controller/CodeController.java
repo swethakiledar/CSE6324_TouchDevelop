@@ -18,7 +18,8 @@ import edu.uta.tdj.code.proposal.ProposalComputer;
 import edu.uta.tdj.factory.CodeFactory;
 import edu.uta.tdj.factory.ProposalButtonFactory;
 import edu.uta.tdj.ui.ButtonPanel;
-import edu.uta.tdj.ui.CodeTest;
+import edu.uta.tdj.ui.CodePanel;
+import edu.uta.tdj.ui.GUI;
 import edu.uta.tdj.ui.FormPanel;
 import edu.uta.tdj.ui.forms.ClassForm;
 
@@ -32,6 +33,7 @@ public class CodeController {
 
 	private static ClassElement ce;
 	private static ProposalComputer pc = new ProposalComputer();
+	private static CodePanel cp;
 
 	/**
 	 * for test
@@ -63,9 +65,6 @@ public class CodeController {
 	}
 
 	public static ClassElement getCode() {
-		/**
-		 * build AST start
-		 * */
 
 		return ce;
 	}
@@ -82,10 +81,10 @@ public class CodeController {
 		if (selectedElement != null) {
 			lastSelectedElement = selectedElement;
 			selectedElement.setSelected(!selectedElement.isSelected());
-			// for test proposal
-			System.out.println(pc.getProposal(selectedElement));
-
 		}
+
+		CodeController.showTools(selectedElement);
+		GUI.getInstance().refresh();
 		return selectedElement;
 	}
 
@@ -106,6 +105,7 @@ public class CodeController {
 					.getClassButtons(nodeList);
 			// form
 			ClassForm.getInstance().setElement((ClassElement) element);
+			
 			FormPanel.getInstance().setInsidePanel(ClassForm.getInstance());
 		}
 		if (element instanceof MethodElement) {
@@ -117,5 +117,13 @@ public class CodeController {
 
 	public static void showForm(Element element) {
 
+	}
+
+	public static CodePanel getCpCodePanel() {
+		return cp;
+	}
+
+	public static void setCodePanel(CodePanel cpCodePanel) {
+		CodeController.cp = cpCodePanel;
 	}
 }
