@@ -4,7 +4,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import edu.uta.tdj.code.component.ClassElement;
-import edu.uta.tdj.code.controller.CodeController;
 import edu.uta.tdj.code.file.FileSaver;
 
 public class FileController implements ActionListener{

@@ -1,4 +1,4 @@
-package edu.uta.tdj.code.controller;
+package edu.uta.tdj.controller;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -14,11 +14,13 @@ import edu.uta.tdj.code.component.Element;
 import edu.uta.tdj.code.component.ExpressionStatementElement;
 import edu.uta.tdj.code.component.FieldElement;
 import edu.uta.tdj.code.component.MethodElement;
-import edu.uta.tdj.code.factory.CodeFactory;
 import edu.uta.tdj.code.proposal.ProposalComputer;
-import edu.uta.tdj.code.ui.CodeTest;
+import edu.uta.tdj.factory.CodeFactory;
+import edu.uta.tdj.factory.ProposalButtonFactory;
 import edu.uta.tdj.ui.ButtonPanel;
-import edu.uta.tdj.ui.buttons.ProposalButtonFactory;
+import edu.uta.tdj.ui.CodeTest;
+import edu.uta.tdj.ui.FormPanel;
+import edu.uta.tdj.ui.forms.ClassForm;
 
 /**
  * 2015 2015Äê2ÔÂ22ÈÕ
@@ -86,27 +88,34 @@ public class CodeController {
 		}
 		return selectedElement;
 	}
-	
-	public static Element getSelectedElement(){
+
+	public static Element getSelectedElement() {
 		return lastSelectedElement;
 	}
-	
-	public static void addElement(Element element){
+
+	public static void addElement(Element element) {
 		getSelectedElement().addChild(element);
 	}
 
-	public static void showButtons(Element element) {
+	public static void showTools(Element element) {
 		List<ASTNode> nodeList = pc.getProposal(element);
 		ArrayList buttonList = new ArrayList<>();
-		;
 		if (element instanceof ClassElement) {
+			// buttons
 			buttonList = (ArrayList) ProposalButtonFactory.getInstance()
 					.getClassButtons(nodeList);
+			// form
+			ClassForm.getInstance().setElement((ClassElement) element);
+			FormPanel.getInstance().setInsidePanel(ClassForm.getInstance());
 		}
 		if (element instanceof MethodElement) {
 			buttonList = (ArrayList) ProposalButtonFactory.getInstance()
 					.getMethodButtons(nodeList);
 		}
 		ButtonPanel.getInstance().setButtonList(buttonList);
+	}
+
+	public static void showForm(Element element) {
+
 	}
 }

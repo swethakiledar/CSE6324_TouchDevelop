@@ -1,4 +1,4 @@
-package edu.uta.tdj.code.factory;
+package edu.uta.tdj.factory;
 
 import org.eclipse.jdt.core.dom.AST;
 import org.eclipse.jdt.core.dom.Assignment;

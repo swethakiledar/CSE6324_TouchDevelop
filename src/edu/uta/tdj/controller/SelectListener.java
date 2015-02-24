@@ -1,4 +1,4 @@
-package edu.uta.tdj.code.controller;
+package edu.uta.tdj.controller;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -24,8 +24,9 @@ public class SelectListener implements MouseListener {
 	public void mouseClicked(java.awt.event.MouseEvent e) {
 		// TODO Auto-generated method stub
 		Element element = CodeController.selectedElement(e.getX(), e.getY());
-		CodeController.showButtons(element);
+		CodeController.showTools(element);
 		CodePanel cp = (CodePanel) e.getSource();
+		cp.getParent().repaint();
 		cp.repaint();
 	}
 

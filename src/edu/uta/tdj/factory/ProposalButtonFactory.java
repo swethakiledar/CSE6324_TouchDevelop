@@ -1,4 +1,4 @@
-package edu.uta.tdj.ui.buttons;
+package edu.uta.tdj.factory;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -11,8 +11,8 @@ import org.eclipse.jdt.core.dom.AST;
 import org.eclipse.jdt.core.dom.ASTNode;
 
 import edu.uta.tdj.code.component.Element;
-import edu.uta.tdj.code.controller.CodeController;
-import edu.uta.tdj.ui.actions.ButtonActions;
+import edu.uta.tdj.controller.CodeController;
+import edu.uta.tdj.ui.actions.AddMainMethodAction;
 
 public class ProposalButtonFactory {
 
@@ -61,7 +61,7 @@ public class ProposalButtonFactory {
 		JButton addFieldButton = new JButton("Add a Field");
 		JButton addMainMethodButton = new JButton("Add the Main Method");
 		
-		addMainMethodButton.addActionListener(new ButtonActions());
+		addMainMethodButton.addActionListener(new AddMainMethodAction());
 
 		classButtons_al.add(addFieldButton);
 		classButtons_al.add(addMethodButton);
