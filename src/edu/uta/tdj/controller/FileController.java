@@ -28,8 +28,8 @@ public class FileController implements ActionListener{
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		// TODO Auto-generated method stub
-		ceClassElement = CodeController.getCode();
-		fSaver.saveFile(ceClassElement);
+//		ceClassElement = CodeController.getCode();
+//		fSaver.saveFile(ceClassElement);
 		
 	}
 

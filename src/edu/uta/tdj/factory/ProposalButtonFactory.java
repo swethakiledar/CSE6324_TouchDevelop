@@ -1,18 +1,16 @@
 package edu.uta.tdj.factory;
 
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.List;
 
 import javax.swing.JButton;
 
 import org.eclipse.jdt.core.dom.AST;
-import org.eclipse.jdt.core.dom.ASTNode;
-
-import edu.uta.tdj.code.component.Element;
-import edu.uta.tdj.controller.CodeController;
+import edu.uta.tdj.code.component.ClassElement;
+import edu.uta.tdj.code.component.MethodElement;
+import edu.uta.tdj.code.proposal.ProposalComputer;
 import edu.uta.tdj.ui.actions.AddMainMethodAction;
+import edu.uta.tdj.ui.actions.RemoveAction;
 
 public class ProposalButtonFactory {
 
@@ -23,10 +21,9 @@ public class ProposalButtonFactory {
 	private ArrayList<JButton> classButtons_al = new ArrayList<JButton>();
 	private ArrayList<JButton> methodButtons_al = new ArrayList<JButton>();
 	private ArrayList<JButton> fieldButtons_al = new ArrayList<JButton>();
-	
+
 	private JButton removeButton;
-	
-	
+
 	private ProposalButtonFactory() {
 		this.init_RemoveButtonsl();
 		this.init_ClassButtons_al();
@@ -43,24 +40,16 @@ public class ProposalButtonFactory {
 	public void setAST(AST ast) {
 		this.ast = ast;
 	}
-	
-	public void init_RemoveButtonsl(){		
+
+	public void init_RemoveButtonsl() {
 		removeButton = new JButton("Remove");
-		removeButton.addActionListener(new ActionListener() {
-			
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				Element element = CodeController.getSelectedElement();
-				element.getParent().removeChild(element);
-			}
-		});
+		removeButton.addActionListener(new RemoveAction());
 	}
 
 	public void init_ClassButtons_al() {
 		JButton addMethodButton = new JButton("Add a Method");
 		JButton addFieldButton = new JButton("Add a Field");
 		JButton addMainMethodButton = new JButton("Add the Main Method");
-		
 		addMainMethodButton.addActionListener(new AddMainMethodAction());
 
 		classButtons_al.add(addFieldButton);
@@ -87,33 +76,33 @@ public class ProposalButtonFactory {
 	// fieldButtons_al
 	// }
 
-	public List<JButton> getClassButtons(List<ASTNode> astNodes) {
+	// public List<JButton> getButtons(Element element) {
+	// List<ASTNode> astNodes = pc.getProposal(element);
+	// if (element instanceof ExpressionStatementElement) {
+	//
+	// return null;
+	// }
+	// if (element instanceof MethodElement) {
+	//
+	// return getMethodButtons(astNodes);
+	// }
+	// if (element instanceof ClassElement) {
+	// return getClassButtons(astNodes);
+	// }
+	//
+	// return null;
+	// }
+
+	public List<JButton> getButtons(ClassElement ce) {
 
 		ArrayList<JButton> al = new ArrayList<JButton>();
 		al.addAll(classButtons_al);
-		// for(ASTNode node : astNodes){
-		//
-		// switch (node.getNodeType()) {
-		// case ASTNode.:
-		//
-		// break;
-		//
-		// default:
-		// break;
-		// }
-		//
-		// }
-
 		return al;
 	}
 
-	public List<JButton> getMethodButtons(List<ASTNode> astNodes) {
+	public List<JButton> getButtons(MethodElement me) {
 		ArrayList<JButton> al = new ArrayList<JButton>();
 		al.addAll(methodButtons_al);
-		for (ASTNode node : astNodes) {
-			
-		}
-
 		return al;
 	}
 

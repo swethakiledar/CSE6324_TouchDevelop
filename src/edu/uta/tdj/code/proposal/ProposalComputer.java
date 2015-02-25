@@ -34,17 +34,17 @@ public class ProposalComputer {
 		this.cu = cu;
 	}
 
-	public List<ASTNode> getProposal(Element element) {
-		if (element instanceof ExpressionStatementElement) {
-			return getProposal((ExpressionStatement) ((ExpressionStatementElement) element)
-					.getAstNode());
-		}
-		if (element instanceof MethodElement) {
-			return getProposal((MethodDeclaration) ((MethodElement) element)
-					.getAstNode());
-		}
-		return null;
-	}
+//	public List<ASTNode> getProposal(Element element) {
+//		if (element instanceof ExpressionStatementElement) {
+//			return getProposal((ExpressionStatement) ((ExpressionStatementElement) element)
+//					.getAstNode());
+//		}
+//		if (element instanceof MethodElement) {
+//			return getProposal((MethodDeclaration) ((MethodElement) element)
+//					.getAstNode());
+//		}
+//		return null;
+//	}
 
 	/**
 	 * proposal for the statement

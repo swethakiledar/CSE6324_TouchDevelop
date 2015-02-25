@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.security.auth.x500.X500Principal;
+import javax.swing.JButton;
 
 import org.eclipse.jdt.core.dom.AST;
 import org.eclipse.jdt.core.dom.ASTNode;
@@ -24,6 +25,8 @@ import org.eclipse.jdt.core.dom.Type;
 import org.eclipse.jdt.core.dom.TypeDeclaration;
 
 import edu.uta.tdj.code.proposal.ProposalComputer;
+import edu.uta.tdj.factory.ProposalButtonFactory;
+import edu.uta.tdj.ui.forms.ClassForm;
 
 /**
  * For a class
@@ -47,14 +50,15 @@ public class ClassElement extends Element {
 
 		this.setX(50);
 		this.setY(50);
-
+		this.form = new ClassForm();
+		form.setElement(this);
 		this.height = 20;
 	}
 
 	public void setName(String name) {
 		this.name = name;
 		this.width = name.length() * 5;
-		((TypeDeclaration)astNode).setName(ast.newSimpleName(name));
+		((TypeDeclaration) astNode).setName(ast.newSimpleName(name));
 	}
 
 	public void addContructor(ModifierKeyword modifiers) {
@@ -63,14 +67,14 @@ public class ClassElement extends Element {
 		me.setName(this.getName());
 		me.createBlock();
 		me.setModifiers(modifiers);
-		((TypeDeclaration)astNode).bodyDeclarations().add(me.getAstNode());
+		((TypeDeclaration) astNode).bodyDeclarations().add(me.getAstNode());
 	}
 
 	public void addMethod(MethodElement me) {
 		me.setParent(this);
 		me.setX(x + 20);
 		me.setY(y + height - 20);
-		((TypeDeclaration)astNode).bodyDeclarations().add(me.getAstNode());
+		((TypeDeclaration) astNode).bodyDeclarations().add(me.getAstNode());
 		methodList.add(me);
 	}
 
@@ -93,7 +97,7 @@ public class ClassElement extends Element {
 		fe.setParent(this);
 		fe.setX(x + 20);
 		fe.setY(y + (fieldList.size() + 1) * 20);
-		((TypeDeclaration)astNode).bodyDeclarations().add(fe.getAstNode());
+		((TypeDeclaration) astNode).bodyDeclarations().add(fe.getAstNode());
 		fieldList.add(fe);
 	}
 
@@ -104,27 +108,25 @@ public class ClassElement extends Element {
 		fe.setModifiers(modifiers);
 		addField(fe);
 	}
-	
-	public void removeChild(Element element){
+
+	public void removeChild(Element element) {
 		fieldList.remove(element);
 		methodList.remove(element);
 		element.getAstNode().delete();
 	}
-	
-	
+
 	/**
 	 * should be changed and split into parts
 	 * */
 	@Override
 	public void setModifiers(ModifierKeyword modifiers) {
-		((TypeDeclaration)astNode).modifiers().add(ast.newModifier(modifiers));
+		((TypeDeclaration) astNode).modifiers().add(ast.newModifier(modifiers));
 		modifiedString = modifiedString + " " + modifiers.toString();
 	}
 
 	@Override
-	public void accept(ProposalComputer pcComputer) {
-		// TODO Auto-generated method stub
-		super.accept(pcComputer);
+	public List<JButton> getButtons(ProposalButtonFactory pcComputer) {
+		return pcComputer.getButtons(this);
 	}
 
 	@Override

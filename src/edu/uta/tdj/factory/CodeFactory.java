@@ -86,6 +86,7 @@ public class CodeFactory {
 		me.setModifiers(ModifierKeyword.STATIC_KEYWORD);
 		me.addParam("args", ast.newArrayType(ast.newSimpleType(ast
 				.newSimpleName("String"))));
+		me.setName("main");
 		return me;
 	}
 
