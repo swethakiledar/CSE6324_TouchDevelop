@@ -12,9 +12,10 @@ import org.w3c.dom.events.MouseEvent;
 import org.w3c.dom.views.AbstractView;
 
 import edu.uta.tdj.code.component.ClassElement;
+import edu.uta.tdj.code.component.ComplieUnitElement;
 import edu.uta.tdj.code.component.Element;
+import edu.uta.tdj.code.proposal.ProposalButtonFactory;
 import edu.uta.tdj.code.proposal.ProposalComputer;
-import edu.uta.tdj.factory.ProposalButtonFactory;
 import edu.uta.tdj.ui.ButtonPanel;
 import edu.uta.tdj.ui.CodePanel;
 import edu.uta.tdj.ui.FormPanel;
@@ -37,8 +38,8 @@ public class SelectListener implements MouseListener {
 	}
 
 	// get the Class element
-	public ClassElement getCode() {
-		return cp.getClassElement();
+	public ComplieUnitElement getCode() {
+		return cp.getComplieUnitElement();
 	}
 
 	private Element lastSelectedElement;

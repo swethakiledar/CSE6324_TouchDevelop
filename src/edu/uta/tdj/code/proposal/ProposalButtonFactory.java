@@ -1,4 +1,4 @@
-package edu.uta.tdj.factory;
+package edu.uta.tdj.code.proposal;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -6,9 +6,9 @@ import java.util.List;
 import javax.swing.JButton;
 
 import org.eclipse.jdt.core.dom.AST;
+
 import edu.uta.tdj.code.component.ClassElement;
 import edu.uta.tdj.code.component.MethodElement;
-import edu.uta.tdj.code.proposal.ProposalComputer;
 import edu.uta.tdj.ui.actions.AddMainMethodAction;
 import edu.uta.tdj.ui.actions.RemoveAction;
 

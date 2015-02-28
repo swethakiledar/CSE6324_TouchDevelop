@@ -1,6 +1,7 @@
 package edu.uta.tdj.code.component;
 
 import java.awt.Color;
+import java.awt.Font;
 import java.awt.Graphics;
 import java.util.ArrayList;
 import java.util.List;
@@ -12,8 +13,8 @@ import org.eclipse.jdt.core.dom.ASTNode;
 import org.eclipse.jdt.core.dom.Modifier.ModifierKeyword;
 
 import edu.uta.tdj.code.proposal.ComputedElement;
+import edu.uta.tdj.code.proposal.ProposalButtonFactory;
 import edu.uta.tdj.code.proposal.ProposalComputer;
-import edu.uta.tdj.factory.ProposalButtonFactory;
 import edu.uta.tdj.ui.forms.Form;
 
 /**
@@ -51,6 +52,7 @@ public abstract class Element implements ComputedElement {
 	
 	public void delete(){
 		this.getParent().removeChild(this);
+		form.setVisible(false);
 	}
 	
 	public abstract void addChild(Element element);
@@ -72,6 +74,7 @@ public abstract class Element implements ComputedElement {
 	}
 
 	public void draw(Graphics g) {
+		g.setFont(new Font("Tahoma", Font.BOLD, 15));
 		if (selected) {
 			g.setColor(Color.white);
 			g.fillRect(0, y, 500, height);

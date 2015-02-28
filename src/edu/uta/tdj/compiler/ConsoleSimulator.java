@@ -6,12 +6,16 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
 
+import org.apache.tools.ant.BuildEvent;
+import org.apache.tools.ant.BuildListener;
+
 /**
  * Class for console simulation
  * 
  * @author lewhwa
  */
-public class ConsoleSimulator implements Runnable {
+public class ConsoleSimulator extends Thread implements Runnable {
+
 	private volatile boolean isStop = false;
 
 	private static final int INFO = 0;
@@ -52,18 +56,12 @@ public class ConsoleSimulator implements Runnable {
 		}
 	}
 
-	public void stop() {
-		isStop = true;
-	}
-	
-	public void RunCode(String path)throws IOException,
-	InterruptedException {
-		Process child = Runtime.getRuntime().exec(
-				"java -classpath c:\\test\\ test.Main ");
-		OutputStream os = child.getOutputStream();
-		is= child.getInputStream(); //
+	public static void RunCode(String path) throws IOException,
+			InterruptedException {
+		Process child = Runtime.getRuntime().exec("java -classpath " + path);
+		InputStream stdin = child.getInputStream(); //
 		InputStream stderr = child.getErrorStream();
-		Thread tIn = new Thread(this);
+		Thread tIn = new Thread(new ConsoleSimulator(stdin, INFO));
 		Thread tErr = new Thread(new ConsoleSimulator(stderr, ERROR));
 		tIn.start();
 		tErr.start();
@@ -76,30 +74,5 @@ public class ConsoleSimulator implements Runnable {
 			System.out.println(" FAILED! ");
 		}
 	}
-	
-	
-	public static void main(String[] args) throws IOException,
-			InterruptedException {
-		
-		// Process child = Runtime.getRuntime().exec("run.bat");
-//		Process child = Runtime.getRuntime().exec(
-//				" java -classpath c:\\test\\ test.Main ");
-//		OutputStream os = child.getOutputStream();
-//		InputStream stdin = child.getInputStream(); //
-//		InputStream stderr = child.getErrorStream();
-//		Thread tIn = new Thread(new ConsoleSimulator(stdin, INFO));
-//		Thread tErr = new Thread(new ConsoleSimulator(stderr, ERROR));
-//		tIn.start();
-//		tErr.start();
-//		int result = child.waitFor();
-//		tIn.join();
-//		tErr.join();
-//		if (result == 0) {
-//			System.out.println(" SUCCESS! ");
-//		} else {
-//			System.out.println(" FAILED! ");
-//		}
-		
-		
-	}
+
 }

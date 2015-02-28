@@ -8,6 +8,7 @@ import org.eclipse.jdt.core.dom.Modifier.ModifierKeyword;
 import org.eclipse.jdt.core.dom.Type;
 
 import edu.uta.tdj.code.component.ClassElement;
+import edu.uta.tdj.code.component.ComplieUnitElement;
 import edu.uta.tdj.code.component.ExpressionStatementElement;
 import edu.uta.tdj.code.component.FieldElement;
 import edu.uta.tdj.code.component.MethodElement;
@@ -22,18 +23,10 @@ public class CodeFactory {
 
 	private AST ast;
 
-	private static CodeFactory instanceCodeFactory;
 
-	private CodeFactory() {
+	public CodeFactory() {
 	}
-
-	public static CodeFactory getInstance() {
-		if (instanceCodeFactory == null) {
-			instanceCodeFactory = new CodeFactory();
-		}
-		return instanceCodeFactory;
-	}
-
+	
 	public void setAST(AST ast) {
 		this.ast = ast;
 	}
@@ -43,15 +36,38 @@ public class CodeFactory {
 	}
 
 	/**
-	 * create a new class
+	 * create a new public class
 	 * 
 	 * @param name
 	 *            : the name of the class
 	 * @return the new created classelement
 	 * */
 	public ClassElement createClass(String name) {
-		ClassElement ce = new ClassElement(ast, name);
+		ClassElement ce = this.createClass(name,ModifierKeyword.PUBLIC_KEYWORD);
 		return ce;
+	}
+	
+	/**
+	 * create a new class
+	 * 
+	 * @param name
+	 *            : the name of the class
+	 * @return the new created classelement
+	 * */
+	public ClassElement createClass(String name, ModifierKeyword modifier){
+		ClassElement ce = new ClassElement(ast, name);
+		ce.setModifiers(modifier);
+//		ce.getForm().setElement(ce);
+		return ce;
+	}
+	
+	public ComplieUnitElement createComplieUnitElement(String name){
+		ComplieUnitElement cue = new ComplieUnitElement(ast);
+		ClassElement ce = createClass(name);
+		cue.addChild(ce);
+		cue.setPublicClass(ce);
+		return cue;
+		
 	}
 
 	/**
@@ -72,6 +88,7 @@ public class CodeFactory {
 		me.createBlock();
 		me.setModifiers(modifier);
 		me.setReturnType(returnType);
+		me.getForm().setElement(me);
 		return me;
 	}
 

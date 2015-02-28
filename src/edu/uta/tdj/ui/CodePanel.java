@@ -10,6 +10,7 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 
 import edu.uta.tdj.code.component.ClassElement;
+import edu.uta.tdj.code.component.ComplieUnitElement;
 import edu.uta.tdj.controller.SelectListener;
 
 /**
@@ -20,18 +21,18 @@ import edu.uta.tdj.controller.SelectListener;
 
 public class CodePanel extends JPanel {
 
-	private ClassElement ce;
+	private ComplieUnitElement ce;
 	private SelectListener sl;
 	public CodePanel() {
 		this.sl =  new SelectListener(this);
 		this.setBackground(Color.orange);
-		this.setPreferredSize(new Dimension(200, 1000));
+//		this.setPreferredSize(new Dimension(200, 1000));
 	}
-	public void setClassElement(ClassElement ceElement) {
+	public void setComplieUnitElement(ComplieUnitElement ceElement) {
 		this.ce = ceElement;
 	}
 	
-	public ClassElement getClassElement(){
+	public ComplieUnitElement getComplieUnitElement(){
 		return ce;
 	}
 	

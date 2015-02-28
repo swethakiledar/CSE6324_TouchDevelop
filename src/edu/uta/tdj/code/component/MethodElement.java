@@ -17,7 +17,7 @@ import org.eclipse.jdt.core.dom.Modifier.ModifierKeyword;
 
 import edu.uta.tdj.code.component.observer.Observable;
 import edu.uta.tdj.code.component.observer.Observer;
-import edu.uta.tdj.factory.ProposalButtonFactory;
+import edu.uta.tdj.code.proposal.ProposalButtonFactory;
 import edu.uta.tdj.ui.forms.ClassForm;
 import edu.uta.tdj.ui.forms.MethodForm;
 
@@ -44,7 +44,6 @@ public class MethodElement extends Element implements Observable {
 		statementList = new ArrayList<ExpressionStatementElement>();
 		this.height = 50;
 		this.form = new MethodForm();
-		form.setElement(this);
 	}
 
 	public void setName(String name) {

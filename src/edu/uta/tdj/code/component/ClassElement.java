@@ -24,8 +24,8 @@ import org.eclipse.jdt.core.dom.Modifier.ModifierKeyword;
 import org.eclipse.jdt.core.dom.Type;
 import org.eclipse.jdt.core.dom.TypeDeclaration;
 
+import edu.uta.tdj.code.proposal.ProposalButtonFactory;
 import edu.uta.tdj.code.proposal.ProposalComputer;
-import edu.uta.tdj.factory.ProposalButtonFactory;
 import edu.uta.tdj.ui.forms.ClassForm;
 
 /**
@@ -51,7 +51,6 @@ public class ClassElement extends Element {
 		this.setX(50);
 		this.setY(50);
 		this.form = new ClassForm();
-		form.setElement(this);
 		this.height = 20;
 	}
 
@@ -213,6 +212,10 @@ public class ClassElement extends Element {
 	public void addChild(Element element) {
 		if (element instanceof MethodElement) {
 			this.addMethod((MethodElement) element);
+			return;
+		}
+		if (element instanceof FieldElement) {
+			this.addField((FieldElement) element);
 			return;
 		}
 	}

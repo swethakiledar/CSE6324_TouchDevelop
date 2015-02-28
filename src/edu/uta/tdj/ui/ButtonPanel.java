@@ -6,7 +6,7 @@ import javax.swing.JButton;
 import javax.swing.JPanel;
 
 import edu.uta.tdj.code.component.Element;
-import edu.uta.tdj.factory.ProposalButtonFactory;
+import edu.uta.tdj.code.proposal.ProposalButtonFactory;
 
 import java.awt.Dimension;
 
@@ -16,7 +16,7 @@ public class ButtonPanel extends JPanel {
 
 	private ButtonPanel() {
 		setLayout(new VFlowLayout());
-		this.setPreferredSize(new Dimension(180, 400));
+//		this.setPreferredSize(new Dimension(180, 400));
 	}
 
 	public static ButtonPanel getInstance() {

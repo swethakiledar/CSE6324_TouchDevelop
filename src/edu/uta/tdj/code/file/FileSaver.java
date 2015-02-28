@@ -19,7 +19,7 @@ import edu.uta.tdj.code.component.ClassElement;
 
 public class FileSaver {
 
-	private String filePath;// 属性尽量选择private，别问我为啥，我也不知道，就是任性！
+	private String filePath;
 	private File file;
 
 	public boolean ifExistFile() {
@@ -27,10 +27,11 @@ public class FileSaver {
 	}
 
 	public void saveFile(ClassElement ce) {
-		this.saveFile(ce.getAstNode().toString());
+		// this.saveFile(ce.getAstNode().toString());
 	}
 
-	private void saveFile(String input) {
+	public static void saveFile(String path, String input) {
+		File file = new File(path);
 		if (!file.exists()) {
 			try {
 				file.createNewFile();
@@ -38,9 +39,7 @@ public class FileSaver {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-		} else {
 		}
-
 		try {
 			FileWriter fw = new FileWriter(file);
 			fw.write(input);
@@ -51,11 +50,20 @@ public class FileSaver {
 		}
 	}
 
-	// 读取文件并返回string格式的文件文本
-	private String readFile() {
+	public static boolean createFolder(String pathname) {
+		File folder = new File(pathname);
+		if (!folder.exists()) {
+			return folder.mkdirs();
+		}
+		return false;
+	}
+
+
+	public static String readFile(File file) {
 		StringWriter sw = null;
+		FileReader fr = null;
 		try {
-			FileReader fr = new FileReader(file);
+			fr = new FileReader(file);
 			int i;
 			// StringBuffer sb = new StringBuffer();
 			BufferedReader br = new BufferedReader(fr);
@@ -65,27 +73,22 @@ public class FileSaver {
 			sw = new StringWriter();
 			BufferedWriter bw = new BufferedWriter(sw);
 			while ((buffer = br.readLine()) != null) {
-				// sb.append(buffer);
 				bw.write(buffer);
 				bw.newLine();
 			}
-			// System.out.println(bw.toString());
 			bw.flush();
 			bw.close();
-			// System.out.println(sw.toString());
-
-			//
-			// while((i = fr.read())!=-1){
-			// char c = (char)i;
-			// sb.append(c);
-			// }
-			// System.out.println(sb.toString());
 		} catch (FileNotFoundException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
+		} finally {
+			try {
+				fr.close();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		}
 		return sw.toString();
 	}
