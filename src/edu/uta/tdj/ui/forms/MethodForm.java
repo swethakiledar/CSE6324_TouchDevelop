@@ -3,16 +3,7 @@ package edu.uta.tdj.ui.forms;
 import javax.swing.event.TableModelEvent;
 import javax.swing.event.TableModelListener;
 
-
-public class MethodForm extends Form{
-	
-//	private static ClassForm instanceClassForm;
-
-//	public static ClassForm getInstance() {
-//		if (instanceClassForm == null)
-//			instanceClassForm = new ClassForm();
-//		return instanceClassForm;
-//	}
+public class MethodForm extends Form {
 
 	public MethodForm() {
 		super();
@@ -21,7 +12,7 @@ public class MethodForm extends Form{
 		setUpdateData();
 	}
 
-	//set update cells
+	// set update cells
 	public void setUpdateData() {
 		table.getModel().addTableModelListener(new TableModelListener() {
 			public void tableChanged(TableModelEvent e) {

@@ -24,7 +24,7 @@ public class MenuAction extends AbstractAction {
 			break;
 		case "Complie":
 			JavaBuilder.execute(ProjectController.getInstance()
-					.getSelectedProjectElement().getComplieUnitElement()
+					.getSelectedCodePanel().getComplieUnitElement()
 					.getPackage().getProjectElement());
 			break;
 		default:

@@ -9,6 +9,7 @@ import org.eclipse.jdt.core.dom.AST;
 
 import edu.uta.tdj.code.component.ClassElement;
 import edu.uta.tdj.code.component.MethodElement;
+import edu.uta.tdj.ui.actions.AddIfStatementAction;
 import edu.uta.tdj.ui.actions.AddMainMethodAction;
 import edu.uta.tdj.ui.actions.RemoveAction;
 
@@ -62,7 +63,9 @@ public class ProposalButtonFactory {
 		JButton addForButton = new JButton("Add a For");
 		JButton addIfButton = new JButton("Add a IF");
 		JButton addDoButton = new JButton("Add a DO While");
-
+		
+		addIfButton.addActionListener(new AddIfStatementAction());
+		
 		methodButtons_al.add(addWhileButton);
 		methodButtons_al.add(addDoButton);
 		methodButtons_al.add(addIfButton);

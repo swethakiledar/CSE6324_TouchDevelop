@@ -40,7 +40,7 @@ public class ProjectController {
 				projectname);
 		projectElement.save();
 		this.projectList.add(projectElement);
-		
+
 		return projectElement;
 	}
 
@@ -124,12 +124,24 @@ public class ProjectController {
 		for (ProjectElement projectElement : projectList) {
 			projects.addItem(projectElement.getName());
 		}
+
+		int iss = projects.getSelectedIndex();
+		if (iss >= projectList.size() - 1) {
+			ProjectElement selectedproject = projectList.get(iss);
+			if (selectedproject != null) {
+				packages.removeAllItems();
+				for (PackageElement pe : selectedproject.getPackages()) {
+					packages.addItem(pe.getName());
+					System.out.println(pe.getName());
+				}
+			}
+
+		}
 		projects.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				int i = projects.getSelectedIndex();
 				ProjectElement selectedproject = projectList.get(i);
-				System.out.println(selectedproject.getName());
 				packages.removeAllItems();
 				for (PackageElement pe : selectedproject.getPackages()) {
 					packages.addItem(pe.getName());
@@ -182,15 +194,15 @@ public class ProjectController {
 		// return null;
 	}
 
-	public CodePanel getSelectedProjectElement() {
+	public CodePanel getSelectedCodePanel() {
 		JScrollPane comp = (JScrollPane) CodePanelTabs.getInstance()
 				.getSelectedComponent();
 		if (comp == null)
 			return null;
 		CodePanel cp = (CodePanel) comp.getViewport().getView();
 		return cp;
-		
-//		return projectList.get(0);
+
+		// return projectList.get(0);
 	}
 
 	public static void main(String[] args) {

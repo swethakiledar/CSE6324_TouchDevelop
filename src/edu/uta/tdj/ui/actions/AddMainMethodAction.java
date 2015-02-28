@@ -19,7 +19,7 @@ public class AddMainMethodAction extends ButtonActions {
 		// CodeController.getSelectedElement().addChild(
 		// CodeFactory.getInstance().createMainMethodElement());
 		CodePanel cp = ProjectController.getInstance()
-				.getSelectedProjectElement();
+				.getSelectedCodePanel();
 		ClassElement ce = (ClassElement) cp.getSelectListener()
 				.getSelectedElement();
 
@@ -38,6 +38,6 @@ public class AddMainMethodAction extends ButtonActions {
 								+ ((ComplieUnitElement) ce.getParent())
 										.getName());
 		((ComplieUnitElement) ce.getParent()).save();
-		
+
 	}
 }

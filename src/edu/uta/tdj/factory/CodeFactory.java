@@ -12,6 +12,7 @@ import edu.uta.tdj.code.component.ComplieUnitElement;
 import edu.uta.tdj.code.component.ExpressionStatementElement;
 import edu.uta.tdj.code.component.FieldElement;
 import edu.uta.tdj.code.component.MethodElement;
+import edu.uta.tdj.code.component.statment.IfStatementElement;
 
 /**
  * 2015 2015Äê2ÔÂ22ÈÕ
@@ -23,10 +24,9 @@ public class CodeFactory {
 
 	private AST ast;
 
-
 	public CodeFactory() {
 	}
-	
+
 	public void setAST(AST ast) {
 		this.ast = ast;
 	}
@@ -43,10 +43,11 @@ public class CodeFactory {
 	 * @return the new created classelement
 	 * */
 	public ClassElement createClass(String name) {
-		ClassElement ce = this.createClass(name,ModifierKeyword.PUBLIC_KEYWORD);
+		ClassElement ce = this
+				.createClass(name, ModifierKeyword.PUBLIC_KEYWORD);
 		return ce;
 	}
-	
+
 	/**
 	 * create a new class
 	 * 
@@ -54,20 +55,28 @@ public class CodeFactory {
 	 *            : the name of the class
 	 * @return the new created classelement
 	 * */
-	public ClassElement createClass(String name, ModifierKeyword modifier){
+	public ClassElement createClass(String name, ModifierKeyword modifier) {
 		ClassElement ce = new ClassElement(ast, name);
 		ce.setModifiers(modifier);
-//		ce.getForm().setElement(ce);
+		 ce.getForm().setElement(ce);
 		return ce;
 	}
-	
-	public ComplieUnitElement createComplieUnitElement(String name){
+
+	public ComplieUnitElement createComplieUnitElement(String name) {
 		ComplieUnitElement cue = new ComplieUnitElement(ast);
 		ClassElement ce = createClass(name);
 		cue.addChild(ce);
 		cue.setPublicClass(ce);
 		return cue;
-		
+	}
+
+	/**
+	 * create a new ifstatementelement
+	 * */
+
+	public IfStatementElement createIfStatementElement() {
+		IfStatementElement ifStatementElement = new IfStatementElement(ast);
+		return ifStatementElement;
 	}
 
 	/**

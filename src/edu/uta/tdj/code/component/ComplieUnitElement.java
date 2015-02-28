@@ -98,7 +98,14 @@ public class ComplieUnitElement extends Element implements ISave {
 		// }
 		return null;
 	}
-
+	
+	public void unSelected() {
+		selected = false;
+		for (Element fe : childsList) {
+			unSelected();
+		}
+	}
+	
 	@Override
 	public void draw(Graphics g) {
 		g.drawString(pDeclaration.toString(), x, y);

@@ -5,12 +5,12 @@ import org.eclipse.jdt.core.dom.Modifier.ModifierKeyword;
 
 import edu.uta.tdj.code.component.Element;
 
-
 public class ExpressionElement extends Element {
 
 	public ExpressionElement(AST ast) {
 		super(ast);
 		// TODO Auto-generated constructor stub
+		astNode = ast.newExpressionStatement(ast.newInfixExpression());
 	}
 
 	@Override
@@ -35,6 +35,11 @@ public class ExpressionElement extends Element {
 	public Element getSelectedElement(int x_in, int y_in) {
 		// TODO Auto-generated method stub
 		return null;
+	}
+
+	@Override
+	public String toString() {
+		return astNode.toString();
 	}
 
 }

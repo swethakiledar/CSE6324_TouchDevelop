@@ -18,7 +18,6 @@ public class ClassForm extends Form {
 			public void tableChanged(TableModelEvent e) {
 				if (e.getType() == TableModelEvent.UPDATE) {
 					String name = table.getValueAt(0, 1).toString();
-					System.out.println(name);
 					setName(name);
 				}
 			}

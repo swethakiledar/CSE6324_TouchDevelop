@@ -47,7 +47,7 @@ public class SelectListener implements MouseListener {
 	// select the element and return it
 	public Element selectedElement(int x_in, int y_in) {
 		Element selectedElement = getCode().getSelectedElement(x_in, y_in);
-
+		getCode().unSelected();
 		if (lastSelectedElement != null
 				&& lastSelectedElement != selectedElement) {
 			getCode().unSelected();

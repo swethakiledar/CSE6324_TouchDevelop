@@ -17,6 +17,7 @@ import org.eclipse.jdt.core.dom.Modifier.ModifierKeyword;
 
 import edu.uta.tdj.code.component.observer.Observable;
 import edu.uta.tdj.code.component.observer.Observer;
+import edu.uta.tdj.code.component.statment.StatementElement;
 import edu.uta.tdj.code.proposal.ProposalButtonFactory;
 import edu.uta.tdj.ui.forms.ClassForm;
 import edu.uta.tdj.ui.forms.MethodForm;
@@ -36,12 +37,12 @@ public class MethodElement extends Element implements Observable {
 
 	private String modifiedString = "";
 	private String returnTypeString = "";
-	private ArrayList<ExpressionStatementElement> statementList;
+	private ArrayList<StatementElement> statementList;
 
 	public MethodElement(AST ast) {
 		super(ast);
 		astNode = ast.newMethodDeclaration();
-		statementList = new ArrayList<ExpressionStatementElement>();
+		statementList = new ArrayList<StatementElement>();
 		this.height = 50;
 		this.form = new MethodForm();
 	}
@@ -91,7 +92,7 @@ public class MethodElement extends Element implements Observable {
 		((MethodDeclaration) astNode).getBody().statements().add(s);
 	}
 
-	public void addStatement(ExpressionStatementElement ese) {
+	public void addStatement(StatementElement ese) {
 		ese.setParent(this);
 		((MethodDeclaration) astNode).getBody().statements()
 				.add(ese.getAstNode());
@@ -100,7 +101,14 @@ public class MethodElement extends Element implements Observable {
 		statementList.add(ese);
 		this.height = height + 20;
 	}
-
+	
+	
+	@Override
+	public void addChild(Element element){
+		addStatement((StatementElement)element);
+	}
+	
+	
 	public ASTNode getAstNode() {
 		return astNode;
 	}
@@ -110,7 +118,7 @@ public class MethodElement extends Element implements Observable {
 		super.draw(g);
 		g.setColor(Color.blue);
 		g.drawString(this.toString(), x, y + 20);
-		for (ExpressionStatementElement ee : statementList) {
+		for (StatementElement ee : statementList) {
 			ee.draw(g);
 		}
 		g.setColor(Color.blue);
@@ -145,7 +153,7 @@ public class MethodElement extends Element implements Observable {
 	public void notifyObservers() {
 		// TODO Auto-generated method stub
 		int i = 1;
-		for (ExpressionStatementElement ese : statementList) {
+		for (StatementElement ese : statementList) {
 			ese.setY(y + 20 * i);
 			i++;
 		}
@@ -156,7 +164,7 @@ public class MethodElement extends Element implements Observable {
 		if (this.isInelement(x_in, y_in)) {
 			return this;
 		} else {
-			for (ExpressionStatementElement ese : statementList) {
+			for (StatementElement ese : statementList) {
 				Element element = ese.getSelectedElement(x_in, y_in);
 				if (element != null) {
 					return element;
@@ -169,16 +177,11 @@ public class MethodElement extends Element implements Observable {
 	@Override
 	public void unSelected() {
 		super.unSelected();
-		for (ExpressionStatementElement ese : statementList) {
+		for (StatementElement ese : statementList) {
 			ese.unSelected();
 		}
 	}
 
-	@Override
-	public void addChild(Element element) {
-		// TODO Auto-generated method stub
-
-	}
 
 	@Override
 	public void removeChild(Element element) {
