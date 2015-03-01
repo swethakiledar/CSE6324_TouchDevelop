@@ -31,6 +31,7 @@ public class FieldElement extends Element {
 		astNode = ast.newFieldDeclaration(vdf);
 		setHeight(20);
 		this.form = new FieldForm();
+		form.setElement(this);
 	}
 
 	public void setName(String name) {

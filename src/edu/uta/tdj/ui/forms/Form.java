@@ -34,7 +34,6 @@ public abstract class Form extends JPanel {
 				return cell;
 			}
 		};
-		setUpdateData();
 	}
 
 	private void setUpdateData() {
@@ -42,6 +41,7 @@ public abstract class Form extends JPanel {
 			public void tableChanged(TableModelEvent e) {
 				if (e.getType() == TableModelEvent.UPDATE) {
 					updateElement();
+					GUI.getInstance().refresh();
 				}
 			}
 		});
@@ -51,7 +51,7 @@ public abstract class Form extends JPanel {
 
 		table.setModel(new DefaultTableModel(item_value_array, new String[] {
 				"Item", "Value" }) {
-			Class[] columnTypes = new Class[] { String.class, Object.class };
+			Class[] columnTypes = new Class[] { String.class, String.class };
 
 			public Class getColumnClass(int columnIndex) {
 				return columnTypes[columnIndex];
@@ -66,11 +66,14 @@ public abstract class Form extends JPanel {
 
 		table.getColumn("Item").setCellRenderer(tcr);
 		table.getColumn("Value").setCellRenderer(tcr);
+		
+		setUpdateData();
 	}
 
 	public void setElement(Element element) {
 		this.element = element;
 		setTableValue();
+		System.out.println( "sdadasdasdasdasdas");
 	}
 
 	public abstract void setTableValue();

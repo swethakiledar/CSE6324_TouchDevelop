@@ -19,5 +19,6 @@ public class ClassForm extends Form {
 	@Override
 	public void updateElement() {
 		element.setName((String) this.table.getValueAt(0, 1));
+		System.out.println( this.table.getValueAt(0, 1));
 	}
 }

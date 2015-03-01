@@ -41,6 +41,7 @@ public class IfStatementElement extends StatementElement {
 		setHeight(120);
 		defaultHeight = 120;
 		this.form = new IfForm();
+		form.setElement(this);
 	}
 
 	private ExpressionElement expressionElement;
