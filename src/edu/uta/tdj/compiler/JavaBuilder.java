@@ -2,6 +2,9 @@ package edu.uta.tdj.compiler;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.OutputStream;
+import java.io.PrintStream;
+import java.io.StringWriter;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.net.MalformedURLException;
@@ -27,6 +30,7 @@ import edu.uta.tdj.code.component.MethodElement;
 import edu.uta.tdj.code.project.PackageElement;
 import edu.uta.tdj.code.project.ProjectElement;
 import edu.uta.tdj.controller.ProjectController;
+import edu.uta.tdj.ui.ConsolPanel;
 
 //import edu.uta.tdj.code.project.PackageElement;
 //import edu.uta.tdj.code.project.ProjectElement;

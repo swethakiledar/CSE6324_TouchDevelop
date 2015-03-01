@@ -4,15 +4,11 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.io.OutputStream;
-
-import org.apache.tools.ant.BuildEvent;
-import org.apache.tools.ant.BuildListener;
+import edu.uta.tdj.ui.ConsolPanel;
 
 /**
  * Class for console simulation
  * 
- * @author lewhwa
  */
 public class ConsoleSimulator extends Thread implements Runnable {
 
@@ -23,7 +19,6 @@ public class ConsoleSimulator extends Thread implements Runnable {
 	private static final int ERROR = 1;
 
 	private InputStream is;
-
 	private int type;
 
 	/** Creates a new instance of StreamInterceptor */
@@ -40,9 +35,10 @@ public class ConsoleSimulator extends Thread implements Runnable {
 			while ((!isStop) && (s = reader.readLine()) != null) {
 				if (s.length() != 0) {
 					if (type == INFO) {
-						System.out.println(" INFO> " + s);
+						ConsolPanel.getInstance().setConsoleText(" INFO> " + s);
 					} else {
-						System.err.println(" ERROR> " + s);
+						ConsolPanel.getInstance()
+								.setConsoleText(" ERROR> " + s);
 					}
 					try {
 						Thread.sleep(10);
@@ -69,9 +65,9 @@ public class ConsoleSimulator extends Thread implements Runnable {
 		tIn.join();
 		tErr.join();
 		if (result == 0) {
-			System.out.println(" SUCCESS! ");
+			ConsolPanel.getInstance().setConsoleText("Success!");
 		} else {
-			System.out.println(" FAILED! ");
+			ConsolPanel.getInstance().setConsoleText("Success!");
 		}
 	}
 

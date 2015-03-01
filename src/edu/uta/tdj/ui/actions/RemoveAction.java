@@ -14,7 +14,8 @@ public class RemoveAction extends ButtonActions {
 				.getSelectedCodePanel().getSelectListener()
 				.getSelectedElement();
 		element.delete();
-		System.out.println("remove");
+		ProjectController.getInstance().getSelectedCodePanel()
+				.getComplieUnitElement().save();
 		GUI.getInstance().refresh();
 	}
 }

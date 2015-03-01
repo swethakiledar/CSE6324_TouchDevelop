@@ -7,14 +7,14 @@ import edu.uta.tdj.code.component.ComplieUnitElement;
 import edu.uta.tdj.code.component.MethodElement;
 import edu.uta.tdj.controller.ProjectController;
 import edu.uta.tdj.ui.CodePanel;
+import edu.uta.tdj.ui.GUI;
 
 public class AddMainMethodAction extends ButtonActions {
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		super.actionPerformed(e);
-		CodePanel cp = ProjectController.getInstance()
-				.getSelectedCodePanel();
+		CodePanel cp = ProjectController.getInstance().getSelectedCodePanel();
 		ClassElement ce = (ClassElement) cp.getSelectListener()
 				.getSelectedElement();
 
@@ -24,16 +24,18 @@ public class AddMainMethodAction extends ButtonActions {
 		ce.addChild(main);
 
 		((ComplieUnitElement) ce.getParent())
-				.getPackage() 
-				.getProjectElement()   // get the project 
+				.getPackage()
+				.getProjectElement()
+				// get the project
 				.setMainClass(
 						((ComplieUnitElement) ce.getParent()).getPackage()
 								.getName()
 								+ "."
 								+ ((ComplieUnitElement) ce.getParent())
 										.getName());
-		
+
 		((ComplieUnitElement) ce.getParent()).save();
+		GUI.getInstance().refresh();
 
 	}
 }
