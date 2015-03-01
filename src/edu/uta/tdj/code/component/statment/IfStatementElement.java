@@ -39,6 +39,7 @@ public class IfStatementElement extends StatementElement {
 		childArrayList.add(thenBlockElement);
 		childArrayList.add(elseBlockElement);
 		setHeight(120);
+		defaultHeight = 120;
 		this.form = new IfForm();
 	}
 
@@ -91,6 +92,20 @@ public class IfStatementElement extends StatementElement {
 		return null;
 	}
 
+	public void reSort() {
+		if (this.getParent() != null)
+			this.getParent().reSort();
+		int lastHeight = 20;
+		setHeight(defaultHeight);
+		for (Element me : childArrayList) {
+			me.setX(x);
+			me.setY(y + getHeight() - 30);
+			setHeight(getHeight() + me.getHeight());
+			me.setY(lastHeight + y);
+			lastHeight = me.getHeight() + lastHeight;
+		}
+	}
+
 	@Override
 	public List<JButton> getButtons(ProposalButtonFactory pcComputer) {
 		return pcComputer.getButtons(this);
@@ -102,10 +117,9 @@ public class IfStatementElement extends StatementElement {
 		super.draw(g);
 		g.setColor(Color.blue);
 		g.drawString(this.toString(), x, y + 20);
-		if (thenBlockElement != null)
-			thenBlockElement.draw(g);
-		if (elseBlockElement != null)
-			elseBlockElement.draw(g);
+		for (Element element : childArrayList) {
+			element.draw(g);
+		}
 	}
 
 	@Override

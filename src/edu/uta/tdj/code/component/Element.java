@@ -35,6 +35,7 @@ public abstract class Element implements ComputedElement {
 	protected int width;
 	private int height;
 	protected Form form;
+	protected int defaultHeight;
 
 	protected ArrayList<JButton> buttons_ArrayList;
 
@@ -61,7 +62,6 @@ public abstract class Element implements ComputedElement {
 	}
 
 	public void delete() {
-		System.out.println("delete");
 		this.getParent().removeChild(this);
 		form.setVisible(false);
 	}
@@ -69,22 +69,25 @@ public abstract class Element implements ComputedElement {
 	public abstract void addChild(Element element);
 
 	public void removeChild(Element element) {
-		System.out.println("remove");
 		childArrayList.remove(element);
 		element.getAstNode().delete();
 
-		// public void computeHeight() {
 		height = height - element.getHeight();
-		int lastHeight = 20;
+		reSort();
+	}
 
+	public void reSort() {
+		if (this.getParent() != null)
+			this.getParent().reSort();
+		int lastHeight = 20;
+		setHeight(defaultHeight);
 		for (Element me : childArrayList) {
-			height = height + me.getHeight();
+			me.setX(x + 20);
+			me.setY(y + getHeight() - 30);
+			setHeight(getHeight() + me.getHeight());
 			me.setY(lastHeight + y);
 			lastHeight = me.getHeight() + lastHeight;
 		}
-		// }
-		// }
-
 	}
 
 	public boolean isSelected() {

@@ -1,4 +1,3 @@
-
 package edu.uta.tdj.code.component;
 
 /**
@@ -35,13 +34,14 @@ public class ClassElement extends Element {
 		this.setY(50);
 		this.form = new ClassForm();
 		setHeight(100);
+		defaultHeight = 100;
 	}
 
 	public void setName(String name) {
 		this.name = name;
 		((TypeDeclaration) astNode).setName(ast.newSimpleName
 
-(name));
+		(name));
 	}
 
 	@Override
@@ -53,7 +53,10 @@ public class ClassElement extends Element {
 		element.setX(x + 20);
 		element.setY(y + getHeight() - 30);
 		setHeight(getHeight() + element.getHeight());
+		reSort();
 	}
+	
+	
 
 	/**
 	 * should be changed and split into parts
@@ -62,7 +65,7 @@ public class ClassElement extends Element {
 	public void setModifiers(ModifierKeyword modifiers) {
 		((TypeDeclaration) astNode).modifiers().add(ast.newModifier
 
-(modifiers));
+		(modifiers));
 		modifiedString = modifiedString + " " + modifiers.toString();
 	}
 

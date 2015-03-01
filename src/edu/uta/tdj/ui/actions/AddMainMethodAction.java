@@ -24,14 +24,15 @@ public class AddMainMethodAction extends ButtonActions {
 		ce.addChild(main);
 
 		((ComplieUnitElement) ce.getParent())
-				.getPackage()
-				.getProjectElement()
+				.getPackage() 
+				.getProjectElement()   // get the project 
 				.setMainClass(
 						((ComplieUnitElement) ce.getParent()).getPackage()
 								.getName()
 								+ "."
 								+ ((ComplieUnitElement) ce.getParent())
 										.getName());
+		
 		((ComplieUnitElement) ce.getParent()).save();
 
 	}

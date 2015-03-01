@@ -38,9 +38,10 @@ public class MethodElement extends Element {
 		super(ast);
 		astNode = ast.newMethodDeclaration();
 		setHeight(50);
+		defaultHeight = 50;
 		this.form = new MethodForm();
 	}
-
+	
 	public void setName(String name) {
 		((MethodDeclaration) astNode).setName(ast.newSimpleName(name));
 		this.name = name;
@@ -89,7 +90,7 @@ public class MethodElement extends Element {
 
 	@Override
 	public void addChild(Element element) {
-
+		
 		element.setParent(this);
 		((MethodDeclaration) astNode).getBody().statements()
 				.add(element.getAstNode());
@@ -98,6 +99,8 @@ public class MethodElement extends Element {
 		element.setX(x + 20);
 		element.setY(y + getHeight() - 30);
 		setHeight(getHeight() + element.getHeight());
+		
+		reSort();
 	}
 
 	@Override
