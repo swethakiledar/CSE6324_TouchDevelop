@@ -43,6 +43,7 @@ public class JavaBuilder {
 	}
 
 	public static void execute(ProjectElement projectElement) {
+		projectElement.save();
 		BuilderCreator bc = new BuilderCreator();
 		String buildPath = bc.createBuildXML(projectElement);
 		exeBuildFile(buildPath, 3);
@@ -50,7 +51,6 @@ public class JavaBuilder {
 			ConsoleSimulator.RunCode(projectElement.getPath()
 					+ "/build/classes/ " + projectElement.getMainclass());
 		} catch (IOException | InterruptedException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}

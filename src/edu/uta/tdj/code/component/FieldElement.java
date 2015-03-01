@@ -36,6 +36,7 @@ public class FieldElement extends Element {
 
 	public void setName(String name) {
 		vdf.setName(ast.newSimpleName(name));
+		System.out.println(astNode);
 		this.name = name;
 	}
 
