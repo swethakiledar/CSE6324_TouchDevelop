@@ -48,6 +48,7 @@ public class ClassElement extends Element {
 	public void addChild(Element element) {
 		((TypeDeclaration) astNode).bodyDeclarations()
 				.add(element.getAstNode());
+//		((TypeDeclaration) astNode).
 		childArrayList.add(element);
 		element.setParent(this);
 		element.setX(x + 20);

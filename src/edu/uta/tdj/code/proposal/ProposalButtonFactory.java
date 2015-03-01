@@ -10,8 +10,10 @@ import org.eclipse.jdt.core.dom.IfStatement;
 
 import edu.uta.tdj.code.component.BlockElement;
 import edu.uta.tdj.code.component.ClassElement;
+import edu.uta.tdj.code.component.FieldElement;
 import edu.uta.tdj.code.component.MethodElement;
 import edu.uta.tdj.code.component.statment.IfStatementElement;
+import edu.uta.tdj.ui.actions.AddFieldAction;
 import edu.uta.tdj.ui.actions.AddIfStatementAction;
 import edu.uta.tdj.ui.actions.AddMainMethodAction;
 import edu.uta.tdj.ui.actions.RemoveAction;
@@ -52,7 +54,10 @@ public class ProposalButtonFactory {
 
 	public void init_ClassButtons_al() {
 		JButton addMethodButton = new JButton("Add a Method");
+
 		JButton addFieldButton = new JButton("Add a Field");
+		addFieldButton.addActionListener(new AddFieldAction());
+
 		JButton addMainMethodButton = new JButton("Add the Main Method");
 		addMainMethodButton.addActionListener(new AddMainMethodAction());
 
@@ -78,7 +83,7 @@ public class ProposalButtonFactory {
 
 	public List<JButton> getButtons(IfStatementElement is) {
 		ArrayList<JButton> al = new ArrayList<JButton>();
-
+		al.add(removeButton);
 		return al;
 	}
 
@@ -98,6 +103,12 @@ public class ProposalButtonFactory {
 	public List<JButton> getButtons(MethodElement me) {
 		ArrayList<JButton> al = new ArrayList<JButton>();
 		al.addAll(methodButtons_al);
+		return al;
+	}
+
+	public List<JButton> getButtons(FieldElement fe) {
+		ArrayList<JButton> al = new ArrayList<JButton>();
+		al.add(removeButton);
 		return al;
 	}
 

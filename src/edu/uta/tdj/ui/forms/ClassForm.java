@@ -9,18 +9,15 @@ public class ClassForm extends Form {
 		super();
 		String[][] item_value_array = { { "Class Name", "" } };
 		super.setTableItem(item_value_array);
-		setUpdateData();
 	}
 
 	@Override
-	public void setUpdateData() {
-		table.getModel().addTableModelListener(new TableModelListener() {
-			public void tableChanged(TableModelEvent e) {
-				if (e.getType() == TableModelEvent.UPDATE) {
-					String name = table.getValueAt(0, 1).toString();
-					setName(name);
-				}
-			}
-		});
+	public void setTableValue() {
+		this.table.getModel().setValueAt(element.getName(), 0, 1);
+	}
+
+	@Override
+	public void updateElement() {
+		element.setName((String) this.table.getValueAt(0, 1));
 	}
 }

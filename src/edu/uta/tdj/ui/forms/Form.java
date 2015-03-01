@@ -1,8 +1,11 @@
 package edu.uta.tdj.ui.forms;
 
 import java.awt.Component;
+
 import javax.swing.JPanel;
 import javax.swing.JTable;
+import javax.swing.event.TableModelEvent;
+import javax.swing.event.TableModelListener;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 
@@ -28,16 +31,22 @@ public abstract class Form extends JPanel {
 					int row, int column) {
 				Component cell = super.getTableCellRendererComponent(table,
 						value, isSelected, hasFocus, row, column);
-//				if (column == 0 && cell.isBackgroundSet()) {
-//					cell.setBackground(new Color(225, 234, 234));
-//				}
 				return cell;
 			}
 		};
+		setUpdateData();
 	}
-	
-	protected abstract void setUpdateData();
-	
+
+	private void setUpdateData() {
+		table.getModel().addTableModelListener(new TableModelListener() {
+			public void tableChanged(TableModelEvent e) {
+				if (e.getType() == TableModelEvent.UPDATE) {
+					updateElement();
+				}
+			}
+		});
+	}
+
 	protected void setTableItem(String[][] item_value_array) {
 
 		table.setModel(new DefaultTableModel(item_value_array, new String[] {
@@ -61,25 +70,10 @@ public abstract class Form extends JPanel {
 
 	public void setElement(Element element) {
 		this.element = element;
-		this.setName(element.getName());
+		setTableValue();
 	}
 
-	private String oldName;
+	public abstract void setTableValue();
 
-	// set the class name to the cell
-	public void setName(String name) {
-		if (oldName != name) {
-			oldName = name;
-			table.getModel().setValueAt(name, 0, 1);
-			element.setName(name);
-			GUI.getInstance().refresh();
-		}
-	}
-
-	// get the class name from the table's cell
-	public String getName() {
-		String name = (String) table.getModel().getValueAt(0, 1);
-		return name;
-	}
-
+	public abstract void updateElement();
 }

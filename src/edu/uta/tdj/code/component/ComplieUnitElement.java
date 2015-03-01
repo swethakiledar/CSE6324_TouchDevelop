@@ -2,6 +2,9 @@ package edu.uta.tdj.code.component;
 
 import java.awt.Graphics;
 import java.util.ArrayList;
+import java.util.List;
+
+import javax.swing.JButton;
 
 import org.eclipse.jdt.core.dom.AST;
 import org.eclipse.jdt.core.dom.CompilationUnit;
@@ -12,6 +15,7 @@ import org.eclipse.jdt.core.dom.PackageDeclaration;
 
 import edu.uta.tdj.code.file.ISave;
 import edu.uta.tdj.code.project.PackageElement;
+import edu.uta.tdj.code.proposal.ProposalButtonFactory;
 
 public class ComplieUnitElement extends Element implements ISave {
 
@@ -108,6 +112,12 @@ public class ComplieUnitElement extends Element implements ISave {
 	@Override
 	public void save() {
 		fs.saveFile(path, toString());
+	}
+
+	@Override
+	public List<JButton> getButtons(ProposalButtonFactory pcComputer) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }

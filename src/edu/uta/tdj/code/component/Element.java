@@ -134,7 +134,7 @@ public abstract class Element implements ComputedElement {
 	}
 
 	public abstract void setModifiers(ModifierKeyword modifiers);
-
+	
 	public boolean isInelement(int x_in, int y_in) {
 		if (y_in > this.y && y_in < this.y + 20) {
 			return true;
@@ -148,9 +148,7 @@ public abstract class Element implements ComputedElement {
 	}
 
 	@Override
-	public List<JButton> getButtons(ProposalButtonFactory pcComputer) {
-		return buttons_ArrayList;
-	}
+	public abstract List<JButton> getButtons(ProposalButtonFactory pcComputer) ;
 
 	public ASTNode getAstNode() {
 		return astNode;

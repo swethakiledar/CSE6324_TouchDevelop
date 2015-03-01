@@ -70,7 +70,7 @@ public class CodeFactory {
 		cue.setPublicClass(ce);
 		return cue;
 	}
-	
+
 	/**
 	 * create a new ifstatementelement
 	 * */
@@ -79,17 +79,17 @@ public class CodeFactory {
 		IfStatementElement ifStatementElement = new IfStatementElement(ast);
 		return ifStatementElement;
 	}
-	
+
 	/**
 	 * create a new InfixExpressionElement
 	 * */
-	
-	public InfixExpressionElement createInfixExpressionElement(){
-		InfixExpressionElement infixExpressionElement = new InfixExpressionElement(ast);
+
+	public InfixExpressionElement createInfixExpressionElement() {
+		InfixExpressionElement infixExpressionElement = new InfixExpressionElement(
+				ast);
 		return infixExpressionElement;
 	}
-	
-	
+
 	/**
 	 * create a new method
 	 * 
@@ -147,4 +147,10 @@ public class CodeFactory {
 		fe.setModifiers(modifiers);
 		return fe;
 	}
+
+	public FieldElement createFieldElement() {
+		FieldElement fe = new FieldElement(ast);
+		return fe;
+	}
+
 }
