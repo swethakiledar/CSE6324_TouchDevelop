@@ -10,7 +10,7 @@ public class FieldForm extends Form {
 
 	public FieldForm() {
 		super();
-		String[][] item_value_array = { { "Field Name", "" }, { "Type", "" },
+		String[][] item_value_array = { { "Field Name", oldname }, { "Type", "" },
 				{ "Access", "" } };
 		super.setTableItem(item_value_array);
 	}
@@ -22,12 +22,23 @@ public class FieldForm extends Form {
 		List list = ((FieldElement) element).getModifierKeyword();
 		this.table.getModel().setValueAt(name, 0, 1);
 		this.table.getModel().setValueAt(type, 1, 1);
-//		this.table.getModel().setValueAt((ModifierKeyword) list.get(0), 2, 1);
+		// this.table.getModel().setValueAt((ModifierKeyword) list.get(0), 2,
+		// 1);
 	}
+
+	String oldname = "";
+	String oldType = null;
+	String oldAccess = null;
 
 	@Override
 	public void updateElement() {
-		
+		String newname = (String) this.table.getValueAt(0, 1);
+		System.out.println(newname + "====new name is ");
+		if (newname !=null &&!oldname.equals(newname)) {
+			System.out.println("setting name");
+			element.setName(newname);
+			oldname = newname;
+		}
 	}
 
 }

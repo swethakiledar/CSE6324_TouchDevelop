@@ -73,7 +73,6 @@ public abstract class Form extends JPanel {
 	public void setElement(Element element) {
 		this.element = element;
 		setTableValue();
-		System.out.println( "sdadasdasdasdasdas");
 	}
 
 	public abstract void setTableValue();
