@@ -5,10 +5,7 @@ import java.awt.event.ActionEvent;
 import edu.uta.tdj.code.component.ClassElement;
 import edu.uta.tdj.code.component.ComplieUnitElement;
 import edu.uta.tdj.code.component.MethodElement;
-import edu.uta.tdj.code.project.ProjectElement;
-import edu.uta.tdj.controller.CodeController;
 import edu.uta.tdj.controller.ProjectController;
-import edu.uta.tdj.factory.CodeFactory;
 import edu.uta.tdj.ui.CodePanel;
 
 public class AddMainMethodAction extends ButtonActions {
@@ -16,8 +13,6 @@ public class AddMainMethodAction extends ButtonActions {
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		super.actionPerformed(e);
-		// CodeController.getSelectedElement().addChild(
-		// CodeFactory.getInstance().createMainMethodElement());
 		CodePanel cp = ProjectController.getInstance()
 				.getSelectedCodePanel();
 		ClassElement ce = (ClassElement) cp.getSelectListener()

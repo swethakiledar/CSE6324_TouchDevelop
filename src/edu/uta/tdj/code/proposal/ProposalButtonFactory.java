@@ -6,9 +6,12 @@ import java.util.List;
 import javax.swing.JButton;
 
 import org.eclipse.jdt.core.dom.AST;
+import org.eclipse.jdt.core.dom.IfStatement;
 
+import edu.uta.tdj.code.component.BlockElement;
 import edu.uta.tdj.code.component.ClassElement;
 import edu.uta.tdj.code.component.MethodElement;
+import edu.uta.tdj.code.component.statment.IfStatementElement;
 import edu.uta.tdj.ui.actions.AddIfStatementAction;
 import edu.uta.tdj.ui.actions.AddMainMethodAction;
 import edu.uta.tdj.ui.actions.RemoveAction;
@@ -63,9 +66,9 @@ public class ProposalButtonFactory {
 		JButton addForButton = new JButton("Add a For");
 		JButton addIfButton = new JButton("Add a IF");
 		JButton addDoButton = new JButton("Add a DO While");
-		
+
 		addIfButton.addActionListener(new AddIfStatementAction());
-		
+
 		methodButtons_al.add(addWhileButton);
 		methodButtons_al.add(addDoButton);
 		methodButtons_al.add(addIfButton);
@@ -73,28 +76,17 @@ public class ProposalButtonFactory {
 		methodButtons_al.add(removeButton);
 	}
 
-	// public void init_FieldButtons_al(){
-	// JButton
-	//
-	// fieldButtons_al
-	// }
+	public List<JButton> getButtons(IfStatementElement is) {
+		ArrayList<JButton> al = new ArrayList<JButton>();
 
-	// public List<JButton> getButtons(Element element) {
-	// List<ASTNode> astNodes = pc.getProposal(element);
-	// if (element instanceof ExpressionStatementElement) {
-	//
-	// return null;
-	// }
-	// if (element instanceof MethodElement) {
-	//
-	// return getMethodButtons(astNodes);
-	// }
-	// if (element instanceof ClassElement) {
-	// return getClassButtons(astNodes);
-	// }
-	//
-	// return null;
-	// }
+		return al;
+	}
+
+	public List<JButton> getButtons(BlockElement is) {
+		ArrayList<JButton> al = new ArrayList<JButton>();
+		al.addAll(methodButtons_al);
+		return al;
+	}
 
 	public List<JButton> getButtons(ClassElement ce) {
 

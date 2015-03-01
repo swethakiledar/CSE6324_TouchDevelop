@@ -15,6 +15,7 @@ import org.eclipse.jdt.core.dom.Modifier.ModifierKeyword;
 import edu.uta.tdj.code.proposal.ComputedElement;
 import edu.uta.tdj.code.proposal.ProposalButtonFactory;
 import edu.uta.tdj.code.proposal.ProposalComputer;
+import edu.uta.tdj.ui.actions.RemoveAction;
 import edu.uta.tdj.ui.forms.Form;
 
 /**
@@ -25,7 +26,6 @@ public abstract class Element implements ComputedElement {
 
 	protected ASTNode astNode;
 	protected Element parent;
-	// for now it's useless
 	protected AST ast;
 	protected String name;
 	protected Color backgroundColor;
@@ -33,10 +33,12 @@ public abstract class Element implements ComputedElement {
 	protected int x;
 	protected int y;
 	protected int width;
-	protected int height;
+	private int height;
 	protected Form form;
-	
+
 	protected ArrayList<JButton> buttons_ArrayList;
+
+	protected ArrayList<Element> childArrayList = new ArrayList<Element>();
 
 	public Form getForm() {
 		return this.form;
@@ -46,18 +48,44 @@ public abstract class Element implements ComputedElement {
 		return parent;
 	}
 
+	public void setHeight(int height) {
+		if (getParent() != null) {
+			this.getParent().setHeight(
+					this.getParent().getHeight() + height - getHeight());
+		}
+		this.height = height;
+	}
+
 	public void setParent(Element parent) {
 		this.parent = parent;
 	}
-	
-	public void delete(){
+
+	public void delete() {
+		System.out.println("delete");
 		this.getParent().removeChild(this);
 		form.setVisible(false);
 	}
-	
+
 	public abstract void addChild(Element element);
 
-	public abstract void removeChild(Element element);
+	public void removeChild(Element element) {
+		System.out.println("remove");
+		childArrayList.remove(element);
+		element.getAstNode().delete();
+
+		// public void computeHeight() {
+		height = height - element.getHeight();
+		int lastHeight = 20;
+
+		for (Element me : childArrayList) {
+			height = height + me.getHeight();
+			me.setY(lastHeight + y);
+			lastHeight = me.getHeight() + lastHeight;
+		}
+		// }
+		// }
+
+	}
 
 	public boolean isSelected() {
 		return selected;
@@ -81,13 +109,28 @@ public abstract class Element implements ComputedElement {
 		}
 	}
 
+	public Element getSelectedElement(int x_in, int y_in) {
+		if (this.isInelement(x_in, y_in)) {
+			return this;
+		} else {
+			for (Element element : childArrayList) {
+				Element e = element.getSelectedElement(x_in, y_in);
+				if (e != null)
+					return e;
+			}
+		}
+		return null;
+	}
+
 	public void unSelected() {
 		selected = false;
+		System.out.println(this.getName() + " = === == " + selected);
+		for (Element fe : childArrayList) {
+			fe.unSelected();
+		}
 	}
 
 	public abstract void setModifiers(ModifierKeyword modifiers);
-
-	public abstract Element getSelectedElement(int x_in, int y_in);
 
 	public boolean isInelement(int x_in, int y_in) {
 		if (y_in > this.y && y_in < this.y + 20) {
@@ -148,10 +191,6 @@ public abstract class Element implements ComputedElement {
 
 	public int getHeight() {
 		return height;
-	}
-
-	public void setHeight(int height) {
-		this.height = height;
 	}
 
 }

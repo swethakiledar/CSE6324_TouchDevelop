@@ -9,17 +9,13 @@ import javax.swing.JButton;
 
 import org.eclipse.jdt.core.dom.AST;
 import org.eclipse.jdt.core.dom.ASTNode;
+import org.eclipse.jdt.core.dom.Block;
 import org.eclipse.jdt.core.dom.MethodDeclaration;
 import org.eclipse.jdt.core.dom.SingleVariableDeclaration;
-import org.eclipse.jdt.core.dom.Statement;
 import org.eclipse.jdt.core.dom.Type;
 import org.eclipse.jdt.core.dom.Modifier.ModifierKeyword;
 
-import edu.uta.tdj.code.component.observer.Observable;
-import edu.uta.tdj.code.component.observer.Observer;
-import edu.uta.tdj.code.component.statment.StatementElement;
 import edu.uta.tdj.code.proposal.ProposalButtonFactory;
-import edu.uta.tdj.ui.forms.ClassForm;
 import edu.uta.tdj.ui.forms.MethodForm;
 
 /**
@@ -28,7 +24,7 @@ import edu.uta.tdj.ui.forms.MethodForm;
  * @author Fuqiang Zhang
  */
 
-public class MethodElement extends Element implements Observable {
+public class MethodElement extends Element {
 
 	@Override
 	public List<JButton> getButtons(ProposalButtonFactory pcComputer) {
@@ -37,13 +33,11 @@ public class MethodElement extends Element implements Observable {
 
 	private String modifiedString = "";
 	private String returnTypeString = "";
-	private ArrayList<StatementElement> statementList;
 
 	public MethodElement(AST ast) {
 		super(ast);
 		astNode = ast.newMethodDeclaration();
-		statementList = new ArrayList<StatementElement>();
-		this.height = 50;
+		setHeight(50);
 		this.form = new MethodForm();
 	}
 
@@ -51,10 +45,6 @@ public class MethodElement extends Element implements Observable {
 		((MethodDeclaration) astNode).setName(ast.newSimpleName(name));
 		this.name = name;
 		this.width = name.length() * 6;
-	}
-
-	public ASTNode getNode() {
-		return astNode;
 	}
 
 	public void setModifiers(ModifierKeyword modifiers) {
@@ -88,29 +78,26 @@ public class MethodElement extends Element implements Observable {
 		((MethodDeclaration) astNode).setBody(ast.newBlock());
 	}
 
-	public void addStatement(Statement s) {
-		((MethodDeclaration) astNode).getBody().statements().add(s);
+	public void setY(int y) {
+		this.y = y;
+		int i = 1;
+		for (Element ese : childArrayList) {
+			ese.setY(y + 20 * i);
+			i++;
+		}
 	}
 
-	public void addStatement(StatementElement ese) {
-		ese.setParent(this);
-		((MethodDeclaration) astNode).getBody().statements()
-				.add(ese.getAstNode());
-		ese.setX(x + 20);
-		ese.setY(y + (statementList.size() + 1) * 20);
-		statementList.add(ese);
-		this.height = height + 20;
-	}
-	
-	
 	@Override
-	public void addChild(Element element){
-		addStatement((StatementElement)element);
-	}
-	
-	
-	public ASTNode getAstNode() {
-		return astNode;
+	public void addChild(Element element) {
+
+		element.setParent(this);
+		((MethodDeclaration) astNode).getBody().statements()
+				.add(element.getAstNode());
+
+		childArrayList.add(element);
+		element.setX(x + 20);
+		element.setY(y + getHeight() - 30);
+		setHeight(getHeight() + element.getHeight());
 	}
 
 	@Override
@@ -118,11 +105,11 @@ public class MethodElement extends Element implements Observable {
 		super.draw(g);
 		g.setColor(Color.blue);
 		g.drawString(this.toString(), x, y + 20);
-		for (StatementElement ee : statementList) {
+		for (Element ee : childArrayList) {
 			ee.draw(g);
 		}
 		g.setColor(Color.blue);
-		g.drawString("}", x, this.height + y - 10);
+		g.drawString("}", x, getHeight() + y - 10);
 	}
 
 	public String toString() {
@@ -135,58 +122,6 @@ public class MethodElement extends Element implements Observable {
 				+ "("
 				+ ((MethodDeclaration) astNode).parameters().toString()
 						.replace("[", "").replace("]", "") + ")" + "{";
-	}
-
-	@Override
-	public void add(Observer observer) {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	public void remove(Observer observer) {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	public void notifyObservers() {
-		// TODO Auto-generated method stub
-		int i = 1;
-		for (StatementElement ese : statementList) {
-			ese.setY(y + 20 * i);
-			i++;
-		}
-	}
-
-	@Override
-	public Element getSelectedElement(int x_in, int y_in) {
-		if (this.isInelement(x_in, y_in)) {
-			return this;
-		} else {
-			for (StatementElement ese : statementList) {
-				Element element = ese.getSelectedElement(x_in, y_in);
-				if (element != null) {
-					return element;
-				}
-			}
-		}
-		return null;
-	}
-
-	@Override
-	public void unSelected() {
-		super.unSelected();
-		for (StatementElement ese : statementList) {
-			ese.unSelected();
-		}
-	}
-
-
-	@Override
-	public void removeChild(Element element) {
-		// TODO Auto-generated method stub
-
 	}
 
 }

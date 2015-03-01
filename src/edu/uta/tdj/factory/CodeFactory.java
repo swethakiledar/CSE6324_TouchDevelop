@@ -9,9 +9,9 @@ import org.eclipse.jdt.core.dom.Type;
 
 import edu.uta.tdj.code.component.ClassElement;
 import edu.uta.tdj.code.component.ComplieUnitElement;
-import edu.uta.tdj.code.component.ExpressionStatementElement;
 import edu.uta.tdj.code.component.FieldElement;
 import edu.uta.tdj.code.component.MethodElement;
+import edu.uta.tdj.code.component.expression.InfixExpressionElement;
 import edu.uta.tdj.code.component.statment.IfStatementElement;
 
 /**
@@ -56,9 +56,10 @@ public class CodeFactory {
 	 * @return the new created classelement
 	 * */
 	public ClassElement createClass(String name, ModifierKeyword modifier) {
-		ClassElement ce = new ClassElement(ast, name);
+		ClassElement ce = new ClassElement(ast);
+		ce.setName(name);
 		ce.setModifiers(modifier);
-		 ce.getForm().setElement(ce);
+		ce.getForm().setElement(ce);
 		return ce;
 	}
 
@@ -69,7 +70,7 @@ public class CodeFactory {
 		cue.setPublicClass(ce);
 		return cue;
 	}
-
+	
 	/**
 	 * create a new ifstatementelement
 	 * */
@@ -78,7 +79,17 @@ public class CodeFactory {
 		IfStatementElement ifStatementElement = new IfStatementElement(ast);
 		return ifStatementElement;
 	}
-
+	
+	/**
+	 * create a new InfixExpressionElement
+	 * */
+	
+	public InfixExpressionElement createInfixExpressionElement(){
+		InfixExpressionElement infixExpressionElement = new InfixExpressionElement(ast);
+		return infixExpressionElement;
+	}
+	
+	
 	/**
 	 * create a new method
 	 * 
@@ -114,21 +125,6 @@ public class CodeFactory {
 				.newSimpleName("String"))));
 		me.setName("main");
 		return me;
-	}
-
-	/**
-	 * create a new ExpressionStatementElement
-	 * 
-	 * need to be discussed
-	 * 
-	 * */
-	public ExpressionStatementElement createExpressionStatementElement() {
-		ExpressionStatementElement eeElement = new ExpressionStatementElement(
-				ast);
-		eeElement.setLeft("test");
-		eeElement.setOperation(Assignment.Operator.ASSIGN);
-		eeElement.setRight("s");
-		return eeElement;
 	}
 
 	/**

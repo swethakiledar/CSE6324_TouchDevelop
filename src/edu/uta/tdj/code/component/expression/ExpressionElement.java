@@ -1,6 +1,7 @@
-package edu.uta.tdj.code.component.statment;
+package edu.uta.tdj.code.component.expression;
 
 import org.eclipse.jdt.core.dom.AST;
+import org.eclipse.jdt.core.dom.Expression;
 import org.eclipse.jdt.core.dom.Modifier.ModifierKeyword;
 
 import edu.uta.tdj.code.component.Element;
@@ -13,6 +14,7 @@ public class ExpressionElement extends Element {
 		astNode = ast.newExpressionStatement(ast.newInfixExpression());
 	}
 
+	
 	@Override
 	public void addChild(Element element) {
 		// TODO Auto-generated method stub
@@ -20,21 +22,8 @@ public class ExpressionElement extends Element {
 	}
 
 	@Override
-	public void removeChild(Element element) {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
 	public void setModifiers(ModifierKeyword modifiers) {
-		// TODO Auto-generated method stub
 
-	}
-
-	@Override
-	public Element getSelectedElement(int x_in, int y_in) {
-		// TODO Auto-generated method stub
-		return null;
 	}
 
 	@Override

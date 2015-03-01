@@ -38,25 +38,6 @@ public class JavaBuilder {
 	public JavaBuilder() {
 	}
 
-	public static void main(String[] args) {
-
-		ProjectElement p = ProjectController.getInstance().newProject(
-				"testssszzzdddd");
-		PackageElement packageElement = ProjectController.getInstance()
-				.newPackage("dd");
-		p.addPackage(packageElement);
-		ComplieUnitElement cue = ProjectController.getInstance()
-				.newComplieUnitElement(p, "TZS");
-		packageElement.addComplieUnit(cue);
-		
-		MethodElement main = p.getCodeFactory().createMainMethodElement();
-		((ClassElement)cue.getChildsList().get(0)).addChild(main);
-		p.setMainClass(cue.getPackage().getName()+"."+cue.getName());
-		
-		p.save();
-		execute(p);
-	}
-
 	public static void execute(ProjectElement projectElement) {
 		BuilderCreator bc = new BuilderCreator();
 		String buildPath = bc.createBuildXML(projectElement);
@@ -76,9 +57,9 @@ public class JavaBuilder {
 		DefaultLogger consoleLogger = new DefaultLogger();
 		consoleLogger.setErrorPrintStream(System.err);
 		consoleLogger.setOutputPrintStream(System.out);
-		 // 输出信息级别
-		 consoleLogger.setMessageOutputLevel(level);
-		 p.addBuildListener(consoleLogger);
+		// 输出信息级别
+		consoleLogger.setMessageOutputLevel(level);
+		p.addBuildListener(consoleLogger);
 		try {
 			p.fireBuildStarted();
 			p.init();

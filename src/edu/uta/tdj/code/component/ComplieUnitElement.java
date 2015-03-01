@@ -15,15 +15,11 @@ import edu.uta.tdj.code.project.PackageElement;
 
 public class ComplieUnitElement extends Element implements ISave {
 
-	private ArrayList<Element> childsList = new ArrayList<Element>();
 	private ClassElement publicClassElement;
 
-	public ArrayList<Element> getChildsList() {
-		return childsList;
-	}
 
 	public void setChildsList(ArrayList<Element> childsList) {
-		this.childsList = childsList;
+		this.childArrayList = childsList;
 	}
 
 	private PackageElement packageElement;
@@ -56,7 +52,7 @@ public class ComplieUnitElement extends Element implements ISave {
 			setPublicClass((ClassElement) element);
 		}
 		((CompilationUnit) astNode).types().add(element.getAstNode());
-		childsList.add(element);
+		childArrayList.add(element);
 	}
 
 	public void setParent(PackageElement pe) {
@@ -72,11 +68,6 @@ public class ComplieUnitElement extends Element implements ISave {
 		return this.packageElement;
 	}
 
-	@Override
-	public void removeChild(Element element) {
-		// TODO Auto-generated method stub
-
-	}
 
 	@Override
 	public void setModifiers(ModifierKeyword modifiers) {
@@ -86,30 +77,18 @@ public class ComplieUnitElement extends Element implements ISave {
 
 	@Override
 	public Element getSelectedElement(int x_in, int y_in) {
-		// if (this.isInelement(x_in, y_in)) {
-		// return null;
-		// } else {
-		for (Element fe : childsList) {
+		for (Element fe : childArrayList) {
 			Element element = fe.getSelectedElement(x_in, y_in);
 			if (element != null)
 				return element;
 		}
-
-		// }
 		return null;
 	}
-	
-	public void unSelected() {
-		selected = false;
-		for (Element fe : childsList) {
-			unSelected();
-		}
-	}
-	
+
 	@Override
 	public void draw(Graphics g) {
 		g.drawString(pDeclaration.toString(), x, y);
-		for (Element e : childsList) {
+		for (Element e : childArrayList) {
 			e.draw(g);
 		}
 	}
@@ -119,7 +98,7 @@ public class ComplieUnitElement extends Element implements ISave {
 		StringBuffer sb = new StringBuffer();
 		sb.append(pDeclaration.toString());
 		sb.append(System.lineSeparator());
-		for (Element e : childsList) {
+		for (Element e : childArrayList) {
 			sb.append(e.getAstNode().toString());
 			sb.append(System.lineSeparator());
 		}
