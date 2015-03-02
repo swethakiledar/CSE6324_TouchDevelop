@@ -46,6 +46,7 @@ public class JavaBuilder {
 		projectElement.save();
 		BuilderCreator bc = new BuilderCreator();
 		String buildPath = bc.createBuildXML(projectElement);
+		System.out.println(buildPath);
 		exeBuildFile(buildPath, 3);
 		try {
 			String mainclassStr = projectElement.getMainclass().getPackage().getName() + "." + projectElement.getMainclass().getName();

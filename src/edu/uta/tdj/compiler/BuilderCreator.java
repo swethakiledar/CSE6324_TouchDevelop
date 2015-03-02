@@ -1,8 +1,10 @@
 package edu.uta.tdj.compiler;
 
+import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.InputStream;
+import java.io.StringReader;
 import java.util.ArrayList;
 
 import javax.xml.parsers.DocumentBuilder;
@@ -27,21 +29,42 @@ public class BuilderCreator {
 		Document doc = null;
 		InputStream is = null;
 		String buildPath = "";
+		String sr = new String(
+				"<?xml version=\"1.0\" encoding=\"UTF-8\" ?>"
+						+ "<project name=\"z\" default=\"jar\" basedir=\"z\">"
+						+ "	<property name=\"mainclass\" value=\"mainclass\" />"
+						+ "	<target name=\"clean\">"
+						+ "		<delete dir=\"${basedir}/build\" />	</target>"
+						+ "	<target name=\"compile\" depends=\"clean\">"
+						+ "<mkdir dir=\"${basedir}/build/classes\" />"
+						+ "		<javac srcdir=\"${basedir}/src\" destdir=\"${basedir}/build/classes\" />"
+						+ "	</target>	<target name=\"run\" depends=\"compile\">"
+						+ "<java classname=\"${mainclass}\">"
+						+ "			<classpath>"
+						+ "				<pathelement path=\"${basedir}/build/classes\" />"
+						+ "			</classpath>		</java>	</target>"
+						+ "<target name=\"jar\" depends=\"run\">"
+						+ "		<jar destfile=\"helloworld.jar\" basedir=\"${basedir}/build/classes\">"
+						+ "			<manifest>"
+						+ "				<attribute name=\"Main-class\" value=\"${mainclass}\" />"
+						+ "</manifest>		</jar>	</target ></project>");
 		try {
 			db = dbf.newDocumentBuilder();
-			is = new FileInputStream(new File("build/build.xml"));
+			 is = new ByteArrayInputStream(sr.getBytes());
+
 			doc = db.parse(is);
 			NodeList nodes = doc.getElementsByTagName("project");
 			Element node = (Element) nodes.item(0);
-			node.setAttribute("name",pe.getName());
+			node.setAttribute("name", pe.getName());
 			node.setAttribute("basedir", pe.getPath());
-			
-			Element mainclass = (Element) node.getElementsByTagName("property").item(0);
-			
-			String mainclassStr = pe.getMainclass().getPackage().getName() + "." + pe.getMainclass().getName();
+
+			Element mainclass = (Element) node.getElementsByTagName("property")
+					.item(0);
+
+			String mainclassStr = pe.getMainclass().getPackage().getName()
+					+ "." + pe.getMainclass().getName();
 			mainclass.setAttribute("value", mainclassStr);
-			
-			
+
 			TransformerFactory transformerFactory = TransformerFactory
 					.newInstance();
 			Transformer transformer = transformerFactory.newTransformer();
@@ -56,32 +79,32 @@ public class BuilderCreator {
 		}
 		return "build/build.xml";
 	}
-	
-//	<?xml version="1.0" encoding="UTF-8" ?>
-//	<project name="testssszzzdddd" default="run" basedir="g:/testWorkspace/testssszzzdddd/">
-//		<property name="src" value="src" />
-//		<property name="dest" value="bin" />
-//		<property name="hello_jar" value="hello1.jar" />
-//		<target name="init">
-//			<mkdir dir="${dest}" />
-//		</target>
-//		<target name="compile" depends="init">
-//			<javac srcdir="${src}" destdir="${dest}" />
-//		</target>
-//		<target name="build" depends="compile">
-//			<jar jarfile="${hello_jar}" basedir="${dest}" />
-//		</target>
-//		<target name="run" depends="build">
-//			<java classname="test.ant.HelloWorld" classpath="${hello_jar}" />
-//		</target>
-//		<target name="clean">
-//			<delete dir="${dest}" />
-//			<delete file="${hello_jar}" />
-//		</target>
-//		<target name="rerun" depends="clean,run">
-//			<ant target="clean" />
-//			<ant target="run" />
-//		</target>
-//	</project>
+	// <?xml version="1.0" encoding="UTF-8" ?>
+	// <project name="testssszzzdddd" default="run"
+	// basedir="g:/testWorkspace/testssszzzdddd/">
+	// <property name="src" value="src" />
+	// <property name="dest" value="bin" />
+	// <property name="hello_jar" value="hello1.jar" />
+	// <target name="init">
+	// <mkdir dir="${dest}" />
+	// </target>
+	// <target name="compile" depends="init">
+	// <javac srcdir="${src}" destdir="${dest}" />
+	// </target>
+	// <target name="build" depends="compile">
+	// <jar jarfile="${hello_jar}" basedir="${dest}" />
+	// </target>
+	// <target name="run" depends="build">
+	// <java classname="test.ant.HelloWorld" classpath="${hello_jar}" />
+	// </target>
+	// <target name="clean">
+	// <delete dir="${dest}" />
+	// <delete file="${hello_jar}" />
+	// </target>
+	// <target name="rerun" depends="clean,run">
+	// <ant target="clean" />
+	// <ant target="run" />
+	// </target>
+	// </project>
 
 }
