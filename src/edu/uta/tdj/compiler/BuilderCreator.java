@@ -37,7 +37,11 @@ public class BuilderCreator {
 			node.setAttribute("basedir", pe.getPath());
 			
 			Element mainclass = (Element) node.getElementsByTagName("property").item(0);
-			mainclass.setAttribute("value", pe.getMainclass());
+			
+			String mainclassStr = pe.getMainclass().getPackage().getName() + "." + pe.getMainclass().getName();
+			mainclass.setAttribute("value", mainclassStr);
+			
+			
 			TransformerFactory transformerFactory = TransformerFactory
 					.newInstance();
 			Transformer transformer = transformerFactory.newTransformer();

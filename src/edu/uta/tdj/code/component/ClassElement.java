@@ -39,16 +39,14 @@ public class ClassElement extends Element {
 
 	public void setName(String name) {
 		this.name = name;
-		((TypeDeclaration) astNode).setName(ast.newSimpleName
-
-		(name));
+		((TypeDeclaration) astNode).setName(ast.newSimpleName(name));
 	}
 
 	@Override
 	public void addChild(Element element) {
 		((TypeDeclaration) astNode).bodyDeclarations()
 				.add(element.getAstNode());
-//		((TypeDeclaration) astNode).
+		// ((TypeDeclaration) astNode).
 		childArrayList.add(element);
 		element.setParent(this);
 		element.setX(x + 20);
@@ -56,8 +54,6 @@ public class ClassElement extends Element {
 		setHeight(getHeight() + element.getHeight());
 		reSort();
 	}
-	
-	
 
 	/**
 	 * should be changed and split into parts

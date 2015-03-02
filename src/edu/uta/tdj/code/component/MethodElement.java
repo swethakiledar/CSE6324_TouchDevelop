@@ -10,11 +10,13 @@ import javax.swing.JButton;
 import org.eclipse.jdt.core.dom.AST;
 import org.eclipse.jdt.core.dom.ASTNode;
 import org.eclipse.jdt.core.dom.Block;
+import org.eclipse.jdt.core.dom.Expression;
 import org.eclipse.jdt.core.dom.MethodDeclaration;
 import org.eclipse.jdt.core.dom.SingleVariableDeclaration;
 import org.eclipse.jdt.core.dom.Type;
 import org.eclipse.jdt.core.dom.Modifier.ModifierKeyword;
 
+import edu.uta.tdj.code.component.expression.MethodInvocationElement;
 import edu.uta.tdj.code.proposal.ProposalButtonFactory;
 import edu.uta.tdj.ui.forms.MethodForm;
 
@@ -41,7 +43,7 @@ public class MethodElement extends Element {
 		defaultHeight = 50;
 		this.form = new MethodForm();
 	}
-	
+
 	public void setName(String name) {
 		((MethodDeclaration) astNode).setName(ast.newSimpleName(name));
 		this.name = name;
@@ -90,16 +92,25 @@ public class MethodElement extends Element {
 
 	@Override
 	public void addChild(Element element) {
-		
+		// for demo
+		if (element instanceof MethodInvocationElement) {
+			((MethodDeclaration) astNode)
+					.getBody()
+					.statements()
+					.add(ast.newExpressionStatement((Expression) element
+							.getAstNode()));
+		} else {
+			((MethodDeclaration) astNode).getBody().statements()
+					.add(element.getAstNode());
+		}
+		// for demo end
 		element.setParent(this);
-		((MethodDeclaration) astNode).getBody().statements()
-				.add(element.getAstNode());
 
 		childArrayList.add(element);
 		element.setX(x + 20);
 		element.setY(y + getHeight() - 30);
 		setHeight(getHeight() + element.getHeight());
-		
+
 		reSort();
 	}
 

@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import org.eclipse.jdt.core.dom.AST;
 import org.eclipse.jdt.core.dom.Modifier.ModifierKeyword;
 
+import edu.uta.tdj.code.component.ComplieUnitElement;
 import edu.uta.tdj.code.file.FileSaver;
 import edu.uta.tdj.code.file.ISave;
 import edu.uta.tdj.controller.ProjectController;
@@ -20,7 +21,7 @@ public class ProjectElement implements ISave{
 
 	private AST ast;
 	
-	private String mainclassString="";
+	private ComplieUnitElement mainclassString;
 
 	private CodeFactory codeFactory = new CodeFactory();
 
@@ -31,11 +32,11 @@ public class ProjectElement implements ISave{
 		codeFactory.setAST(ast);
 	}
 	
-	public void setMainClass(String mainclass){
+	public void setMainClass(ComplieUnitElement mainclass){
 		this.mainclassString = mainclass;
 	}
 	
-	public String getMainclass(){
+	public ComplieUnitElement getMainclass(){
 		return this.mainclassString;
 	}
 	

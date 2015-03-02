@@ -48,8 +48,9 @@ public class JavaBuilder {
 		String buildPath = bc.createBuildXML(projectElement);
 		exeBuildFile(buildPath, 3);
 		try {
+			String mainclassStr = projectElement.getMainclass().getPackage().getName() + "." + projectElement.getMainclass().getName();
 			ConsoleSimulator.RunCode(projectElement.getPath()
-					+ "/build/classes/ " + projectElement.getMainclass());
+					+ "/build/classes/ " + mainclassStr);
 		} catch (IOException | InterruptedException e) {
 			e.printStackTrace();
 		}

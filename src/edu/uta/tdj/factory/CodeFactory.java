@@ -12,6 +12,7 @@ import edu.uta.tdj.code.component.ComplieUnitElement;
 import edu.uta.tdj.code.component.FieldElement;
 import edu.uta.tdj.code.component.MethodElement;
 import edu.uta.tdj.code.component.expression.InfixExpressionElement;
+import edu.uta.tdj.code.component.expression.MethodInvocationElement;
 import edu.uta.tdj.code.component.statment.IfStatementElement;
 
 /**
@@ -151,6 +152,16 @@ public class CodeFactory {
 	public FieldElement createFieldElement() {
 		FieldElement fe = new FieldElement(ast);
 		return fe;
+	}
+
+	/**
+	 * create a System.out.println();
+	 * */
+
+	public MethodInvocationElement createMethodInvocationElement(String value) {
+		MethodInvocationElement mie = new MethodInvocationElement(ast);
+		mie.setArguments(value);
+		return mie;
 	}
 
 }

@@ -61,14 +61,8 @@ public class ConsoleSimulator extends Thread implements Runnable {
 		Thread tErr = new Thread(new ConsoleSimulator(stderr, ERROR));
 		tIn.start();
 		tErr.start();
-		int result = child.waitFor();
 		tIn.join();
 		tErr.join();
-		if (result == 0) {
-			ConsolPanel.getInstance().setConsoleText("Success!");
-		} else {
-			ConsolPanel.getInstance().setConsoleText("Success!");
-		}
 	}
 
 }

@@ -58,6 +58,10 @@ public class FileSaver {
 		return false;
 	}
 
+	public static void deleteFile(String path){
+		File file = new File(path);
+		file.delete();
+	}
 
 	public static String readFile(File file) {
 		StringWriter sw = null;

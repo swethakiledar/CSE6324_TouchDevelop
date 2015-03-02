@@ -12,7 +12,9 @@ import edu.uta.tdj.code.component.BlockElement;
 import edu.uta.tdj.code.component.ClassElement;
 import edu.uta.tdj.code.component.FieldElement;
 import edu.uta.tdj.code.component.MethodElement;
+import edu.uta.tdj.code.component.expression.ExpressionElement;
 import edu.uta.tdj.code.component.statment.IfStatementElement;
+import edu.uta.tdj.ui.actions.AdPrintAction;
 import edu.uta.tdj.ui.actions.AddFieldAction;
 import edu.uta.tdj.ui.actions.AddIfStatementAction;
 import edu.uta.tdj.ui.actions.AddMainMethodAction;
@@ -71,7 +73,8 @@ public class ProposalButtonFactory {
 		JButton addForButton = new JButton("Add a For");
 		JButton addIfButton = new JButton("Add a IF");
 		JButton addDoButton = new JButton("Add a DO While");
-
+		JButton addPrintButton = new JButton("System.out.println");
+		addPrintButton.addActionListener(new AdPrintAction());
 		addIfButton.addActionListener(new AddIfStatementAction());
 
 		methodButtons_al.add(addWhileButton);
@@ -79,6 +82,7 @@ public class ProposalButtonFactory {
 		methodButtons_al.add(addIfButton);
 		methodButtons_al.add(addForButton);
 		methodButtons_al.add(removeButton);
+		methodButtons_al.add(addPrintButton);
 	}
 
 	public List<JButton> getButtons(IfStatementElement is) {
@@ -107,6 +111,12 @@ public class ProposalButtonFactory {
 	}
 
 	public List<JButton> getButtons(FieldElement fe) {
+		ArrayList<JButton> al = new ArrayList<JButton>();
+		al.add(removeButton);
+		return al;
+	}
+
+	public List<JButton> getButtons(ExpressionElement expressionElement) {
 		ArrayList<JButton> al = new ArrayList<JButton>();
 		al.add(removeButton);
 		return al;

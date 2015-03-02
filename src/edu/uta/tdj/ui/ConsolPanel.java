@@ -50,6 +50,7 @@ public class ConsolPanel extends JPanel {
 
 	public void setConsoleText(String text) {
 		this.ta_Console.append(text);
+		this.ta_Console.append("\n");
 	}
 
 	public void clearConsole() {

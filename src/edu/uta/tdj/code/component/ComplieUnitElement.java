@@ -4,6 +4,7 @@ import java.awt.Graphics;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.swing.CellEditor;
 import javax.swing.JButton;
 
 import org.eclipse.jdt.core.dom.AST;
@@ -20,7 +21,6 @@ import edu.uta.tdj.code.proposal.ProposalButtonFactory;
 public class ComplieUnitElement extends Element implements ISave {
 
 	private ClassElement publicClassElement;
-
 
 	public void setChildsList(ArrayList<Element> childsList) {
 		this.childArrayList = childsList;
@@ -72,7 +72,6 @@ public class ComplieUnitElement extends Element implements ISave {
 		return this.packageElement;
 	}
 
-
 	@Override
 	public void setModifiers(ModifierKeyword modifiers) {
 		// TODO Auto-generated method stub
@@ -111,6 +110,9 @@ public class ComplieUnitElement extends Element implements ISave {
 
 	@Override
 	public void save() {
+		this.setName(publicClassElement.getName());
+		fs.deleteFile(path);
+		path = path = packageElement.getPath() + "/" + publicClassElement.getName() + ".java";
 		fs.saveFile(path, toString());
 	}
 

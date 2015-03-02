@@ -40,7 +40,8 @@ public class ExpressionElement extends Element {
 	@Override
 	public List<JButton> getButtons(ProposalButtonFactory pcComputer) {
 		// TODO Auto-generated method stub
-		return null;
+		
+		return pcComputer.getButtons(this);
 	}
 
 }
