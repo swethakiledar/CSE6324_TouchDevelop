@@ -132,7 +132,6 @@ public class ProjectController {
 				packages.removeAllItems();
 				for (PackageElement pe : selectedproject.getPackages()) {
 					packages.addItem(pe.getName());
-					System.out.println(pe.getName());
 				}
 			}
 
