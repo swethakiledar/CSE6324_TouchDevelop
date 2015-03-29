@@ -37,7 +37,6 @@ import edu.uta.tdj.ui.ConsolPanel;
 
 public class JavaBuilder {
 
-	private static String workspace = "g:\\testWorkspace\\";
 
 	public JavaBuilder() {
 	}

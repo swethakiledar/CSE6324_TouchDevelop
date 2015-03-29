@@ -3,11 +3,14 @@ package edu.uta.tdj.code.project;
 import java.util.ArrayList;
 
 import org.eclipse.jdt.core.dom.AST;
+
+import com.thoughtworks.xstream.annotations.XStreamOmitField;
+
 import edu.uta.tdj.code.component.ComplieUnitElement;
 import edu.uta.tdj.code.file.ISave;
 
 public class PackageElement extends ProjectNode implements ISave {
-
+	@XStreamOmitField
 	private ArrayList complieUnitArrayList = new ArrayList();
 
 	private String name = "";
@@ -16,6 +19,7 @@ public class PackageElement extends ProjectNode implements ISave {
 
 	private ProjectElement projectElement;
 
+	@XStreamOmitField
 	private AST ast;
 
 	public PackageElement(String project, String name) {
@@ -72,8 +76,28 @@ public class PackageElement extends ProjectNode implements ISave {
 		this.projectElement = projectElement;
 	}
 
+	public String toXML() {
+		String head = "<package>";
+		String end = "</package>";
+		String name = "<name>";
+		String nameEnd = "</name>";
+		String path = "<path>";
+		String pathEnd = "</path>";
+		StringBuilder sb = new StringBuilder();
+		sb.append(head);
+		sb.append(name);
+		sb.append(this.name);
+		sb.append(nameEnd);
+		sb.append(path);
+		sb.append(this.path);
+		sb.append(pathEnd);
+		sb.append(end);
+		return sb.toString();
+	}
+
 	@Override
 	public void save() {
+
 		fs.createFolder(getPath());
 		for (int i = 0; i < complieUnitArrayList.size(); i++) {
 			ISave save = (ISave) complieUnitArrayList.get(i);

@@ -12,7 +12,7 @@ public class FileController implements ActionListener{
 	FileSaver fSaver = new FileSaver();
 	
 	public FileController(){
-		fSaver.setFilePath("C://tttt.java");
+//		fSaver.setFilePath("C://tttt.java");
 	}
 	
 	private ClassElement ceClassElement;

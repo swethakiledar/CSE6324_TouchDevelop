@@ -53,7 +53,15 @@ public class GUI extends JFrame {
 		JMenuItem mntmComplie = new JMenuItem("Complie");
 		mntmComplie.addActionListener(mAction);
 		mnF.add(mntmComplie);
-
+		
+		JMenuItem mntmWorkspaceItem = new JMenuItem("Set Workspace");
+		mntmWorkspaceItem.addActionListener(mAction);
+		mnF.add(mntmWorkspaceItem);
+		
+		JMenuItem mntmOpenprojectItem = new JMenuItem("Open project");
+		mntmOpenprojectItem.addActionListener(mAction);
+		mnF.add(mntmOpenprojectItem);
+		
 		getContentPane().setLayout(new BorderLayout(0, 0));
 
 		// add tools panel

@@ -2,6 +2,7 @@ package edu.uta.tdj.controller;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
 import java.util.ArrayList;
 
 import javax.swing.JComboBox;
@@ -12,8 +13,10 @@ import javax.swing.JTextField;
 import edu.uta.tdj.code.component.ComplieUnitElement;
 import edu.uta.tdj.code.project.PackageElement;
 import edu.uta.tdj.code.project.ProjectElement;
+import edu.uta.tdj.factory.ProjectFactory;
 import edu.uta.tdj.ui.CodePanel;
 import edu.uta.tdj.ui.CodePanelTabs;
+import edu.uta.tdj.ui.ProjectPanel;
 
 public class ProjectController {
 	private static ProjectController instance;
@@ -23,7 +26,8 @@ public class ProjectController {
 		return projectList;
 	}
 
-	private String workspace = "g:/testWorkspace/";
+	private String workspace = PropertyController.getProperties().getProperty(
+			"workspace");
 
 	private ProjectController() {
 	}
@@ -34,13 +38,42 @@ public class ProjectController {
 		}
 		return instance;
 	}
+	
+	public boolean isProject(String pathString) {
+		File projectFolder = new File(pathString);
+		boolean isProject = false;
+		if(projectFolder.isDirectory()){
+			File[] files = projectFolder.listFiles();
+			for(File file:files){
+				if(file.getName().equals("src")){
+					isProject = true;
+					break;
+				}
+			}
+		}
+		return isProject;
+	}
+	
+	public void openProject(String path) {
+		if(isProject(path)){
+			File projectXMLFile = new File(path+"/"+"project.project");
+			if(projectXMLFile.exists()){
+				addProject(ProjectFactory.getProject(projectXMLFile));
+			}
+		}
+	}
 
+	public void addProject(ProjectElement pe){
+		this.projectList.add(pe);
+		System.out.println("add" + pe.getName());
+		ProjectPanel.getInstance().reset();
+	}
+	
 	public ProjectElement newProject(String projectname) {
 		ProjectElement projectElement = new ProjectElement(workspace,
 				projectname);
 		projectElement.save();
-		this.projectList.add(projectElement);
-
+		addProject(projectElement);
 		return projectElement;
 	}
 
@@ -94,6 +127,7 @@ public class ProjectController {
 			PackageElement packageElement = newPackage(packagename);
 			projectList.get(i).addPackage(packageElement);
 			packageElement.save();
+			ProjectPanel.getInstance().reset();
 			return packageElement;
 		default:
 			break;
@@ -179,7 +213,7 @@ public class ProjectController {
 			packageElement.addComplieUnit(ce);
 			ce.save();
 			CodePanelTabs.getInstance().addCodePanel(ce);
-
+			ProjectPanel.getInstance().reset();
 			break;
 		default:
 			break;
@@ -204,9 +238,4 @@ public class ProjectController {
 		// return projectList.get(0);
 	}
 
-	public static void main(String[] args) {
-		ProjectController.getInstance().newProject();
-		ProjectController.getInstance().newPackage();
-		ProjectController.getInstance().newComplieUnitElement();
-	}
 }

@@ -8,6 +8,10 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTree;
 import javax.swing.tree.DefaultMutableTreeNode;
+import javax.swing.tree.DefaultTreeModel;
+import javax.swing.tree.TreeModel;
+import javax.swing.tree.TreePath;
+import javax.swing.tree.TreeSelectionModel;
 
 import edu.uta.tdj.code.component.ComplieUnitElement;
 import edu.uta.tdj.code.project.PackageElement;
@@ -31,19 +35,31 @@ public class ProjectPanel extends JPanel {
 	}
 
 	DefaultMutableTreeNode top;
+	TreeModel treeModel;
 
 	public void init() {
-		top = new DefaultMutableTreeNode("");
-		projects = new JTree(top);
+		top = new DefaultMutableTreeNode("projects");
+
+		treeModel = new DefaultTreeModel(top);
+		// treeModel.addTreeModelListener(new MyTreeModelListener());
+		projects = new JTree(treeModel);
+		projects.setEditable(true);
+		projects.getSelectionModel().setSelectionMode(
+				TreeSelectionModel.SINGLE_TREE_SELECTION);
+		projects.setShowsRootHandles(true);
+
+		projects.setEditable(true);
 		reset();
 		this.add(new JScrollPane(projects));
 	}
 
 	public void reset() {
+		top.removeAllChildren();
 		for (ProjectElement project : ProjectController.getInstance()
 				.getProjectList()) {
 			addProject(project);
 		}
+		this.repaint();
 	}
 
 	public void addProject(ProjectElement project) {
@@ -52,7 +68,8 @@ public class ProjectPanel extends JPanel {
 		for (PackageElement packageNode : project.getPackages()) {
 			addPackage(projectNode, packageNode);
 		}
-		top.add(projectNode);
+		top.insert(projectNode, top.getChildCount());
+		// top.add(projectNode);
 	}
 
 	private void addPackage(DefaultMutableTreeNode project,
@@ -62,13 +79,15 @@ public class ProjectPanel extends JPanel {
 		for (ComplieUnitElement cue : packagee.getComplieUnitArrayList()) {
 			addClass(packageNode, cue);
 		}
-		project.add(packageNode);
+		project.insert(packageNode, project.getChildCount());
 	}
 
 	private void addClass(DefaultMutableTreeNode packagee,
 			ComplieUnitElement classs) {
 		DefaultMutableTreeNode classNode = new DefaultMutableTreeNode(
 				classs.getName());
-		packagee.add(classNode);
+		System.out.println("add a class " + classs.getName());
+		packagee.insert(classNode, packagee.getChildCount());
 	}
+
 }

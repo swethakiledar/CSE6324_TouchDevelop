@@ -90,19 +90,18 @@ public class FileSaver {
 			try {
 				fr.close();
 			} catch (IOException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		}
 		return sw.toString();
 	}
 
-	public String getFilePath() {
-		return filePath;
-	}
-
-	public void setFilePath(String filePath) {
-		this.filePath = filePath;
-		file = new File(filePath);
-	}
+//	public String getFilePath() {
+//		return filePath;
+//	}
+//
+//	public void setFilePath(String filePath) {
+//		this.filePath = filePath;
+//		file = new File(filePath);
+//	}
 }
