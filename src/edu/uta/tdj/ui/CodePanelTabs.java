@@ -24,10 +24,12 @@ public class CodePanelTabs extends JClosableTabbedPane {
 	private ArrayList<CodePanel> codePanel_al = new ArrayList<CodePanel>();
 
 	public void addCodePanel(CodePanel cp) {
+		
 		this.codePanel_al.add(cp);
 		JScrollPane jsp = new JScrollPane(cp);
 		this.insertTab(cp.getComplieUnitElement().getName(), new CloseTabIcon(
 				null), jsp, null, this.getTabCount() - 1);
+		this.setSelectedIndex(this.getTabCount() - 2);
 	}
 
 	public void addCodePanel(ComplieUnitElement ce) {

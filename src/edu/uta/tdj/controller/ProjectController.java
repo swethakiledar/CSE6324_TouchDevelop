@@ -38,14 +38,14 @@ public class ProjectController {
 		}
 		return instance;
 	}
-	
+
 	public boolean isProject(String pathString) {
 		File projectFolder = new File(pathString);
 		boolean isProject = false;
-		if(projectFolder.isDirectory()){
+		if (projectFolder.isDirectory()) {
 			File[] files = projectFolder.listFiles();
-			for(File file:files){
-				if(file.getName().equals("src")){
+			for (File file : files) {
+				if (file.getName().equals("src")) {
 					isProject = true;
 					break;
 				}
@@ -53,22 +53,21 @@ public class ProjectController {
 		}
 		return isProject;
 	}
-	
+
 	public void openProject(String path) {
-		if(isProject(path)){
-			File projectXMLFile = new File(path+"/"+"project.project");
-			if(projectXMLFile.exists()){
+		if (isProject(path)) {
+			File projectXMLFile = new File(path + "/" + "project.project");
+			if (projectXMLFile.exists()) {
 				addProject(ProjectFactory.getProject(projectXMLFile));
 			}
 		}
 	}
 
-	public void addProject(ProjectElement pe){
+	public void addProject(ProjectElement pe) {
 		this.projectList.add(pe);
-		System.out.println("add" + pe.getName());
 		ProjectPanel.getInstance().reset();
 	}
-	
+
 	public ProjectElement newProject(String projectname) {
 		ProjectElement projectElement = new ProjectElement(workspace,
 				projectname);
@@ -227,6 +226,16 @@ public class ProjectController {
 		// return null;
 	}
 
+	// show the class in codepanel when double clicked the java file in the
+	// treepanel
+	public void showSelectedCodePanel(int project, int packageIndex, int ceIndex) {
+		ProjectElement pe = projectList.get(project);
+		PackageElement packageElement = pe.getPackages().get(packageIndex);
+		ComplieUnitElement cueComplieUnitElement = packageElement
+				.getComplieUnitArrayList().get(ceIndex);
+		CodePanelTabs.getInstance().addCodePanel(cueComplieUnitElement);
+	}
+
 	public CodePanel getSelectedCodePanel() {
 		JScrollPane comp = (JScrollPane) CodePanelTabs.getInstance()
 				.getSelectedComponent();
@@ -234,7 +243,6 @@ public class ProjectController {
 			return null;
 		CodePanel cp = (CodePanel) comp.getViewport().getView();
 		return cp;
-
 		// return projectList.get(0);
 	}
 

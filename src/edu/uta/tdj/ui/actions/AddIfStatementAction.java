@@ -13,13 +13,17 @@ public class AddIfStatementAction extends ButtonActions {
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		super.actionPerformed(e);
+		// 
 		CodePanel cp = ProjectController.getInstance().getSelectedCodePanel();
+		
 		IfStatementElement ifstatement = cp.getComplieUnitElement()
 				.getPackage().getProjectElement().getCodeFactory()
 				.createIfStatementElement();
+		
 		cp.getSelectListener().getSelectedElement().addChild(ifstatement);
-
+		//save
 		cp.getComplieUnitElement().save();
+		//
 		GUI.getInstance().refresh();
 	}
 }

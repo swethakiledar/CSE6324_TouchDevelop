@@ -1,12 +1,15 @@
 package edu.uta.tdj.ui;
 
 import java.awt.GridLayout;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTree;
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.DefaultTreeModel;
+import javax.swing.tree.TreeNode;
 import javax.swing.tree.TreePath;
 
 import edu.uta.tdj.code.component.ComplieUnitElement;
@@ -37,10 +40,10 @@ public class ProjectPanel extends JPanel {
 		top = new DefaultMutableTreeNode("projects");
 		projects = new JTree(top);
 		projects.setEditable(true);
+		projects.addMouseListener(new MouseHandle());
 		treeModel = (DefaultTreeModel) projects.getModel();
 		this.add(new JScrollPane(projects));
 		reset();
-
 	}
 
 	public void reset() {
@@ -95,10 +98,40 @@ public class ProjectPanel extends JPanel {
 
 		DefaultMutableTreeNode classNode = new DefaultMutableTreeNode(
 				classs.getName());
-		classNode.setAllowsChildren(false);
+		classNode.setAllowsChildren(true);
 		treeModel.insertNodeInto(classNode, packagee, packagee.getChildCount());
 		projects.scrollPathToVisible(new TreePath(classNode.getPath()));
 
+	}
+
+	class MouseHandle extends MouseAdapter {
+
+		@Override
+		public void mouseClicked(MouseEvent e) {
+			super.mouseClicked(e);
+			if (e.getClickCount() == 2) {
+				try {
+					JTree tree = (JTree) e.getSource();
+					int rowLocation = tree
+							.getRowForLocation(e.getX(), e.getY());
+					TreePath treepath = tree.getPathForRow(rowLocation);
+					TreeNode treenode = (TreeNode) treepath
+							.getLastPathComponent();
+					if (treepath.getPathCount() == 4) {
+						int classIndex = treenode.getParent()
+								.getIndex(treenode);
+						int packageIndex = treenode.getParent().getParent()
+								.getIndex(treenode.getParent());
+						int projectIndex = treenode.getParent().getParent()
+								.getParent()
+								.getIndex(treenode.getParent().getParent());
+						ProjectController.getInstance().showSelectedCodePanel(
+								projectIndex, packageIndex, classIndex);
+					}
+				} catch (NullPointerException ne) {
+				}
+			}
+		}
 	}
 
 }
