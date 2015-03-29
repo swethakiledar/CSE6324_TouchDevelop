@@ -1,7 +1,5 @@
 package edu.uta.tdj.ui;
 
-import java.awt.Dimension;
-import java.awt.Graphics;
 import java.awt.GridLayout;
 
 import javax.swing.JPanel;
@@ -9,9 +7,7 @@ import javax.swing.JScrollPane;
 import javax.swing.JTree;
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.DefaultTreeModel;
-import javax.swing.tree.TreeModel;
 import javax.swing.tree.TreePath;
-import javax.swing.tree.TreeSelectionModel;
 
 import edu.uta.tdj.code.component.ComplieUnitElement;
 import edu.uta.tdj.code.project.PackageElement;
@@ -35,26 +31,23 @@ public class ProjectPanel extends JPanel {
 	}
 
 	DefaultMutableTreeNode top;
-	TreeModel treeModel;
+	DefaultTreeModel treeModel;
 
 	public void init() {
 		top = new DefaultMutableTreeNode("projects");
-
-		treeModel = new DefaultTreeModel(top);
-		// treeModel.addTreeModelListener(new MyTreeModelListener());
-		projects = new JTree(treeModel);
+		projects = new JTree(top);
 		projects.setEditable(true);
-		projects.getSelectionModel().setSelectionMode(
-				TreeSelectionModel.SINGLE_TREE_SELECTION);
-		projects.setShowsRootHandles(true);
-
-		projects.setEditable(true);
-		reset();
+		treeModel = (DefaultTreeModel) projects.getModel();
 		this.add(new JScrollPane(projects));
+		reset();
+
 	}
 
 	public void reset() {
-		top.removeAllChildren();
+		DefaultMutableTreeNode rootNode = (DefaultMutableTreeNode) treeModel
+				.getRoot();
+		rootNode.removeAllChildren();
+		treeModel.reload();
 		for (ProjectElement project : ProjectController.getInstance()
 				.getProjectList()) {
 			addProject(project);
@@ -63,31 +56,49 @@ public class ProjectPanel extends JPanel {
 	}
 
 	public void addProject(ProjectElement project) {
-		DefaultMutableTreeNode projectNode = new DefaultMutableTreeNode(
+
+		DefaultMutableTreeNode parentNode = null;
+		DefaultMutableTreeNode newNode = new DefaultMutableTreeNode(
 				project.getName());
+		newNode.setAllowsChildren(true);
+
 		for (PackageElement packageNode : project.getPackages()) {
-			addPackage(projectNode, packageNode);
+			addPackage(newNode, packageNode);
 		}
-		top.insert(projectNode, top.getChildCount());
-		// top.add(projectNode);
+
+		// parent of the project is the root(top)
+		parentNode = top;
+		// add the new node in to the root
+		treeModel.insertNodeInto(newNode, parentNode,
+				parentNode.getChildCount());
+		// tree的scrollPathToVisible()方法在使Tree会自动展开文件夹以便显示所加入的新节点。若没加这行则加入的新节点
+		// 会被 包在文件夹中，你必须自行展开文件夹才看得到。
+		projects.scrollPathToVisible(new TreePath(newNode.getPath()));
 	}
 
 	private void addPackage(DefaultMutableTreeNode project,
 			PackageElement packagee) {
 		DefaultMutableTreeNode packageNode = new DefaultMutableTreeNode(
 				packagee.getName());
+		packageNode.setAllowsChildren(true);
+
 		for (ComplieUnitElement cue : packagee.getComplieUnitArrayList()) {
 			addClass(packageNode, cue);
 		}
-		project.insert(packageNode, project.getChildCount());
+		treeModel.insertNodeInto(packageNode, project, project.getChildCount());
+
+		projects.scrollPathToVisible(new TreePath(packageNode.getPath()));
 	}
 
 	private void addClass(DefaultMutableTreeNode packagee,
 			ComplieUnitElement classs) {
+
 		DefaultMutableTreeNode classNode = new DefaultMutableTreeNode(
 				classs.getName());
-		System.out.println("add a class " + classs.getName());
-		packagee.insert(classNode, packagee.getChildCount());
+		classNode.setAllowsChildren(false);
+		treeModel.insertNodeInto(classNode, packagee, packagee.getChildCount());
+		projects.scrollPathToVisible(new TreePath(classNode.getPath()));
+
 	}
 
 }
