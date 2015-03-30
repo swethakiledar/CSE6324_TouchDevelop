@@ -42,6 +42,8 @@ public class MenuAction extends AbstractAction {
 			if(f != null){
 				PropertyController.getProperties().setProperty("workspace", f.getAbsolutePath());
 				PropertyController.save();
+			}else{
+				
 			}
 
 			break;

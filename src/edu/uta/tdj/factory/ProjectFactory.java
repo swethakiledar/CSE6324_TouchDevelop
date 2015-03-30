@@ -26,10 +26,6 @@ import edu.uta.tdj.code.project.ProjectElement;
 
 public class ProjectFactory {
 
-	public static void main(String[] args) {
-		ProjectElement pe = ProjectFactory.getProject(new File(
-				"G:/testWorkspace/Test/project.project"));
-	}
 
 	public static ProjectElement getProject(File file) {
 		DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();

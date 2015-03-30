@@ -217,13 +217,7 @@ public class ProjectController {
 		default:
 			break;
 		}
-
 		return null;
-
-		// ComplieUnitElement cue = new ComplieUnitElement();
-		// cu.types().add(ce.getAstNode());
-		// CodePanelTabs.getInstance().addCodePanel(ce);
-		// return null;
 	}
 
 	// show the class in codepanel when double clicked the java file in the
