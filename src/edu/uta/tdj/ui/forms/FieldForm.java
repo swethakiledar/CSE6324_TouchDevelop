@@ -33,14 +33,12 @@ public class FieldForm extends Form {
 	@Override
 	public void updateElement() {
 		String newname = (String) this.table.getValueAt(0, 1);
-		if (newname != null && !oldname.equals(newname)) {
-			System.out.println(newname + "====new name is ");
-			if (newname != null && !oldname.equals(newname)) {
-				System.out.println("setting name");
-				element.setName(newname);
-				oldname = newname;
-			}
+		System.out.println(newname + "====new name is ");
+		if (newname !=null &&!oldname.equals(newname)) {
+			System.out.println("setting name");
+			element.setName(newname);
+			oldname = newname;
 		}
-
 	}
+
 }
