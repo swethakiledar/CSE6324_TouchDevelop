@@ -45,7 +45,7 @@ public class ProjectPanel extends JPanel {
 		this.add(new JScrollPane(projects));
 		reset();
 	}
-
+	// reset 
 	public void reset() {
 		DefaultMutableTreeNode rootNode = (DefaultMutableTreeNode) treeModel
 				.getRoot();
@@ -57,7 +57,7 @@ public class ProjectPanel extends JPanel {
 		}
 		this.repaint();
 	}
-
+	// add a new project
 	public void addProject(ProjectElement project) {
 
 		DefaultMutableTreeNode parentNode = null;
@@ -103,7 +103,7 @@ public class ProjectPanel extends JPanel {
 		projects.scrollPathToVisible(new TreePath(classNode.getPath()));
 
 	}
-
+	// handle the double click on the class and show the class in the code panel
 	class MouseHandle extends MouseAdapter {
 
 		@Override
@@ -118,6 +118,7 @@ public class ProjectPanel extends JPanel {
 					TreeNode treenode = (TreeNode) treepath
 							.getLastPathComponent();
 					if (treepath.getPathCount() == 4) {
+						//get the indexs of the class
 						int classIndex = treenode.getParent()
 								.getIndex(treenode);
 						int packageIndex = treenode.getParent().getParent()
@@ -125,6 +126,7 @@ public class ProjectPanel extends JPanel {
 						int projectIndex = treenode.getParent().getParent()
 								.getParent()
 								.getIndex(treenode.getParent().getParent());
+						// show the selected class
 						ProjectController.getInstance().showSelectedCodePanel(
 								projectIndex, packageIndex, classIndex);
 					}

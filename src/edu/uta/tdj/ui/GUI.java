@@ -1,15 +1,19 @@
 package edu.uta.tdj.ui;
 
 import java.awt.BorderLayout;
+
 import javax.swing.JFrame;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JSplitPane;
+
 import java.awt.Dialog.ModalExclusionType;
+
 import org.jb2011.lnf.beautyeye.BeautyEyeLNFHelper;
+
 import edu.uta.tdj.controller.FileController;
-import edu.uta.tdj.menuAction.MenuAction;
+import edu.uta.tdj.ui.actions.MenuAction;
 
 public class GUI extends JFrame {
 

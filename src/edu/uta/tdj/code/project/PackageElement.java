@@ -9,7 +9,7 @@ import com.thoughtworks.xstream.annotations.XStreamOmitField;
 import edu.uta.tdj.code.component.ComplieUnitElement;
 import edu.uta.tdj.code.file.ISave;
 
-public class PackageElement extends ProjectNode implements ISave {
+public class PackageElement  implements ProjectNode {
 	@XStreamOmitField
 	private ArrayList complieUnitArrayList = new ArrayList();
 

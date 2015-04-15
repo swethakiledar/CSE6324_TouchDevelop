@@ -10,8 +10,8 @@ public class FieldForm extends Form {
 
 	public FieldForm() {
 		super();
-		String[][] item_value_array = { { "Field Name", oldname }, { "Type", "" },
-				{ "Access", "" } };
+		String[][] item_value_array = { { "Field Name", oldname },
+				{ "Type", "" }, { "Access", "" } };
 		super.setTableItem(item_value_array);
 	}
 
@@ -33,10 +33,14 @@ public class FieldForm extends Form {
 	@Override
 	public void updateElement() {
 		String newname = (String) this.table.getValueAt(0, 1);
-		if (newname !=null &&!oldname.equals(newname)) {
-			element.setName(newname);
-			oldname = newname;
+		if (newname != null && !oldname.equals(newname)) {
+			System.out.println(newname + "====new name is ");
+			if (newname != null && !oldname.equals(newname)) {
+				System.out.println("setting name");
+				element.setName(newname);
+				oldname = newname;
+			}
 		}
-	}
 
+	}
 }

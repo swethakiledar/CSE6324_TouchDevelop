@@ -31,14 +31,14 @@ public class ProjectController {
 
 	private ProjectController() {
 	}
-
+	//single instance
 	public static ProjectController getInstance() {
 		if (instance == null) {
 			instance = new ProjectController();
 		}
 		return instance;
 	}
-
+	// check whether the input path contains a project
 	public boolean isProject(String pathString) {
 		File projectFolder = new File(pathString);
 		boolean isProject = false;
@@ -53,21 +53,23 @@ public class ProjectController {
 		}
 		return isProject;
 	}
-
+	// open the project
 	public void openProject(String path) {
 		if (isProject(path)) {
 			File projectXMLFile = new File(path + "/" + "project.project");
 			if (projectXMLFile.exists()) {
 				addProject(ProjectFactory.getProject(projectXMLFile));
 			}
+		}else{
+			JOptionPane.showMessageDialog(null, "Not a valid project path", "ERROR", JOptionPane.ERROR_MESSAGE);
 		}
 	}
-
+	// add the project to the list
 	public void addProject(ProjectElement pe) {
 		this.projectList.add(pe);
 		ProjectPanel.getInstance().reset();
 	}
-
+	// create a new project
 	public ProjectElement newProject(String projectname) {
 		ProjectElement projectElement = new ProjectElement(workspace,
 				projectname);
@@ -75,7 +77,7 @@ public class ProjectController {
 		addProject(projectElement);
 		return projectElement;
 	}
-
+	
 	public ProjectElement newProject() {
 
 		String result = JOptionPane.showInputDialog(null, "Project Name",
@@ -93,7 +95,7 @@ public class ProjectController {
 		PackageElement packageElement = new PackageElement(name);
 		return packageElement;
 	}
-
+	// create a new package
 	public PackageElement newPackage() {
 		Object[] message = new Object[4];
 		message[0] = "Please Input The Package Name";
@@ -223,10 +225,13 @@ public class ProjectController {
 	// show the class in codepanel when double clicked the java file in the
 	// treepanel
 	public void showSelectedCodePanel(int project, int packageIndex, int ceIndex) {
+		
+		// get the selected class
 		ProjectElement pe = projectList.get(project);
 		PackageElement packageElement = pe.getPackages().get(packageIndex);
 		ComplieUnitElement cueComplieUnitElement = packageElement
 				.getComplieUnitArrayList().get(ceIndex);
+		// add the class in to the codepaneltab
 		CodePanelTabs.getInstance().addCodePanel(cueComplieUnitElement);
 	}
 
