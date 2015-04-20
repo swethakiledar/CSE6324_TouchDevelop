@@ -65,6 +65,7 @@ public class MethodElement extends Element {
 	}
 
 	public void addParam(String name, Type type) {
+
 		SingleVariableDeclaration variableDeclaration = ast
 				.newSingleVariableDeclaration();
 		variableDeclaration.setType(type);
@@ -128,14 +129,17 @@ public class MethodElement extends Element {
 
 	public String toString() {
 
-		return modifiedString
-				+ " "
-				+ returnTypeString
-				+ " "
-				+ name
-				+ "("
-				+ ((MethodDeclaration) astNode).parameters().toString()
-						.replace("[", "").replace("]", "") + ")" + "{";
+		List paraList = ((MethodDeclaration) astNode).parameters();
+		StringBuilder sb = new StringBuilder();
+		for (Object svd : paraList) {
+			sb.append(svd.toString());
+			sb.append(",");
+		}
+		sb.replace(sb.length()-1, sb.length()-0, "");
+		
+		return modifiedString + " " + returnTypeString + " " + name + "("
+				+ sb.toString() + ")"
+				+ "{";
 	}
 
 }
