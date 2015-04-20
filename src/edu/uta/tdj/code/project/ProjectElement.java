@@ -4,19 +4,9 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
-
 import org.eclipse.jdt.core.dom.AST;
-import org.eclipse.jdt.core.dom.ThisExpression;
-import org.eclipse.jdt.core.dom.Modifier.ModifierKeyword;
-
-import com.thoughtworks.xstream.XStream;
-import com.thoughtworks.xstream.annotations.XStreamOmitField;
-import com.thoughtworks.xstream.io.xml.DomDriver;
-
 import edu.uta.tdj.code.component.ComplieUnitElement;
-import edu.uta.tdj.code.file.FileSaver;
 import edu.uta.tdj.code.file.ISave;
-import edu.uta.tdj.controller.ProjectController;
 import edu.uta.tdj.factory.CodeFactory;
 
 public class ProjectElement implements ISave {

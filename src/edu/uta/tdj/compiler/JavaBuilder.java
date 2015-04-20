@@ -32,12 +32,7 @@ import edu.uta.tdj.code.project.ProjectElement;
 import edu.uta.tdj.controller.ProjectController;
 import edu.uta.tdj.ui.ConsolPanel;
 
-//import edu.uta.tdj.code.project.PackageElement;
-//import edu.uta.tdj.code.project.ProjectElement;
-
 public class JavaBuilder {
-
-
 	public JavaBuilder() {
 	}
 
@@ -51,7 +46,7 @@ public class JavaBuilder {
 			String mainclassStr = projectElement.getMainclass().getPackage().getName() + "." + projectElement.getMainclass().getName();
 			ConsoleSimulator.RunCode(projectElement.getPath()
 					+ "/build/classes/ " + mainclassStr);
-		} catch (IOException | InterruptedException e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}

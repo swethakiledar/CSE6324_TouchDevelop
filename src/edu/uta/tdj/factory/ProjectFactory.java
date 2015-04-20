@@ -36,7 +36,6 @@ public class ProjectFactory {
 
 		ProjectElement pElement = null;
 
-		String projectName = "";
 		String projectPath = "";
 		try {
 			db = dbf.newDocumentBuilder();
@@ -51,7 +50,7 @@ public class ProjectFactory {
 					0);
 			Element path = (Element) project.getElementsByTagName("path").item(
 					0);
-			projectName = name.getTextContent();
+			name.getTextContent();
 			projectPath = path.getTextContent();
 
 			pElement = new ProjectElement(projectPath);

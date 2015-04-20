@@ -13,6 +13,8 @@ import java.awt.Dialog.ModalExclusionType;
 import org.jb2011.lnf.beautyeye.BeautyEyeLNFHelper;
 
 import edu.uta.tdj.controller.FileController;
+import edu.uta.tdj.controller.ProjectController;
+import edu.uta.tdj.controller.PropertyController;
 import edu.uta.tdj.ui.actions.MenuAction;
 
 public class GUI extends JFrame {
@@ -84,6 +86,8 @@ public class GUI extends JFrame {
 		JSplitPane splitPaneMain = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT,
 				projectPanel, splitPane);
 		getContentPane().add(splitPaneMain, BorderLayout.CENTER);
+		
+		ProjectController.getInstance().changeProjectsosWorkspace(PropertyController.getProperties().getProperty("workspace"));
 
 	}
 

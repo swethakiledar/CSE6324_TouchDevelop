@@ -10,9 +10,12 @@ import javax.swing.JOptionPane;
 import javax.swing.JScrollPane;
 import javax.swing.JTextField;
 
+import org.eclipse.jdt.core.compiler.BuildContext;
+
 import edu.uta.tdj.code.component.ComplieUnitElement;
 import edu.uta.tdj.code.project.PackageElement;
 import edu.uta.tdj.code.project.ProjectElement;
+import edu.uta.tdj.compiler.BuilderCreator;
 import edu.uta.tdj.factory.ProjectFactory;
 import edu.uta.tdj.ui.CodePanel;
 import edu.uta.tdj.ui.CodePanelTabs;
@@ -30,14 +33,17 @@ public class ProjectController {
 			"workspace");
 
 	private ProjectController() {
+		// this.changeProjectsosWorkspace(workspace);
 	}
-	//single instance
+
+	// single instance
 	public static ProjectController getInstance() {
 		if (instance == null) {
 			instance = new ProjectController();
 		}
 		return instance;
 	}
+
 	// check whether the input path contains a project
 	public boolean isProject(String pathString) {
 		File projectFolder = new File(pathString);
@@ -53,31 +59,58 @@ public class ProjectController {
 		}
 		return isProject;
 	}
+
 	// open the project
-	public void openProject(String path) {
+	public void openProject(String path, boolean openByUser) {
 		if (isProject(path)) {
 			File projectXMLFile = new File(path + "/" + "project.project");
 			if (projectXMLFile.exists()) {
 				addProject(ProjectFactory.getProject(projectXMLFile));
 			}
-		}else{
-			JOptionPane.showMessageDialog(null, "Not a valid project path", "ERROR", JOptionPane.ERROR_MESSAGE);
+		} else {
+			if (openByUser)
+				JOptionPane.showMessageDialog(null, "Not a valid project path",
+						"ERROR", JOptionPane.ERROR_MESSAGE);
 		}
 	}
+
+	// when setting workspace, add the projects in the new workspace
+	public void changeProjectsosWorkspace(String workspace) {
+		this.projectList.clear();
+		File workspaceFolder = new File(workspace);
+		if (workspaceFolder.exists() && workspaceFolder.isDirectory()) {
+			File[] projectsFile = workspaceFolder.listFiles();
+			for (File project : projectsFile) {
+				openProject(project.getAbsolutePath(), false);
+			}
+		}
+
+		ProjectPanel.getInstance().reset();
+	}
+
 	// add the project to the list
 	public void addProject(ProjectElement pe) {
 		this.projectList.add(pe);
 		ProjectPanel.getInstance().reset();
+		pe.save();
 	}
+
 	// create a new project
 	public ProjectElement newProject(String projectname) {
+
+		for (ProjectElement pe : projectList) {
+			if (pe.getName().equalsIgnoreCase(projectname)) {
+				JOptionPane.showMessageDialog(null, "Already existing");
+				return null;
+			}
+		}
 		ProjectElement projectElement = new ProjectElement(workspace,
 				projectname);
 		projectElement.save();
 		addProject(projectElement);
 		return projectElement;
 	}
-	
+
 	public ProjectElement newProject() {
 
 		String result = JOptionPane.showInputDialog(null, "Project Name",
@@ -95,6 +128,7 @@ public class ProjectController {
 		PackageElement packageElement = new PackageElement(name);
 		return packageElement;
 	}
+
 	// create a new package
 	public PackageElement newPackage() {
 		Object[] message = new Object[4];
@@ -126,7 +160,18 @@ public class ProjectController {
 			String packagename = ((JTextField) message[1]).getText();
 			int i = cb.getSelectedIndex();
 			PackageElement packageElement = newPackage(packagename);
+
+			ProjectElement pe = projectList.get(i);
+
+			for (PackageElement packageE : pe.getPackages()) {
+				if (packageE.getName().equalsIgnoreCase(packagename)) {
+					JOptionPane.showMessageDialog(null, "Already existing");
+					return null;
+				}
+			}
+
 			projectList.get(i).addPackage(packageElement);
+			pe.save();
 			packageElement.save();
 			ProjectPanel.getInstance().reset();
 			return packageElement;
@@ -142,6 +187,7 @@ public class ProjectController {
 		ComplieUnitElement cue = project.getCodeFactory()
 				.createComplieUnitElement(name);
 		cue.setName(name);
+		project.save();
 		return cue;
 	}
 
@@ -208,6 +254,14 @@ public class ProjectController {
 			PackageElement packageElement = projectElement.getPackages().get(
 					packageid);
 
+			for (ComplieUnitElement cue : packageElement
+					.getComplieUnitArrayList()) {
+				if (cue.getName().equalsIgnoreCase(classname)) {
+					JOptionPane.showMessageDialog(null, "Already existing");
+					return null;
+				}
+			}
+
 			ComplieUnitElement ce = newComplieUnitElement(
 					projectList.get(projectid), classname);
 
@@ -225,7 +279,7 @@ public class ProjectController {
 	// show the class in codepanel when double clicked the java file in the
 	// treepanel
 	public void showSelectedCodePanel(int project, int packageIndex, int ceIndex) {
-		
+
 		// get the selected class
 		ProjectElement pe = projectList.get(project);
 		PackageElement packageElement = pe.getPackages().get(packageIndex);

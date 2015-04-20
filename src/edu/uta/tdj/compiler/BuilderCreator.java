@@ -18,6 +18,7 @@ import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
 
+import edu.uta.tdj.code.component.ComplieUnitElement;
 import edu.uta.tdj.code.project.ProjectElement;
 
 public class BuilderCreator {
@@ -60,10 +61,13 @@ public class BuilderCreator {
 
 			Element mainclass = (Element) node.getElementsByTagName("property")
 					.item(0);
-
-			String mainclassStr = pe.getMainclass().getPackage().getName()
-					+ "." + pe.getMainclass().getName();
-			mainclass.setAttribute("value", mainclassStr);
+			ComplieUnitElement mainClass = pe.getMainclass();
+			if(mainClass!=null){
+				
+				String mainclassStr = pe.getMainclass().getPackage().getName()
+						+ "." + pe.getMainclass().getName();
+				mainclass.setAttribute("value", mainclassStr);
+			}
 
 			TransformerFactory transformerFactory = TransformerFactory
 					.newInstance();
