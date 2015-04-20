@@ -41,6 +41,14 @@ public abstract class Element implements ComputedElement {
 
 	protected ArrayList<Element> childArrayList = new ArrayList<Element>();
 
+	public ArrayList<Element> getChildArrayList() {
+		return childArrayList;
+	}
+
+	public void setChildArrayList(ArrayList<Element> childArrayList) {
+		this.childArrayList = childArrayList;
+	}
+
 	public Form getForm() {
 		return this.form;
 	}

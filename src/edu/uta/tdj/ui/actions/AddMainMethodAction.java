@@ -2,8 +2,11 @@ package edu.uta.tdj.ui.actions;
 
 import java.awt.event.ActionEvent;
 
+import javax.swing.JOptionPane;
+
 import edu.uta.tdj.code.component.ClassElement;
 import edu.uta.tdj.code.component.ComplieUnitElement;
+import edu.uta.tdj.code.component.Element;
 import edu.uta.tdj.code.component.MethodElement;
 import edu.uta.tdj.controller.ProjectController;
 import edu.uta.tdj.ui.CodePanel;
@@ -20,6 +23,13 @@ public class AddMainMethodAction extends ButtonActions {
 
 		MethodElement main = ((ComplieUnitElement) ce.getParent()).getPackage()
 				.getProjectElement().getCodeFactory().createMainMethodElement();
+		
+		for(Element method: ce.getChildArrayList()){
+			if(method.getName().equalsIgnoreCase(main.getName()) && method instanceof MethodElement){
+				JOptionPane.showMessageDialog(null, "Already existing");
+				return;
+			}
+		}
 
 		ce.addChild(main);
 
