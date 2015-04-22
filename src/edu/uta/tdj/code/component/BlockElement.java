@@ -8,10 +8,13 @@ import javax.swing.JButton;
 
 import org.eclipse.jdt.core.dom.AST;
 import org.eclipse.jdt.core.dom.Block;
+import org.eclipse.jdt.core.dom.Expression;
 import org.eclipse.jdt.core.dom.Modifier.ModifierKeyword;
+import org.eclipse.jdt.core.dom.Statement;
 
 import edu.uta.tdj.code.component.statment.StatementElement;
 import edu.uta.tdj.code.proposal.ProposalButtonFactory;
+import edu.uta.tdj.ui.forms.BlockForm;
 import edu.uta.tdj.ui.forms.Form;
 
 public class BlockElement extends StatementElement {
@@ -20,6 +23,8 @@ public class BlockElement extends StatementElement {
 		super(ast);
 		astNode = ast.newBlock();
 		defaultHeight = 50;
+		this.form = new BlockForm();
+		form.setElement(this);
 	}
 
 	public void setY(int y) {
@@ -33,7 +38,11 @@ public class BlockElement extends StatementElement {
 
 	@Override
 	public void addChild(Element element) {
-		((Block) astNode).statements().add(element.getAstNode());
+		if(element.getAstNode() instanceof Statement)
+			((Block) astNode).statements().add(element.getAstNode());
+		else {
+			((Block) astNode).statements().add(ast.newExpressionStatement((Expression) element.getAstNode()));
+		}
 		childArrayList.add(element);
 		element.setParent(this);
 		element.setX(x + 20);

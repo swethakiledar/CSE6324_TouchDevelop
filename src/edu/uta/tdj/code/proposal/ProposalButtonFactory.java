@@ -18,6 +18,8 @@ import edu.uta.tdj.ui.actions.AdPrintAction;
 import edu.uta.tdj.ui.actions.AddFieldAction;
 import edu.uta.tdj.ui.actions.AddIfStatementAction;
 import edu.uta.tdj.ui.actions.AddMainMethodAction;
+import edu.uta.tdj.ui.actions.AddMethodAction;
+import edu.uta.tdj.ui.actions.AddStatement;
 import edu.uta.tdj.ui.actions.RemoveAction;
 
 public class ProposalButtonFactory {
@@ -56,7 +58,7 @@ public class ProposalButtonFactory {
 
 	public void init_ClassButtons_al() {
 		JButton addMethodButton = new JButton("Add a Method");
-
+		addMethodButton.addActionListener(new AddMethodAction());
 		JButton addFieldButton = new JButton("Add a Field");
 		addFieldButton.addActionListener(new AddFieldAction());
 
@@ -74,15 +76,22 @@ public class ProposalButtonFactory {
 		JButton addIfButton = new JButton("Add a IF");
 		JButton addDoButton = new JButton("Add a DO While");
 		JButton addPrintButton = new JButton("System.out.println");
+		JButton addStatementButton = new JButton("Add a Statement");
+
+		JButton addFieldButton = new JButton("Add a Field");
+		addFieldButton.addActionListener(new AddFieldAction());
+
 		addPrintButton.addActionListener(new AdPrintAction());
 		addIfButton.addActionListener(new AddIfStatementAction());
-
+		addStatementButton.addActionListener(new AddStatement());
 		methodButtons_al.add(addWhileButton);
 		methodButtons_al.add(addDoButton);
 		methodButtons_al.add(addIfButton);
 		methodButtons_al.add(addForButton);
 		methodButtons_al.add(removeButton);
 		methodButtons_al.add(addPrintButton);
+		methodButtons_al.add(addStatementButton);
+		methodButtons_al.add(addFieldButton);
 	}
 
 	public List<JButton> getButtons(IfStatementElement is) {

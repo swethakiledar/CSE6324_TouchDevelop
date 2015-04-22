@@ -42,6 +42,7 @@ public class MethodElement extends Element {
 		setHeight(50);
 		defaultHeight = 50;
 		this.form = new MethodForm();
+		form.setElement(this);
 	}
 
 	public void setName(String name) {
@@ -135,7 +136,8 @@ public class MethodElement extends Element {
 			sb.append(svd.toString());
 			sb.append(",");
 		}
-		sb.replace(sb.length()-1, sb.length()-0, "");
+		if(sb.length()!=0)
+			sb.replace(sb.length()-1, sb.length()-0, "");
 		
 		return modifiedString + " " + returnTypeString + " " + name + "("
 				+ sb.toString() + ")"

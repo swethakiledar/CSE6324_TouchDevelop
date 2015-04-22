@@ -5,13 +5,14 @@ import java.util.List;
 import org.eclipse.jdt.core.dom.Modifier.ModifierKeyword;
 
 import edu.uta.tdj.code.component.FieldElement;
+import edu.uta.tdj.factory.ASTTranfer;
 
 public class FieldForm extends Form {
 
 	public FieldForm() {
 		super();
 		String[][] item_value_array = { { "Field Name", oldname },
-				{ "Type", "" }, { "Access", "" } };
+				{ "Type", oldType }, { "Access", oldAccess } };
 		super.setTableItem(item_value_array);
 	}
 
@@ -27,18 +28,33 @@ public class FieldForm extends Form {
 	}
 
 	String oldname = "";
-	String oldType = null;
-	String oldAccess = null;
+	String oldType = "";
+	String oldAccess = "";
 
 	@Override
 	public void updateElement() {
 		String newname = (String) this.table.getValueAt(0, 1);
-		System.out.println(newname + "====new name is ");
+		String newType = (String) this.table.getValueAt(1, 1);
+		String newAccess = (String) this.table.getValueAt(2, 1);
+		
+		
 		if (newname !=null &&!oldname.equals(newname)) {
-			System.out.println("setting name");
 			element.setName(newname);
 			oldname = newname;
 		}
+		
+		if (newType !=null &&!oldType.equals(newType)) {
+			((FieldElement)element).setType(ASTTranfer.getType(newType, element.getAstNode().getAST()));
+			oldType = newType;
+		}
+		
+		if (newAccess !=null &&!oldAccess.equals(newAccess)) {
+			((FieldElement)element).setModifiers(ASTTranfer.getModifierKeyword(newAccess));
+			oldAccess = newAccess;
+		}
+		
+		
+		
 	}
 
 }

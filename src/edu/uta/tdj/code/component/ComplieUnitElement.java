@@ -113,7 +113,7 @@ public class ComplieUnitElement extends Element implements ISave {
 		this.setName(publicClassElement.getName());
 		fs.deleteFile(path);
 		path = path = packageElement.getPath() + "/" + publicClassElement.getName() + ".java";
-		fs.saveFile(path, toString());
+		fs.saveFile(path, astNode.toString());
 	}
 
 	@Override

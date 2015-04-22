@@ -1,6 +1,7 @@
 package edu.uta.tdj.ui.forms;
 
 import java.awt.Component;
+import java.util.HashMap;
 
 import javax.swing.JPanel;
 import javax.swing.JTable;
@@ -8,6 +9,7 @@ import javax.swing.event.TableModelEvent;
 import javax.swing.event.TableModelListener;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableCellEditor;
 
 import edu.uta.tdj.code.component.Element;
 import edu.uta.tdj.ui.GUI;
@@ -15,12 +17,12 @@ import edu.uta.tdj.ui.VFlowLayout;
 
 public abstract class Form extends JPanel {
 	protected Element element;
-	protected JTable table;
+	protected MyTable table;
 	private DefaultTableCellRenderer tcr;
 
 	public Form() {
 		setLayout(new VFlowLayout());
-		table = new JTable();
+		table = new MyTable();
 		table.setCellSelectionEnabled(true);
 		table.setRowSelectionAllowed(true);
 		add(table);
@@ -35,7 +37,7 @@ public abstract class Form extends JPanel {
 			}
 		};
 	}
-
+	
 	private void setUpdateData() {
 		table.getModel().addTableModelListener(new TableModelListener() {
 			public void tableChanged(TableModelEvent e) {
@@ -47,11 +49,11 @@ public abstract class Form extends JPanel {
 		});
 	}
 
-	protected void setTableItem(String[][] item_value_array) {
+	protected void setTableItem(Object[][] item_value_array) {
 
-		table.setModel(new DefaultTableModel(item_value_array, new String[] {
+		table.setModel(new DefaultTableModel(item_value_array, new Object[] {
 				"Item", "Value" }) {
-			Class[] columnTypes = new Class[] { String.class, String.class };
+			Class[] columnTypes = new Class[] { Object.class, Object.class };
 
 			public Class getColumnClass(int columnIndex) {
 				return columnTypes[columnIndex];
@@ -66,7 +68,7 @@ public abstract class Form extends JPanel {
 
 		table.getColumn("Item").setCellRenderer(tcr);
 		table.getColumn("Value").setCellRenderer(tcr);
-		
+
 		setUpdateData();
 	}
 
@@ -78,4 +80,23 @@ public abstract class Form extends JPanel {
 	public abstract void setTableValue();
 
 	public abstract void updateElement();
+
+	class MyTable extends JTable {
+		TableCellEditor myEditor;
+		HashMap<Integer, TableCellEditor> cellEditorMap = new HashMap<>();
+
+		public void addComboCell(int r, TableCellEditor ce) {
+			cellEditorMap.put(r, ce);
+		}
+
+		@Override
+		public TableCellEditor getCellEditor(int row, int column) {
+			if (cellEditorMap.containsKey(row) && column == 1) {
+				return cellEditorMap.get(row);
+			}
+
+			return super.getCellEditor(row, column);
+		}
+
+	}
 }

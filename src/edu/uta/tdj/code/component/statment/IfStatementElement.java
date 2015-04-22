@@ -8,6 +8,7 @@ import javax.swing.JButton;
 
 import org.eclipse.jdt.core.dom.AST;
 import org.eclipse.jdt.core.dom.Expression;
+import org.eclipse.jdt.core.dom.ExpressionStatement;
 import org.eclipse.jdt.core.dom.IfStatement;
 
 import edu.uta.tdj.code.component.BlockElement;
@@ -70,6 +71,10 @@ public class IfStatementElement extends StatementElement {
 		((IfStatement) astNode).setExpression((Expression) expressionElement
 				.getAstNode());
 		expressionElement.setParent(this);
+	}
+
+	public void setExpression(Expression expression) {
+		((IfStatement) astNode).setExpression(expression);
 	}
 
 	public BlockElement getThenBlockElement() {

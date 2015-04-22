@@ -25,7 +25,7 @@ public class AddMainMethodAction extends ButtonActions {
 				.getProjectElement().getCodeFactory().createMainMethodElement();
 		
 		for(Element method: ce.getChildArrayList()){
-			if(method.getName().equalsIgnoreCase(main.getName()) && method instanceof MethodElement){
+			if(method.getName().equalsIgnoreCase(main.getName()) && method instanceof MethodElement ){
 				JOptionPane.showMessageDialog(null, "Already existing");
 				return;
 			}

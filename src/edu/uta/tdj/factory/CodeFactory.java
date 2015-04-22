@@ -14,6 +14,7 @@ import edu.uta.tdj.code.component.ClassElement;
 import edu.uta.tdj.code.component.ComplieUnitElement;
 import edu.uta.tdj.code.component.FieldElement;
 import edu.uta.tdj.code.component.MethodElement;
+import edu.uta.tdj.code.component.expression.ExpressionElement;
 import edu.uta.tdj.code.component.expression.InfixExpressionElement;
 import edu.uta.tdj.code.component.expression.MethodInvocationElement;
 import edu.uta.tdj.code.component.statment.IfStatementElement;
@@ -84,6 +85,12 @@ public class CodeFactory {
 		return ifStatementElement;
 	}
 
+	public ExpressionElement createExpressionElement() {
+		ExpressionElement ee = new ExpressionElement(ast);
+		return ee;
+
+	}
+
 	/**
 	 * create a new InfixExpressionElement
 	 * */
@@ -113,6 +120,14 @@ public class CodeFactory {
 		me.setModifiers(modifier);
 		me.setReturnType(returnType);
 		me.getForm().setElement(me);
+		return me;
+	}
+
+	public MethodElement createDefaultMethodElement() {
+		MethodElement me = createMethodElement("newMethod",
+				ModifierKeyword.PUBLIC_KEYWORD,
+				ast.newPrimitiveType(PrimitiveType.VOID));
+		me.setName("newMethod");
 		return me;
 	}
 
