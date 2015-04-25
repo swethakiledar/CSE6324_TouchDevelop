@@ -26,7 +26,6 @@ public class CodePanel extends JPanel {
 	public CodePanel() {
 		this.sl =  new SelectListener(this);
 		this.setBackground(Color.orange);
-//		this.setPreferredSize(new Dimension(200, 1000));
 	}
 	public void setComplieUnitElement(ComplieUnitElement ceElement) {
 		this.ce = ceElement;

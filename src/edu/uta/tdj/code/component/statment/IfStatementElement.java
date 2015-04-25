@@ -39,6 +39,7 @@ public class IfStatementElement extends StatementElement {
 		// add
 		childArrayList.add(thenBlockElement);
 		childArrayList.add(elseBlockElement);
+		
 		setHeight(120);
 		defaultHeight = 120;
 		this.form = new IfForm();
@@ -65,6 +66,10 @@ public class IfStatementElement extends StatementElement {
 	public ExpressionElement getExpressionElement() {
 		return expressionElement;
 	}
+	
+	public void addThenStatement(){
+		
+	}
 
 	public void setExpressionElement(ExpressionElement expressionElement) {
 		this.expressionElement = expressionElement;
@@ -80,7 +85,7 @@ public class IfStatementElement extends StatementElement {
 	public BlockElement getThenBlockElement() {
 		return thenBlockElement;
 	}
-
+	
 	public BlockElement getElseBlockElement() {
 		return elseBlockElement;
 	}

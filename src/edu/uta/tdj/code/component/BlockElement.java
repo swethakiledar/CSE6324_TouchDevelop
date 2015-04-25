@@ -9,6 +9,7 @@ import javax.swing.JButton;
 import org.eclipse.jdt.core.dom.AST;
 import org.eclipse.jdt.core.dom.Block;
 import org.eclipse.jdt.core.dom.Expression;
+import org.eclipse.jdt.core.dom.IfStatement;
 import org.eclipse.jdt.core.dom.Modifier.ModifierKeyword;
 import org.eclipse.jdt.core.dom.Statement;
 
@@ -41,14 +42,15 @@ public class BlockElement extends StatementElement {
 		if(element.getAstNode() instanceof Statement)
 			((Block) astNode).statements().add(element.getAstNode());
 		else {
-			((Block) astNode).statements().add(ast.newExpressionStatement((Expression) element.getAstNode()));
+			System.out.println("ss");
+			((IfStatement)this.parent.getAstNode()).setThenStatement(ast.newExpressionStatement((Expression) element.getAstNode()));
+//			((Block) astNode).statements().add(ast.newExpressionStatement((Expression) element.getAstNode()));
 		}
 		childArrayList.add(element);
 		element.setParent(this);
 		element.setX(x + 20);
 		element.setY(y + getHeight() - 30);
 		setHeight(getHeight() + element.getHeight());
-		
 		reSort();
 	}
 

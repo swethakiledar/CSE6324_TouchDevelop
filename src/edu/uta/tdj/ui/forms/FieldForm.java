@@ -49,12 +49,10 @@ public class FieldForm extends Form {
 		}
 		
 		if (newAccess !=null &&!oldAccess.equals(newAccess)) {
+			((FieldElement)element).setModifiers(ASTTranfer.getModifierKeyword("static"));
 			((FieldElement)element).setModifiers(ASTTranfer.getModifierKeyword(newAccess));
 			oldAccess = newAccess;
 		}
-		
-		
-		
 	}
 
 }
