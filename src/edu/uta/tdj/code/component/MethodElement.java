@@ -2,21 +2,11 @@ package edu.uta.tdj.code.component;
 
 import java.awt.Color;
 import java.awt.Graphics;
-import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import javax.swing.JButton;
 
-import org.eclipse.jdt.core.dom.AST;
-import org.eclipse.jdt.core.dom.ASTNode;
-import org.eclipse.jdt.core.dom.Block;
-import org.eclipse.jdt.core.dom.Expression;
-import org.eclipse.jdt.core.dom.MethodDeclaration;
-import org.eclipse.jdt.core.dom.SingleVariableDeclaration;
-import org.eclipse.jdt.core.dom.Type;
-import org.eclipse.jdt.core.dom.Modifier.ModifierKeyword;
-
-import edu.uta.tdj.code.component.expression.MethodInvocationElement;
 import edu.uta.tdj.code.proposal.ProposalButtonFactory;
 import edu.uta.tdj.ui.forms.MethodForm;
 
@@ -35,10 +25,12 @@ public class MethodElement extends Element {
 
 	private String modifiedString = "";
 	private String returnTypeString = "";
+	private String accessString = "";
+	
+	private HashMap< String, String> paramterMap = new HashMap<>();
+	
 
-	public MethodElement(AST ast) {
-		super(ast);
-		astNode = ast.newMethodDeclaration();
+	public MethodElement() {
 		setHeight(50);
 		defaultHeight = 50;
 		this.form = new MethodForm();
@@ -46,42 +38,35 @@ public class MethodElement extends Element {
 	}
 
 	public void setName(String name) {
-		((MethodDeclaration) astNode).setName(ast.newSimpleName(name));
 		this.name = name;
 		this.width = name.length() * 6;
 	}
 
-	public void setModifiers(ModifierKeyword modifiers) {
-		((MethodDeclaration) astNode).modifiers().add(
-				ast.newModifier(modifiers));
-		modifiedString = modifiedString + " " + modifiers.toString();
+	public void setModifiers(String modifiers) {
+		this.modifiedString = modifiers;
+	}
+	
+	public void setAccess(String access){
+		this.accessString = access;
+	}
+	
+	public String getAccess(){
+		return this.accessString;
+	}
+	
+	public String getModifiers(){
+		return this.modifiedString;
 	}
 
 	public void addParam(String name, String type) {
-		SingleVariableDeclaration variableDeclaration = ast
-				.newSingleVariableDeclaration();
-		variableDeclaration.setType(ast.newSimpleType(ast.newSimpleName(type)));
-		variableDeclaration.setName(ast.newSimpleName(name));
-		((MethodDeclaration) astNode).parameters().add(variableDeclaration);
+		paramterMap.put(name, type);
 	}
 
-	public void addParam(String name, Type type) {
-
-		SingleVariableDeclaration variableDeclaration = ast
-				.newSingleVariableDeclaration();
-		variableDeclaration.setType(type);
-		variableDeclaration.setName(ast.newSimpleName(name));
-		((MethodDeclaration) astNode).parameters().add(variableDeclaration);
+	
+	public void setReturnType(String type) {
+		returnTypeString = type;
 	}
 
-	public void setReturnType(Type type) {
-		((MethodDeclaration) astNode).setReturnType2(type);
-		returnTypeString = type.toString();
-	}
-
-	public void createBlock() {
-		((MethodDeclaration) astNode).setBody(ast.newBlock());
-	}
 
 	public void setY(int y) {
 		this.y = y;
@@ -94,25 +79,11 @@ public class MethodElement extends Element {
 
 	@Override
 	public void addChild(Element element) {
-		// for demo
-		if (element instanceof MethodInvocationElement) {
-			((MethodDeclaration) astNode)
-					.getBody()
-					.statements()
-					.add(ast.newExpressionStatement((Expression) element
-							.getAstNode()));
-		} else {
-			((MethodDeclaration) astNode).getBody().statements()
-					.add(element.getAstNode());
-		}
-		// for demo end
 		element.setParent(this);
-
 		childArrayList.add(element);
 		element.setX(x + 20);
 		element.setY(y + getHeight() - 30);
 		setHeight(getHeight() + element.getHeight());
-
 		reSort();
 	}
 
@@ -129,19 +100,34 @@ public class MethodElement extends Element {
 	}
 
 	public String toString() {
-
-		List paraList = ((MethodDeclaration) astNode).parameters();
+		
 		StringBuilder sb = new StringBuilder();
-		for (Object svd : paraList) {
-			sb.append(svd.toString());
+		for(String name : paramterMap.keySet()){
+			sb.append( paramterMap.get(name)+ " "+name);
 			sb.append(",");
 		}
+		
+		
 		if(sb.length()!=0)
 			sb.replace(sb.length()-1, sb.length()-0, "");
 		
-		return modifiedString + " " + returnTypeString + " " + name + "("
+		return accessString + " " + modifiedString + " " + returnTypeString + " " + name + "("
 				+ sb.toString() + ")"
 				+ "{";
+	}
+
+	@Override
+	public String toCode() {
+		StringBuffer sb = new StringBuffer();
+		sb.append(this.toString());
+		sb.append(System.getProperty("line.separator"));
+		for(Element e : childArrayList){
+			sb.append(e.toCode());
+			sb.append(System.getProperty("line.separator"));
+		}
+		sb.append("}");
+		
+		return sb.toString();
 	}
 
 }

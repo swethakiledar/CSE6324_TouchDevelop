@@ -12,7 +12,6 @@ public class AddFieldAction extends ButtonActions {
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		// TODO Auto-generated method stub
-		super.actionPerformed(e);
 		Element element = ProjectController.getInstance()
 				.getSelectedCodePanel().getSelectListener()
 				.getSelectedElement();

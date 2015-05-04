@@ -4,7 +4,6 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
-import org.eclipse.jdt.core.dom.AST;
 import edu.uta.tdj.code.component.ComplieUnitElement;
 import edu.uta.tdj.code.file.ISave;
 import edu.uta.tdj.factory.CodeFactory;
@@ -16,7 +15,6 @@ public class ProjectElement implements ISave {
 	private String projectName = "";
 
 	private String path = "";
-	private AST ast;
 
 	private ComplieUnitElement mainclassString;
 
@@ -25,8 +23,6 @@ public class ProjectElement implements ISave {
 	public ProjectElement(String path, String name) {
 		this.projectName = name;
 		this.path = path +"/"+ name;
-		this.ast = AST.newAST(AST.JLS4);
-		codeFactory.setAST(ast);
 	}
 
 	/**
@@ -36,8 +32,6 @@ public class ProjectElement implements ISave {
 		this.path = pathName;
 		String[] tmp = pathName.split("/");
 		this.projectName = tmp[tmp.length - 1];
-		this.ast = AST.newAST(AST.JLS4);
-		codeFactory.setAST(ast);
 	}
 
 	public void setMainClass(ComplieUnitElement mainclass) {
@@ -55,7 +49,6 @@ public class ProjectElement implements ISave {
 	public void addPackage(PackageElement packageElement) {
 		this.packageList.add(packageElement);
 		packageElement.setPath(this.path);
-		packageElement.setAST(ast);
 		packageElement.setProjectElement(this);
 	}
 

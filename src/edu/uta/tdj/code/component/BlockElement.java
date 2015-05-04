@@ -6,24 +6,15 @@ import java.util.List;
 
 import javax.swing.JButton;
 
-import org.eclipse.jdt.core.dom.AST;
-import org.eclipse.jdt.core.dom.Block;
-import org.eclipse.jdt.core.dom.Expression;
-import org.eclipse.jdt.core.dom.IfStatement;
-import org.eclipse.jdt.core.dom.Modifier.ModifierKeyword;
-import org.eclipse.jdt.core.dom.Statement;
 
-import edu.uta.tdj.code.component.statment.StatementElement;
 import edu.uta.tdj.code.proposal.ProposalButtonFactory;
 import edu.uta.tdj.ui.forms.BlockForm;
-import edu.uta.tdj.ui.forms.Form;
 
-public class BlockElement extends StatementElement {
+public class BlockElement extends Element {
 
-	public BlockElement(AST ast) {
-		super(ast);
-		astNode = ast.newBlock();
+	public BlockElement() {
 		defaultHeight = 50;
+		this.setHeight(defaultHeight);
 		this.form = new BlockForm();
 		form.setElement(this);
 	}
@@ -39,13 +30,6 @@ public class BlockElement extends StatementElement {
 
 	@Override
 	public void addChild(Element element) {
-		if(element.getAstNode() instanceof Statement)
-			((Block) astNode).statements().add(element.getAstNode());
-		else {
-			System.out.println("ss");
-			((IfStatement)this.parent.getAstNode()).setThenStatement(ast.newExpressionStatement((Expression) element.getAstNode()));
-//			((Block) astNode).statements().add(ast.newExpressionStatement((Expression) element.getAstNode()));
-		}
 		childArrayList.add(element);
 		element.setParent(this);
 		element.setX(x + 20);
@@ -67,12 +51,24 @@ public class BlockElement extends StatementElement {
 	}
 
 	@Override
-	public void setModifiers(ModifierKeyword modifiers) {
+	public String toString() {
+		return "";
 	}
 
 	@Override
 	public List<JButton> getButtons(ProposalButtonFactory pcComputer) {
 		return pcComputer.getButtons(this);
+	}
+
+	@Override
+	public String toCode() {
+		StringBuffer sb = new StringBuffer();
+		sb.append("{");
+		for (Element ee : childArrayList) {
+			sb.append(ee.toCode());
+		}
+		sb.append("}");
+		return sb.toString();
 	}
 
 }

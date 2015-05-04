@@ -10,7 +10,6 @@ import javax.swing.JOptionPane;
 import javax.swing.JScrollPane;
 import javax.swing.JTextField;
 
-import org.eclipse.jdt.core.compiler.BuildContext;
 
 import edu.uta.tdj.code.component.ComplieUnitElement;
 import edu.uta.tdj.code.project.PackageElement;

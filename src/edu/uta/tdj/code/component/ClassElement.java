@@ -10,11 +10,6 @@ import java.util.List;
 
 import javax.swing.JButton;
 
-import org.eclipse.jdt.core.dom.AST;
-import org.eclipse.jdt.core.dom.ASTNode;
-import org.eclipse.jdt.core.dom.Modifier.ModifierKeyword;
-import org.eclipse.jdt.core.dom.TypeDeclaration;
-
 import edu.uta.tdj.code.proposal.ProposalButtonFactory;
 import edu.uta.tdj.ui.forms.ClassForm;
 
@@ -26,27 +21,23 @@ import edu.uta.tdj.ui.forms.ClassForm;
 public class ClassElement extends Element {
 
 	private String modifiedString = "";
+	private String accessString = "";
 
-	public ClassElement(AST ast) {
-		super(ast);
-		this.astNode = ast.newTypeDeclaration();
+	public ClassElement() {
 		this.setX(50);
 		this.setY(50);
 		this.form = new ClassForm();
+		this.form.setElement(this);
 		setHeight(100);
 		defaultHeight = 100;
 	}
 
 	public void setName(String name) {
 		this.name = name;
-		((TypeDeclaration) astNode).setName(ast.newSimpleName(name));
 	}
 
 	@Override
 	public void addChild(Element element) {
-		((TypeDeclaration) astNode).bodyDeclarations()
-				.add(element.getAstNode());
-		// ((TypeDeclaration) astNode).
 		childArrayList.add(element);
 		element.setParent(this);
 		element.setX(x + 20);
@@ -58,22 +49,26 @@ public class ClassElement extends Element {
 	/**
 	 * should be changed and split into parts
 	 * */
-	@Override
-	public void setModifiers(ModifierKeyword modifiers) {
-		((TypeDeclaration) astNode).modifiers().add(ast.newModifier
+	public void setModifiers(String modifiers) {
+		this.modifiedString = modifiers;
+	}
 
-		(modifiers));
-		modifiedString = modifiedString + " " + modifiers.toString();
+	public String getModifiers() {
+		return this.modifiedString;
+	}
+
+	public void setAccess(String access) {
+		this.accessString = access;
+	}
+
+	public String getAccess() {
+
+		return this.accessString;
 	}
 
 	@Override
 	public List<JButton> getButtons(ProposalButtonFactory pcComputer) {
 		return pcComputer.getButtons(this);
-	}
-
-	@Override
-	public ASTNode getAstNode() {
-		return astNode;
 	}
 
 	@Override
@@ -91,7 +86,25 @@ public class ClassElement extends Element {
 	}
 
 	public String toString() {
-		return this.modifiedString + "  class  " + name + "  {";
+		String head = this.modifiedString + this.accessString + "  class  "
+				+ name + "  {";
+		return head;
+	}
+
+	public String toCode() {
+		String head = this.modifiedString + this.accessString + "  class  "
+				+ name + "  {";
+		StringBuffer sb = new StringBuffer();
+		sb.append(head);
+		sb.append(System.getProperty("line.separator"));
+		for (Element me : childArrayList) {
+			sb.append(me.toCode());
+			sb.append(System.getProperty("line.separator"));
+		}
+		sb.append("}");
+		System.out.println(sb.toString());
+		
+		return sb.toString();
 	}
 
 }

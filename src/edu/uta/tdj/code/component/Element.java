@@ -8,9 +8,6 @@ import java.util.List;
 
 import javax.swing.JButton;
 
-import org.eclipse.jdt.core.dom.AST;
-import org.eclipse.jdt.core.dom.ASTNode;
-import org.eclipse.jdt.core.dom.Modifier.ModifierKeyword;
 
 import edu.uta.tdj.code.proposal.ComputedElement;
 import edu.uta.tdj.code.proposal.ProposalButtonFactory;
@@ -24,9 +21,7 @@ import edu.uta.tdj.ui.forms.Form;
 
 public abstract class Element implements ComputedElement {
 
-	protected ASTNode astNode;
 	protected Element parent;
-	protected AST ast;
 	protected String name;
 	protected Color backgroundColor;
 
@@ -38,9 +33,12 @@ public abstract class Element implements ComputedElement {
 	protected int defaultHeight;
 
 	protected ArrayList<JButton> buttons_ArrayList;
-
+	
 	protected ArrayList<Element> childArrayList = new ArrayList<Element>();
-
+	
+	
+	public abstract String toCode();
+	
 	public ArrayList<Element> getChildArrayList() {
 		return childArrayList;
 	}
@@ -78,8 +76,7 @@ public abstract class Element implements ComputedElement {
 
 	public void removeChild(Element element) {
 		childArrayList.remove(element);
-		element.getAstNode().delete();
-
+		
 		height = height - element.getHeight();
 		reSort();
 	}
@@ -108,9 +105,6 @@ public abstract class Element implements ComputedElement {
 
 	protected boolean selected = false;
 
-	public Element(AST ast) {
-		this.ast = ast;
-	}
 
 	public void draw(Graphics g) {
 		g.setFont(new Font("Tahoma", Font.BOLD, 15));
@@ -141,7 +135,6 @@ public abstract class Element implements ComputedElement {
 		}
 	}
 
-	public abstract void setModifiers(ModifierKeyword modifiers);
 
 	public boolean isInelement(int x_in, int y_in) {
 		if (y_in > this.y && y_in < this.y + 20) {
@@ -158,13 +151,6 @@ public abstract class Element implements ComputedElement {
 	@Override
 	public abstract List<JButton> getButtons(ProposalButtonFactory pcComputer);
 
-	public ASTNode getAstNode() {
-		return astNode;
-	}
-
-	public void setAstNode(ASTNode astNode) {
-		this.astNode = astNode;
-	}
 
 	public String getName() {
 		return name;
@@ -175,7 +161,8 @@ public abstract class Element implements ComputedElement {
 	}
 
 	public String toString() {
-		return astNode.toString();
+		
+		return "";
 	}
 
 	public int getX() {

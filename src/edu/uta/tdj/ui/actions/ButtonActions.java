@@ -6,9 +6,8 @@ import java.awt.event.ActionListener;
 import edu.uta.tdj.code.component.Element;
 
 
-public class ButtonActions implements ActionListener{
+public abstract class ButtonActions implements ActionListener{
 	
-	public void actionPerformed(ActionEvent e) {
-	}
+	public abstract void actionPerformed(ActionEvent e);
 
 }

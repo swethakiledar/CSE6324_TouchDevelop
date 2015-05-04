@@ -1,24 +1,9 @@
 package edu.uta.tdj.controller;
 
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.event.MouseListener;
-import java.util.ArrayList;
-import java.util.List;
-
-import org.eclipse.jdt.core.dom.ASTNode;
-import org.w3c.dom.events.EventTarget;
-import org.w3c.dom.events.MouseEvent;
-import org.w3c.dom.views.AbstractView;
-
-import edu.uta.tdj.code.component.ClassElement;
 import edu.uta.tdj.code.component.ComplieUnitElement;
 import edu.uta.tdj.code.component.Element;
-import edu.uta.tdj.code.proposal.ProposalButtonFactory;
-import edu.uta.tdj.code.proposal.ProposalComputer;
-import edu.uta.tdj.ui.ButtonPanel;
 import edu.uta.tdj.ui.CodePanel;
-import edu.uta.tdj.ui.FormPanel;
 import edu.uta.tdj.ui.GUI;
 import edu.uta.tdj.ui.ToolsPanel;
 

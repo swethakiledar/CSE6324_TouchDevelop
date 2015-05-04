@@ -6,12 +6,6 @@ import java.util.List;
 
 import javax.swing.JButton;
 
-import org.eclipse.jdt.core.dom.AST;
-import org.eclipse.jdt.core.dom.ASTNode;
-import org.eclipse.jdt.core.dom.FieldDeclaration;
-import org.eclipse.jdt.core.dom.VariableDeclarationFragment;
-import org.eclipse.jdt.core.dom.Modifier.ModifierKeyword;
-
 import edu.uta.tdj.code.proposal.ProposalButtonFactory;
 import edu.uta.tdj.ui.forms.FieldForm;
 
@@ -23,50 +17,27 @@ import edu.uta.tdj.ui.forms.FieldForm;
 
 public class FieldElement extends Element {
 
-	private VariableDeclarationFragment vdf;
+	private String typeString = "";
+	private String modifiersString = "";
+	private String accessString = "";
+	private String assignmentString = "";
 
-	public FieldElement(AST ast) {
-		super(ast);
-		vdf = ast.newVariableDeclarationFragment();
-		astNode = ast.newFieldDeclaration(vdf);
+	public FieldElement() {
 		setHeight(20);
 		this.form = new FieldForm();
 		form.setElement(this);
 	}
 
 	public void setName(String name) {
-		vdf.setName(ast.newSimpleName(name));
-		System.out.println(astNode);
 		this.name = name;
 	}
 
 	public void setType(String type) {
-		((FieldDeclaration) astNode).setType(ast.newSimpleType(ast
-				.newSimpleName(type)));
+		this.typeString = type;
 	}
 
-	public void setType(org.eclipse.jdt.core.dom.Type type) {
-		((FieldDeclaration) astNode).setType(type);
-	}
-
-	public org.eclipse.jdt.core.dom.Type getType() {
-		org.eclipse.jdt.core.dom.Type type = ((FieldDeclaration) astNode)
-				.getType();
-		return type;
-	}
-
-	@Override
-	public void setModifiers(ModifierKeyword modifiers) {
-		((FieldDeclaration) astNode).modifiers()
-				.add(ast.newModifier(modifiers));
-	}
-
-	public List getModifierKeyword() {
-		return ((FieldDeclaration) astNode).modifiers();
-	}
-
-	public ASTNode getAstNode() {
-		return astNode;
+	public String getType() {
+		return typeString;
 	}
 
 	@Override
@@ -78,18 +49,49 @@ public class FieldElement extends Element {
 		g.setColor(Color.black);
 	}
 
+	public void setModifiers(String modifiers) {
+		this.modifiersString = modifiers;
+	}
+
+	public void setAccess(String access) {
+		this.accessString = access;
+	}
+
+	public String getAccess() {
+		return this.accessString;
+	}
+
+	public String getModifiers() {
+		return this.modifiersString;
+	}
+
 	public String toString() {
-		return astNode.toString();
+		String aString = assignmentString.trim().equals("") ? "" : "="
+				+ assignmentString;
+		return accessString + " " + modifiersString + " " + typeString + " "
+				+ name + aString + ";";
 	}
 
 	@Override
 	public void addChild(Element element) {
-		// TODO Auto-generated method stub
 	}
 
 	@Override
 	public List<JButton> getButtons(ProposalButtonFactory pcComputer) {
 		return pcComputer.getButtons(this);
+	}
+
+	@Override
+	public String toCode() {
+		return toString();
+	}
+
+	public String getAssignmentString() {
+		return assignmentString;
+	}
+
+	public void setAssignmentString(String assignmentString) {
+		this.assignmentString = assignmentString;
 	}
 
 }

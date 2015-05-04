@@ -1,23 +1,14 @@
 package edu.uta.tdj.factory;
 
-import org.eclipse.jdt.core.dom.AST;
-import org.eclipse.jdt.core.dom.ArrayAccess;
-import org.eclipse.jdt.core.dom.ArrayCreation;
-import org.eclipse.jdt.core.dom.ArrayInitializer;
-import org.eclipse.jdt.core.dom.Assignment;
-import org.eclipse.jdt.core.dom.CompilationUnit;
-import org.eclipse.jdt.core.dom.PrimitiveType;
-import org.eclipse.jdt.core.dom.Modifier.ModifierKeyword;
-import org.eclipse.jdt.core.dom.Type;
 
+import edu.uta.tdj.code.component.BlockElement;
 import edu.uta.tdj.code.component.ClassElement;
 import edu.uta.tdj.code.component.ComplieUnitElement;
+import edu.uta.tdj.code.component.ExpressionStatement;
 import edu.uta.tdj.code.component.FieldElement;
+import edu.uta.tdj.code.component.IfStatement;
 import edu.uta.tdj.code.component.MethodElement;
-import edu.uta.tdj.code.component.expression.ExpressionElement;
-import edu.uta.tdj.code.component.expression.InfixExpressionElement;
-import edu.uta.tdj.code.component.expression.MethodInvocationElement;
-import edu.uta.tdj.code.component.statment.IfStatementElement;
+import edu.uta.tdj.code.component.WhileStatement;
 
 /**
  * 2015 2015Äê2ÔÂ22ÈÕ
@@ -27,18 +18,11 @@ import edu.uta.tdj.code.component.statment.IfStatementElement;
 
 public class CodeFactory {
 
-	private AST ast;
 
 	public CodeFactory() {
 	}
 
-	public void setAST(AST ast) {
-		this.ast = ast;
-	}
 
-	public CompilationUnit createCompilationUnit() {
-		return ast.newCompilationUnit();
-	}
 
 	/**
 	 * create a new public class
@@ -48,8 +32,7 @@ public class CodeFactory {
 	 * @return the new created classelement
 	 * */
 	public ClassElement createClass(String name) {
-		ClassElement ce = this
-				.createClass(name, ModifierKeyword.PUBLIC_KEYWORD);
+		ClassElement ce = this.createClass(name, "public");
 		return ce;
 	}
 
@@ -60,8 +43,8 @@ public class CodeFactory {
 	 *            : the name of the class
 	 * @return the new created classelement
 	 * */
-	public ClassElement createClass(String name, ModifierKeyword modifier) {
-		ClassElement ce = new ClassElement(ast);
+	public ClassElement createClass(String name, String modifier) {
+		ClassElement ce = new ClassElement();
 		ce.setName(name);
 		ce.setModifiers(modifier);
 		ce.getForm().setElement(ce);
@@ -69,7 +52,7 @@ public class CodeFactory {
 	}
 
 	public ComplieUnitElement createComplieUnitElement(String name) {
-		ComplieUnitElement cue = new ComplieUnitElement(ast);
+		ComplieUnitElement cue = new ComplieUnitElement();
 		ClassElement ce = createClass(name);
 		cue.addChild(ce);
 		cue.setPublicClass(ce);
@@ -80,26 +63,33 @@ public class CodeFactory {
 	 * create a new ifstatementelement
 	 * */
 
-	public IfStatementElement createIfStatementElement() {
-		IfStatementElement ifStatementElement = new IfStatementElement(ast);
-		return ifStatementElement;
-	}
-
-	public ExpressionElement createExpressionElement() {
-		ExpressionElement ee = new ExpressionElement(ast);
-		return ee;
-
-	}
+//	public IfStatementElement createIfStatementElement() {
+//		IfStatementElement ifStatementElement = new IfStatementElement(ast);
+//		return ifStatementElement;
+//	}
+//
+//	public ForStatementElement createForStatementElement() {
+//		ForStatementElement forStatementElement = new ForStatementElement(ast);
+//
+//		return forStatementElement;
+//
+//	}
+//
+//	public ExpressionElement createExpressionElement() {
+//		ExpressionElement ee = new ExpressionElement(ast);
+//		return ee;
+//
+//	}
 
 	/**
 	 * create a new InfixExpressionElement
 	 * */
 
-	public InfixExpressionElement createInfixExpressionElement() {
-		InfixExpressionElement infixExpressionElement = new InfixExpressionElement(
-				ast);
-		return infixExpressionElement;
-	}
+//	public InfixExpressionElement createInfixExpressionElement() {
+//		InfixExpressionElement infixExpressionElement = new InfixExpressionElement(
+//				ast);
+//		return infixExpressionElement;
+//	}
 
 	/**
 	 * create a new method
@@ -112,11 +102,11 @@ public class CodeFactory {
 	 *            : the return type of the method
 	 * @return the new created method element
 	 * */
-	public MethodElement createMethodElement(String name,
-			ModifierKeyword modifier, Type returnType) {
-		MethodElement me = new MethodElement(ast);
+	public MethodElement createMethodElement(String name, String access,
+			String returnType,String modifier) {
+		MethodElement me = new MethodElement();
 		me.setName(name);
-		me.createBlock();
+		me.setAccess(access);
 		me.setModifiers(modifier);
 		me.setReturnType(returnType);
 		me.getForm().setElement(me);
@@ -124,9 +114,7 @@ public class CodeFactory {
 	}
 
 	public MethodElement createDefaultMethodElement() {
-		MethodElement me = createMethodElement("newMethod",
-				ModifierKeyword.PUBLIC_KEYWORD,
-				ast.newPrimitiveType(PrimitiveType.VOID));
+		MethodElement me = createMethodElement("newMethod", "public", "void","");
 		me.setName("newMethod");
 		return me;
 	}
@@ -136,13 +124,9 @@ public class CodeFactory {
 	 * 
 	 * */
 	public MethodElement createMainMethodElement() {
-		MethodElement me = createMethodElement("main",
-				ModifierKeyword.PUBLIC_KEYWORD,
-				ast.newPrimitiveType(PrimitiveType.VOID));
-		me.setModifiers(ModifierKeyword.STATIC_KEYWORD);
-		me.addParam("args", ast.newArrayType(ast.newSimpleType(ast
-				.newSimpleName("String"))));
-		me.setName("main");
+		MethodElement me = createMethodElement("main", "public", "void","static");
+		me.addParam("args", "String[]");
+		System.out.println(me.toString());
 		return me;
 	}
 
@@ -159,8 +143,8 @@ public class CodeFactory {
 	 * 
 	 * */
 	public FieldElement createFieldElement(String name, String type,
-			ModifierKeyword modifiers) {
-		FieldElement fe = new FieldElement(ast);
+			String modifiers) {
+		FieldElement fe = new FieldElement();
 		fe.setName(name);
 		fe.setType(type);
 		fe.setModifiers(modifiers);
@@ -168,18 +152,51 @@ public class CodeFactory {
 	}
 
 	public FieldElement createFieldElement() {
-		FieldElement fe = new FieldElement(ast);
+		FieldElement fe = new FieldElement();
 		return fe;
 	}
+
+
+//	public IfStatementElement createIfStatementElement() {
+//		IfStatementElement ifStatementElement = new IfStatementElement(ast);
+//		return ifStatementElement;
+//	}
+
+	public IfStatement createIfStatementElement() {
+		IfStatement ifs = new IfStatement();
+		return ifs;
+	}
+	
+	public BlockElement createBlockElement(){
+		return new BlockElement();
+	}
+	
 
 	/**
 	 * create a System.out.println();
 	 * */
-
-	public MethodInvocationElement createMethodInvocationElement(String value) {
-		MethodInvocationElement mie = new MethodInvocationElement(ast);
-		mie.setArguments(value);
-		return mie;
+	
+	
+	/**
+	 * create an ExpressionStatement
+	 * */
+	public ExpressionStatement createExpressionStatement(){
+		ExpressionStatement es = new ExpressionStatement();
+		return es;
 	}
+
+
+
+	public WhileStatement createWhileStatementElement() {
+		// TODO Auto-generated method stub
+		return new WhileStatement();
+	}
+	
+	
+//	public MethodInvocationElement createMethodInvocationElement(String value) {
+//		MethodInvocationElement mie = new MethodInvocationElement(ast);
+//		mie.setArguments(value);
+//		return mie;
+//	}
 
 }

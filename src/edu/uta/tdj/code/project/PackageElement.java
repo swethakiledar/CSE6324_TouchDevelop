@@ -2,8 +2,6 @@ package edu.uta.tdj.code.project;
 
 import java.util.ArrayList;
 
-import org.eclipse.jdt.core.dom.AST;
-
 
 import edu.uta.tdj.code.component.ComplieUnitElement;
 import edu.uta.tdj.code.file.ISave;
@@ -17,7 +15,6 @@ public class PackageElement  implements ProjectNode {
 
 	private ProjectElement projectElement;
 
-	private AST ast;
 
 	public PackageElement(String project, String name) {
 		this(name);
@@ -61,9 +58,6 @@ public class PackageElement  implements ProjectNode {
 		this.complieUnitArrayList = complieUnitArrayList;
 	}
 
-	public void setAST(AST ast) {
-		this.ast = ast;
-	}
 
 	public ProjectElement getProjectElement() {
 		return projectElement;
@@ -94,7 +88,6 @@ public class PackageElement  implements ProjectNode {
 
 	@Override
 	public void save() {
-
 		fs.createFolder(getPath());
 		for (int i = 0; i < complieUnitArrayList.size(); i++) {
 			ISave save = (ISave) complieUnitArrayList.get(i);

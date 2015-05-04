@@ -17,7 +17,6 @@ public class AddMethodAction extends ButtonActions{
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		super.actionPerformed(e);
 		CodePanel cp = ProjectController.getInstance().getSelectedCodePanel();
 		ClassElement ce = (ClassElement) cp.getSelectListener()
 				.getSelectedElement();
